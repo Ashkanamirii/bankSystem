@@ -1,8 +1,6 @@
 package account;
 
-import account.Account;
-
-import java.beans.Customizer;
+import bank.Customer;
 
 /**
  * Created by Ashkan Amiri
@@ -11,7 +9,36 @@ import java.beans.Customizer;
  * Project: bankSystem
  * Copyright: MIT
  */
-public class SavingAccount extends Account {
+public class SavingAccount extends Account implements Transaction {
     double interestRate;
-    Customer customer;
+
+    public SavingAccount(Long accountNumber, double balance, Customer customer, Integer accountType, double interestRate) {
+        super(accountNumber, balance, customer, accountType);
+        this.interestRate = interestRate;
+    }
+
+    public SavingAccount(double interestRate) {
+        this.interestRate = interestRate;
+    }
+
+    @Override
+    public void withDraw(double amount) {
+        balance = balance - amount;
+    }
+
+    @Override
+    public void deposit(double amount) {
+        balance = balance + amount;
+    }
+
+    public void calculateInterestRate() {
+        interestRate = interestRate + (balance * interestRate / 100 / 365);
+
+    }
+
+    public void addInterest() {
+        balance = balance + interestRate;
+        interestRate = 0;
+    }
+
 }

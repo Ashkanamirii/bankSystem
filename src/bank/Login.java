@@ -1,3 +1,7 @@
+package bank;
+
+import account.Transaction;
+
 /**
  * Created by Ashkan Amiri
  * Date:  2020-11-29
@@ -5,8 +9,6 @@
  * Project: bankSystem
  * Copyright: MIT
  */
-public class Customer {
-    String name;
-    String address;
-    long personalNumber;
+public class Login {
+    Customer personalNumber;
 }

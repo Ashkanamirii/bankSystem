@@ -1,3 +1,5 @@
+package bank;
+
 /**
  * Created by Ashkan Amiri
  * Date:  2020-11-29
@@ -6,4 +8,10 @@
  * Copyright: MIT
  */
 public class DataBase {
+
+
+    public DataBase(){
+
+    }
+
 }

@@ -1,3 +1,5 @@
+package bank;
+
 /**
  * Created by Ashkan Amiri
  * Date:  2020-11-29
@@ -8,4 +10,16 @@
 public class BankMain {
     String name;
     Customer customer;
+
+
+    public void addAccount() {
+    }
+
+
+    public void addCustomer() {
+    }
+
+    public static void main(String[] args) {
+
+    }
 }
