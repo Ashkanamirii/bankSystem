@@ -9,7 +9,8 @@ import bank.Customer;
  * Project: bankSystem
  * Copyright: MIT
  */
-public class Account {
+public abstract class Account implements Transaction {
+
     private Long accountNumber;
     protected double balance;
     private Customer customer;
@@ -22,41 +23,8 @@ public class Account {
         this.accountType = accountType;
     }
 
-    public Account() {
-    }
 
-    public Integer getAccountType() {
-        return accountType;
-    }
+    public Account() {}
 
-    public void setAccountType(Integer accountType) {
-        this.accountType = accountType;
-    }
-
-    public Long getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(Long accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public Account setBalance(double balance) {
-        this.balance = balance;
-        return this;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-}
 
 

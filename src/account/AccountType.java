@@ -34,10 +34,9 @@ public enum AccountType {
 
     public static AccountType getAccountType(int code) {
         AccountType[] values = values();
-        AccountType[] array = values;
         int length = values().length;
         for (int i = 0; i < length; i++) {
-            AccountType value = array[i];
+            AccountType value = values[i];
             if (value.getaccountType() == code)
                 return value;
 

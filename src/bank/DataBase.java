@@ -8,7 +8,7 @@ package bank;
  * Copyright: MIT
  */
 public class DataBase {
-
+//läsa customer file
 
     public DataBase(){
 
