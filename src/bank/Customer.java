@@ -12,10 +12,10 @@ import account.Account;
 public class Customer {
     String name;
     String address;
-    long personalNumber; // används som customer ID
+    String personalNumber; // används som customer ID
     Account accountNr;
 
-    public Customer(String name, String address, long personalNumber, Account accountNr) {
+    public Customer(String name, String address, String personalNumber, Account accountNr) {
         this.name = name;
         this.address = address;
         this.personalNumber = personalNumber;
@@ -48,12 +48,21 @@ public class Customer {
         this.address = address;
     }
 
-    public long getPersonalNumber() {
+    public String getPersonalNumber() {
         return personalNumber;
     }
 
-    public void setPersonalNumber(long personalNumber) {
+    public void setPersonalNumber(String personalNumber) {
         this.personalNumber = personalNumber;
     }
 
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", personalNumber='" + personalNumber + '\'' +
+                ", accountNr=" + accountNr +
+                '}';
+    }
 }

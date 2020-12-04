@@ -22,7 +22,7 @@ public class SavingAccount extends Account implements Transaction {
     }
 
     @Override
-    public void withDraw(double amount) {
+    public void withdraw(double amount) {
         balance = balance - amount;
     }
 

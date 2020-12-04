@@ -8,6 +8,6 @@ package account;
  * Copyright: MIT
  */
 public interface Transaction {
-     void withDraw(double amount);
+     void withdraw(double amount);
      void deposit(double amount);
 }
