@@ -2,6 +2,8 @@ package bank;
 
 import account.Account;
 
+import java.util.ArrayList;
+
 /**
  * Created by Ashkan Amiri
  * Date:  2020-11-29
@@ -10,27 +12,31 @@ import account.Account;
  * Copyright: MIT
  */
 public class Customer {
+    int customerId;
     String name;
     String address;
-    long personalNumber; // används som customer ID
-    Account accountNr;
+    long personalNumber;
+    ArrayList<Account> accounts;
 
-    public Customer(String name, String address, long personalNumber, Account accountNr) {
+    public Customer(int customerId, String name, String address, long personalNumber, ArrayList<Account> accounts) {
+        this.customerId = customerId;
         this.name = name;
         this.address = address;
         this.personalNumber = personalNumber;
-        this.accountNr = accountNr;
+        this.accounts = new ArrayList<Account>();
     }
 
     public Customer() {}
 
-    public Account getAccountNr() {
-        return accountNr;
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public void setAccountNr(Account accountNr) {
-        this.accountNr = accountNr;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
+
+
 
     public String getName() {
         return name;

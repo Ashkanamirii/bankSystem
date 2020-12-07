@@ -9,21 +9,18 @@ import bank.Customer;
  * Project: bankSystem
  * Copyright: MIT
  */
-public class CurrentAccount extends Account implements Transaction {
+public class CurrentAccount extends Account {
 
 
-    public CurrentAccount(Long accountNumber, double balance, Customer customer, Integer accountType) {
-        super(accountNumber, balance, customer, accountType);
+    public CurrentAccount(long accountNumber, double balance, Customer customerID) {
+        super(accountNumber, balance, customerID);
+        this.accountType = setAccountType();
     }
 
 
     @Override
-    public void withDraw(double amount) {
-        balance = balance - amount;
-    }
-
-    @Override
-    public void deposit(double amount) {
-        balance = balance + amount;
+    public AccountType setAccountType() {
+        int accType = 2;
+        return AccountType.getAccountType(accType);
     }
 }
