@@ -11,10 +11,10 @@ import java.util.StringTokenizer;
  * Project: bankSystem
  * Copyright: MIT
  */
-public class DataBase {
+public class Database {
 
 
-    public DataBase(HashMap<Integer, Banksystemet> hashMap){
+    public Database(HashMap<Integer, Banksystemet> hashMap){
 
         String csVFile = "src/bank/CustomerList.csv";
         String line;
