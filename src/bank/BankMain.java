@@ -28,6 +28,6 @@ public class BankMain {
         Customer customer1 = new Customer();
         customer1.setCustomerId(11111);
         Facade facade = new Facade();
-        facade.makeDeposite(100 , customer1);
+       // facade.makeDeposit(100 , customer1);
     }
 }

@@ -15,8 +15,8 @@ public enum AccountType {
     UNKNOWN(0, "Unknown");
 
 
-    private Integer accountType;
-    private String description;
+    private final int accountType;
+    private final String description;
 
 
       AccountType(Integer accountType, String description) {
@@ -24,7 +24,7 @@ public enum AccountType {
         this.description = description;
     }
 
-    public Integer getAccountType() {
+    public int getAccountType() {
         return accountType;
     }
 
