@@ -12,7 +12,7 @@ import bank.Customer;
 public class SavingAccount extends Account {
     double interestRate;
 
-    public SavingAccount(long accountNumber, double balance, Customer customerID ) {
+    public SavingAccount(long accountNumber, double balance, int customerID ) {
         super(accountNumber, balance, customerID);
         this.accountType= setAccountType();
     }

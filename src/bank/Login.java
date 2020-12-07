@@ -18,23 +18,13 @@ import java.util.*;
  */
 public class Login {
     Customer customer;
-    int customerId;
-    String name;
-    String adress;
-    String personalNumber;
     Scanner input = new Scanner(System.in);
     int choice;
     boolean persNum_exists;
-
-    List<Customer> customerList = new ArrayList<>();
+    ArrayList<Customer> customerList;
 
 
     Login() {
-
-
-        //       Customer c1 = new Customer(1,"Iryna", "Molkomsbacken 19, 12333, Farsta","198710230001", new Account());
-        //       customers.add(c1);
-
         menu();
 
     }
@@ -75,7 +65,7 @@ public class Login {
         }
     }
 
-    public boolean ckeckId(String idString) {
+    private boolean checkId(String idString) {
         for (Customer c : customerList) {
             if (idString.equalsIgnoreCase(c.getPersonalNumber())) {
                 persNum_exists = true;
@@ -86,23 +76,24 @@ public class Login {
 
     public void createCustomer() {
         try {
+            input.nextLine();
             System.out.println("Ange ditt personnummer (10 ciffror): ");
             String idString = input.nextLine().trim();
 
-            while (!(checkId(idString))) {
-                personalNumber = idString;
+            if (!(checkId(idString))) {
+                Customer newCustomer = new Customer();
+                newCustomer.setPersonalNumber(idString);
                 System.out.print("Ange ditt namn: ");
-                name = input.nextLine();
+                newCustomer.setName(input.nextLine());
                 System.out.print("Adress: ");
-                adress = input.nextLine();
+                newCustomer.setAddress(input.nextLine());
                 // ToDo: generate customerId
-                customerId = 999;
+                newCustomer.setCustomerId(999);
                 // ToDo: generate account number
                 // Behöver det vara en ArrayList<Account> som parameter i konstruktorn?
-
-                Customer newCustomer = new Customer(customerId, name, adress, personalNumber, accountsList);
                 newCustomer.toString();
-            }
+            } else
+                menu();
 
         } catch (Exception e) {
             System.out.println("Error message: " + e);
@@ -120,20 +111,24 @@ public class Login {
                 if (isCustomer.equalsIgnoreCase(c.getPersonalNumber())) {
                     customer = c;
                 }
-                return;
+                System.out.println("Välkommen " + customer.getName());
+                return ;
             }
-            System.out.println("Välkommen " + customer.getName());
 
-        }catch (Exception e) {
-                System.out.println("Error message: " + e);
-            }
+        } catch (NullPointerException e) {
+            System.out.println("Cannot invoke \"bank.Customer.getName()");
+        }
+
+        catch (Exception e) {
+            System.out.println("Error message: " + e);
+        }
     }
 
     //    Kunna skapa en ny konto (CurrentAccount och SavingAccount). Kontotyp för CurrentAccount = 1 och kontotyp för SavingAccount = 2. Ska kunna generera nya aAccNr för varje konto.
     //    OBS behöver skriva till fil utan bara logiken.
 
-
-    public int generateSavingsAccountNumber() {
+/*
+   public int generateSavingsAccountNumber() {
         SavingAccount account = new SavingAccount(); // ska man lägga till en konstruktor som skapar en tom sparkonto?
         int accountNumber = AccountNumberGenerator.getNewAccountNumber(); // generates random account number
         accounts.put(accountNumber, account); // borde lägga till ett konto i hashMap med konto om den finns, om detta behövs
@@ -157,8 +152,9 @@ public class Login {
             }
         }
         return null;
-    }
+*/
 }
+
 
 
 

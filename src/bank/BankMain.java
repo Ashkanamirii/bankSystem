@@ -37,25 +37,17 @@ public class BankMain {
 
         // Irynas branch
 
-        ArrayList<Account> myAccounts = new ArrayList<>();
-
-        Customer customer = new Customer(1,"Iryna", "Molkomsbacken 19, 12333, Farsta","198710230001", myAccounts);
+        Customer customer = new Customer();
+        customer.setCustomerId(1);
+        customer.setAddress("Molkomsbacken 19");
+        customer.setName("Iryna Gnatenko");
+        customer.setPersonalNumber("8710230001");
         System.out.println(customer.toString());
 
-        Account account1 = new Account(123456789, 3000, customer) {
-            @Override
-            public AccountType setAccountType() {
-                int accType = 2;
-                return AccountType.getAccountType(accType);            }
-        };
-
-        myAccounts.add(account1);
-
-        ArrayList <Customer> customers = new ArrayList<>();
-
+        ArrayList <Customer> customerList = new ArrayList<>();
+        customerList.add(customer);
 
         Login l = new Login();
-
 
     }
 }
