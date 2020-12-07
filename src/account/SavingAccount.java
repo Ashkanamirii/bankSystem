@@ -9,36 +9,42 @@ import bank.Customer;
  * Project: bankSystem
  * Copyright: MIT
  */
-public class SavingAccount extends Account implements Transaction {
+public class SavingAccount extends Account {
     double interestRate;
 
-    public SavingAccount(Long accountNumber, double balance, Customer customer, Integer accountType, double interestRate) {
-        super(accountNumber, balance, customer, accountType);
-        this.interestRate = interestRate;
-    }
 
-    public SavingAccount(double interestRate) {
-        this.interestRate = interestRate;
+    public SavingAccount(long accountNumber, double balance, Customer customerID ) {
+        super(accountNumber, balance, customerID);
+        this.accountType= setAccountType();
     }
 
     @Override
-    public void withDraw(double amount) {
-        balance = balance - amount;
+    public AccountType setAccountType() {
+        int accType = 1;
+        return AccountType.getAccountType(accType);
     }
 
-    @Override
-    public void deposit(double amount) {
-        balance = balance + amount;
-    }
 
-    public void calculateInterestRate() {
-        interestRate = interestRate + (balance * interestRate / 100 / 365);
+    public void calculateInterestRate(double interestRate) {
+        this.interestRate = interestRate + (balance * interestRate / 100 / 365);
 
     }
+
 
     public void addInterest() {
         balance = balance + interestRate;
-        interestRate = 0;
+
+    }
+
+
+
+    @Override
+    public String toString() {
+        return
+                "balance=" + balance +
+                ", interestRate=" + interestRate +
+                        accountType +
+                '}';
     }
 
 }
