@@ -28,11 +28,11 @@ public class Database {
             while ((line = br.readLine()) != null){
                 current = new StringTokenizer(line);
 
-                String firstname = current.nextToken(",");
-                String lastname = current.nextToken(",");
-                int customerID = Integer.parseInt(current.nextToken(","));
-                double accountNumber = Integer.parseInt(current.nextToken(","));
-                double balance = Integer.parseInt(current.nextToken(","));
+                String firstname = current.nextToken(";");
+                String lastname = current.nextToken(";");
+                int customerID = Integer.parseInt(current.nextToken(";"));
+                double accountNumber = Integer.parseInt(current.nextToken(";"));
+                double balance = Integer.parseInt(current.nextToken(";"));
                 addAccount = new Banksystemet(customerID, firstname, lastname, accountNumber, balance);
                 hashMap.put(addAccount.getCustomerID(), addAccount);
 
