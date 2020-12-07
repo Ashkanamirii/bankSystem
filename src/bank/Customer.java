@@ -15,10 +15,10 @@ public class Customer {
     int customerId;
     String name;
     String address;
-    long personalNumber;
+    String personalNumber; // används som customer ID vid inloggningen
     ArrayList<Account> accounts;
 
-    public Customer(int customerId, String name, String address, long personalNumber, ArrayList<Account> accounts) {
+    public Customer(int customerId, String name, String address, String personalNumber, ArrayList<Account> accounts) {
         this.customerId = customerId;
         this.name = name;
         this.address = address;
@@ -54,12 +54,22 @@ public class Customer {
         this.address = address;
     }
 
-    public long getPersonalNumber() {
+    public String getPersonalNumber() {
         return personalNumber;
     }
 
-    public void setPersonalNumber(long personalNumber) {
+    public void setPersonalNumber(String personalNumber) {
         this.personalNumber = personalNumber;
     }
 
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerId=" + customerId +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", personalNumber='" + personalNumber + '\'' +
+                ", accounts=" + accounts +
+                '}';
+    }
 }

@@ -11,16 +11,15 @@ import bank.Customer;
  */
 public class CurrentAccount extends Account {
 
-
-    public CurrentAccount(long accountNumber, double balance, Customer customerID) {
+    public CurrentAccount(long accountNumber, double balance, int customerID ) {
         super(accountNumber, balance, customerID);
         this.accountType = setAccountType();
-    }
 
+    }
 
     @Override
     public AccountType setAccountType() {
         int accType = 2;
-        return AccountType.getAccountType(accType);
-    }
+        return AccountType.getAccountType(accType);    }
+
 }
