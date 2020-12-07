@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
 public class Database {
 
 
-    public Database(HashMap<Integer, Banksystemet> hashMap){
+    public static void database(HashMap<Integer, Banksystemet> hashMap){
 
         String csVFile = "src/bank/CustomerList.csv";
         String line;
@@ -23,16 +23,16 @@ public class Database {
         StringTokenizer current;
 
 
-        try(BufferedReader br = new BufferedReader(new FileReader(csVFile))){
+        try(BufferedReader reader = new BufferedReader(new FileReader(csVFile))){
 
-            while ((line = br.readLine()) != null){
+            while ((line = reader.readLine()) != null){
                 current = new StringTokenizer(line);
 
+                short customerID = Short.parseShort(current.nextToken(";"));
                 String firstname = current.nextToken(";");
                 String lastname = current.nextToken(";");
-                int customerID = Integer.parseInt(current.nextToken(";"));
-                double accountNumber = Integer.parseInt(current.nextToken(";"));
-                double balance = Integer.parseInt(current.nextToken(";"));
+                double accountNumber = Double.parseDouble(current.nextToken(";"));
+                double balance = Double.parseDouble(current.nextToken(";"));
                 addAccount = new Banksystemet(customerID, firstname, lastname, accountNumber, balance);
                 hashMap.put(addAccount.getCustomerID(), addAccount);
 
