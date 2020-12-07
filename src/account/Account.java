@@ -1,6 +1,6 @@
 package account;
-
 import bank.Customer;
+
 
 /**
  * Created by Ashkan Amiri
@@ -24,7 +24,7 @@ public abstract class Account implements Transaction {
     }
 
 
-    public Account() {}
+    // public Account() {}
 
 
-
+}
