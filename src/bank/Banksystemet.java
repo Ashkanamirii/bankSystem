@@ -43,7 +43,7 @@ public class Banksystemet implements Comparable<Banksystemet> {
     }
 
     public void toString2() {
-        System.out.println("Namn :" + getFirstname() + " " + getLastname() +
+        System.out.println("Namn: " + getFirstname() + " " + getLastname() +
                 "\n" + "Saldo: " + getBalance() +
                 "\n" + "Kontonummer: " + getAccountNumber());
     }
