@@ -19,12 +19,12 @@ public enum AccountType {
     private String description;
 
 
-    AccountType(Integer accountType, String description) {
+      AccountType(Integer accountType, String description) {
         this.accountType = accountType;
         this.description = description;
     }
 
-    public Integer getaccountType() {
+    public Integer getAccountType() {
         return accountType;
     }
 
@@ -38,10 +38,17 @@ public enum AccountType {
         int length = values().length;
         for (int i = 0; i < length; i++) {
             AccountType value = array[i];
-            if (value.getaccountType() == code)
+            if (value.getAccountType() == code)
                 return value;
-
         }
         return AccountType.getAccountType(0);
+    }
+
+    @Override
+    public String toString() {
+        return
+                "accountType=" + accountType +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

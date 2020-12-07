@@ -7,7 +7,7 @@ package account;
  * Project: bankSystem
  * Copyright: MIT
  */
-public interface Transaction {
-     void withDraw(double amount);
-     void deposit(double amount);
-}
+//public interface Transaction {
+//     void withDraw(double amount);
+//     void deposit(double amount);
+//}
