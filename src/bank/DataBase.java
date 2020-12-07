@@ -1,6 +1,8 @@
 package bank;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.StringTokenizer;
 
 /**
  * Created by Ashkan Amiri
@@ -12,31 +14,35 @@ import java.io.*;
 public class DataBase {
 
 
-    public DataBase(){
+    public DataBase(HashMap<Integer, Banksystemet> hashMap){
 
-        String csVFile = "src/bank/Bank_fil_example.csv";
+        String csVFile = "src/bank/CustomerList.csv";
         String line ="";
-        String csvSplitBy = ",";
+
+        Banksystemet addAccount;
+        StringTokenizer current;
 
 
         try(BufferedReader br = new BufferedReader(new FileReader(csVFile))){
 
             while ((line = br.readLine()) != null){
-                String[] current = line.split(csvSplitBy);
+                current = new StringTokenizer(line);
 
-                System.out.println("Account: " + current[0] + " Accnr: " + current[1] + " Amount: " + current[2] + " Description: " + current[3] + " Balance: " + current[4] + " Timestamp: " + current[5] );
+                String firstname = current.nextToken(",");
+                String lastname = current.nextToken(",");
+                int customerID = Integer.parseInt(current.nextToken(","));
+                double accountNumber = Integer.parseInt(current.nextToken(","));
+                double balance = Integer.parseInt(current.nextToken(","));
+                addAccount = new Banksystemet(customerID, firstname, lastname, accountNumber, balance);
+                hashMap.put(addAccount.getCustomerID(), addAccount);
+
+               // System.out.println("Account: " + current[0] + " Accnr: " + current[1] + " Amount: " + current[2] + " Description: " + current[3] + " Balance: " + current[4] + " Timestamp: " + current[5] );
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public static void main(String[] args){
-
-        new DataBase();
 
     }
 
