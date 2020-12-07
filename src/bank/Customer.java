@@ -15,7 +15,7 @@ public class Customer {
     int customerId;
     String name;
     String address;
-    String personalNumber; // används som customer ID
+    String personalNumber; // används som customer ID vid inloggningen
     ArrayList<Account> accounts;
 
     public Customer(int customerId, String name, String address, String personalNumber, ArrayList<Account> accounts) {
@@ -65,10 +65,11 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "name='" + name + '\'' +
+                "customerId=" + customerId +
+                ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", personalNumber='" + personalNumber + '\'' +
-                ", accountNr=" + accountNr +
+                ", accounts=" + accounts +
                 '}';
     }
 }

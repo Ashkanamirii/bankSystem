@@ -12,7 +12,6 @@ import bank.Customer;
 public class SavingAccount extends Account {
     double interestRate;
 
-
     public SavingAccount(long accountNumber, double balance, Customer customerID ) {
         super(accountNumber, balance, customerID);
         this.accountType= setAccountType();
@@ -33,18 +32,7 @@ public class SavingAccount extends Account {
 
     public void addInterest() {
         balance = balance + interestRate;
-
-    }
-
-
-
-    @Override
-    public String toString() {
-        return
-                "balance=" + balance +
-                ", interestRate=" + interestRate +
-                        accountType +
-                '}';
+        interestRate = 0;
     }
 
 }
