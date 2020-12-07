@@ -63,6 +63,8 @@ public class BankMain {
 
                 if (accountNR == listCustomer.get(customerIDuserinput).getAccountNumber()){
                     listCustomer.get(customerIDuserinput).toString2();
+                }else {
+                    System.out.print("Wrong accountNR! ");
                 }
 
 
