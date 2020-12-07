@@ -1,6 +1,6 @@
 package bank;
 
-import account.Transaction;
+
 
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class History {
     List<Customer> customerList;
-    Transaction transaction;
+
 
 
     public void saveToFile(List<Customer> customerList) throws ParseException {
