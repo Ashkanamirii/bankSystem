@@ -17,7 +17,7 @@ public class DataBase {
     public DataBase(HashMap<Integer, Banksystemet> hashMap){
 
         String csVFile = "src/bank/CustomerList.csv";
-        String line ="";
+        String line;
 
         Banksystemet addAccount;
         StringTokenizer current;
