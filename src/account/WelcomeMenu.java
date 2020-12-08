@@ -54,9 +54,6 @@ public class WelcomeMenu {
                             welcomeDialogue();
 
                         }
-
-
-
             } else {
                 System.out.println("Option not valid");
             }
