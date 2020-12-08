@@ -1,9 +1,7 @@
 package account;
 import bank.Banksystemet;
-import bank.Customer;
 import bank.Database;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.InputMismatchException;
@@ -41,41 +39,29 @@ public class WelcomeMenu {
 
             } else if (chosenOption.equals("1")) {
 
-                    System.out.println("Please enter your customerID:");
+                System.out.println("Please enter your customerID:");
                     int customer = scan.nextInt();
 
                     System.out.println("Please enter your pin code:");
                     int customerPinCode = scan.nextInt();
 
-                        if (customerPinCode == listCustomer.get(customer).getCustomerPinCode()) {
-                            displayMenu(customer);
-                        } else {
-                            System.out.print("Wrong customerID or pincode! Try Again! \n ");
-                            welcomeDialogue();
+                    if (customerPinCode == listCustomer.get(customer).getCustomerPinCode()) {
+                        displayMenu(customer);
+
+                    } else {
+                        System.out.print("Wrong customerID or pincode! Try Again! \n ");
+                        welcomeDialogue();
 
                         }
-
-
-
             } else {
                 System.out.println("Option not valid");
             }
         }
     }
 
-   /* public Customer findCustomer(int customer){
-
-        if (customer.matches("[0-9]")) {
-            return null; //customerDatabase.findByPersonNumber(customer);
-        } else
-            return null; //customerDatabase.findByName(customer);
-        }*/
-
     public void displayMenu(int customerID){
     //    System.out.println("Welcome back " + customer.getName());
         int temp = -1;
-
-
         while(temp != 0)
         {
             listCustomer.get(customerID).toString2();
@@ -89,37 +75,38 @@ public class WelcomeMenu {
             System.out.println("0: log out");
 
             temp = getInfoFromUser();
+            double amount;
+            double withdraw;
 
             switch (temp)
 
             {
-               // Scanner scanMenu = new Scanner(System.in);
                 case 1:
                     System.out.println("Please introduce the amount you want to deposit");
-                    //facade.makeDeposit(customer, amount, accountType);
+                    amount = getAmountFromUser();
+                    //facade.makeDeposit(customer, amount);
                     break;
 
                 case 2:
                     System.out.println("Please introduce the amount you want to withdraw");
-                 //   facade.withdraw(customer, amount);
+                    withdraw = getAmountFromUser();
+                    //facade.withdraw(customer, withdraw);
                     break;
 
                 case 3:
-                    System.out.println("Please introduce the amount you want to transfer and destination account");
-                //    facade.transfer(customer, amount, accountType, accountType);
+                    //processTransfer(customerID);
                     break;
 
                 case 4:
-                  //  facade.displayHistory(customer);
+                    //facade.displayHistory(customer);
                     break;
 
                 case 5:
-                  //  facade.displayBalance(customer);
-                    listCustomer.get(customerID).toString2();
+                    //facade.displayBalance(customer);
                     break;
 
                 case 6:
-                //    facade.updatePersonalInfo(customer);
+                    //facade.updatePersonalInfo(customer);
                     break;
 
                 case 0:
@@ -135,23 +122,69 @@ public class WelcomeMenu {
     }
 
     public int getInfoFromUser(){
-        int input = 0;
-       while (input == 0){
+        int input = -2;
+        while (input == -2){
             try
             {
                 Scanner s = new Scanner(System.in);
                 input = s.nextInt();
             }
-            catch (IllegalArgumentException e)
+            catch (InputMismatchException e)
             {
-                System.out.println("Just numbers allowed");
+                System.out.println("Just numbers allowed. Please try again \n");
             }
         }
         return input;
     }
 
+    public double getAmountFromUser(){
+        double amount = -2;
+        while (amount == -2){
+            try
+            {
+                Scanner s = new Scanner(System.in);
+                amount = s.nextDouble();
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("Just numbers allowed. Try again");
+            }
+        }
+        return amount;
+    }
+   public void processTransfer(int customerID) {
+        double transfer;
+        boolean isValidOption = true;
+        Scanner scanTrans = new Scanner(System.in);
+        while (isValidOption == false) {
+            System.out.println("If you want to transfer from current account to savings account \n" +
+                    "press 1.\n" + "If you want to transfer from savings account to current account \n" +
+                    "pres 2.\n" + "If you want to exit this menu \n" + "press 3");
+            String chosenOption = scanTrans.next();
+            if (chosenOption.equals("1")) {
+                Account originAccount = customer.getCurrentAccount();
+                Account destinationAccount = customer.getSavingsAccount();
+
+            } else if (chosenOption.equals("2")) {
+                Account originAccount = customer.getSavingsAccount();
+                Account destinationAccount = customer.getCurrentAccount();
+
+            } else if (chosenOption.equals("3")) {
+                return;
+
+            } else {
+                System.out.println("Invalid option");
+                isValidOption = false;
+            }
+        }
+        System.out.println("Please introduce the amount you wish to transfer");
+        transfer = getAmountFromUser();
+        //facade.transfer(customer, transfer, originAccount, destinationAccount);
+    }*/
+
     public void run() {
         welcomeDialogue();
+
 
     }
 
