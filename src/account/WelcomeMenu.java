@@ -1,15 +1,13 @@
 package account;
 import bank.Customer;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
 
 public class WelcomeMenu {
 
-    LocalDateTime timeDateToday = LocalDateTime.now();
-    CustomerDatabase customerDatabase = new CustomerDatabase("xxxxx.txt");
+    //LocalDateTime timeDateToday = LocalDateTime.now();
+    //CustomerDatabase customerDatabase = new CustomerDatabase("xxxxx.txt");
 
 
     public void welcomeDialogue() {
@@ -53,6 +51,10 @@ public class WelcomeMenu {
 
     public void displayMenu(Customer customer){
         System.out.println("Welcome back " + customer.getName());
+        System.out.println("Your current balance is: \n" +
+                "Balance account: " + customer.getCurrentAccount.getBalance() +
+                "\n Savings account: " + customer.getSavingsAccount.getBalance());
+
         int temp = -1;
         while(temp != 0)
         {
@@ -66,43 +68,39 @@ public class WelcomeMenu {
             System.out.println("0: log out");
 
             temp = getInfoFromUser();
+            double amount;
+            double withdraw;
 
             switch (temp)
 
             {
-
-                double amount;
-                double withdraw;
-                double transfer;
-
                 case 1:
                     System.out.println("Please introduce the amount you want to deposit");
                     amount = getAmountFromUser();
-                    facade.makeDeposit(customer, amount);
+                    System.out.println("amount " + amount);
+                    //facade.makeDeposit(customer, amount);
                     break;
 
                 case 2:
                     System.out.println("Please introduce the amount you want to withdraw");
                     withdraw = getAmountFromUser();
-                    facade.withdraw(customer, withdraw);
+                    //facade.withdraw(customer, withdraw);
                     break;
 
                 case 3:
-                    System.out.println("Please introduce the amount you want to transfer and destination account");
-                    transfer = getAmountFromUser();
-                    facade.transfer(customer, transfer, account, account);
+                    processTransfer(customer);
                     break;
 
                 case 4:
-                    facade.displayHistory(customer);
+                    //facade.displayHistory(customer);
                     break;
 
                 case 5:
-                    facade.displayBalance(customer);
+                    //facade.displayBalance(customer);
                     break;
 
                 case 6:
-                    facade.updatePersonalInfo(customer);
+                    //facade.updatePersonalInfo(customer);
                     break;
 
                 case 0:
@@ -134,7 +132,48 @@ public class WelcomeMenu {
     }
 
     public double getAmountFromUser(){
+        double amount = 0;
+        while (amount == 0){
+            try
+            {
+                Scanner s = new Scanner(System.in);
+                amount = s.nextDouble();
+            }
+            catch (IllegalArgumentException e)
+            {
+                System.out.println("Just numbers allowed");
+            }
+        }
+        return amount;
+    }
+    public void processTransfer(Customer customer) {
+        double transfer;
+        boolean isValidOption = true;
+        Scanner scanTrans = new Scanner(System.in);
+        while (isValidOption == false) {
+            System.out.println("If you want to transfer from current account to savings account \n" +
+                    "press 1.\n" + "If you want to transfer from savings account to current account \n" +
+                    "pres 2.\n" + "If you want to exit this menu \n" + "press 3");
+            String chosenOption = scanTrans.next();
+            if (chosenOption.equals("1")) {
+                Account originAccount = customer.getCurrentAccount();
+                Account destinationAccount = customer.getSavingsAccount();
 
+            } else if (chosenOption.equals("2")) {
+                Account originAccount = customer.getSavingsAccount();
+                Account destinationAccount = customer.getCurrentAccount();
+
+            } else if (chosenOption.equals("3")) {
+                return;
+
+            } else {
+                System.out.println("Invalid option");
+                isValidOption = false;
+            }
+        }
+        System.out.println("Please introduce the amount you wish to transfer");
+        transfer = getAmountFromUser();
+        //facade.transfer(customer, transfer, originAccount, destinationAccount);
     }
 
     public void run() {
