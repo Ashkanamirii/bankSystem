@@ -13,7 +13,7 @@ import java.util.List;
  * Copyright: MIT
  */
 public class Facade {
-    List<Customer> customerList = new ArrayList<>();
+/*    List<Customer> customerList = new ArrayList<>();
     List<Account> accountList = new ArrayList<>();
     // TODO: 2020-12-07 fixa metoden deposit
     public void makeDeposit(int amount, Customer id){
@@ -38,4 +38,6 @@ public class Facade {
         SavingAccount savingAccount = new SavingAccount(111,10000, customer);
         savingAccount.deposit(amount);
     }
+ */
 }
+

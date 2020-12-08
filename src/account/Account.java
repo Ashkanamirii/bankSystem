@@ -12,11 +12,11 @@ import bank.Customer;
 public abstract class Account {
     private long accountNumber;
     protected double balance;
-    private Customer customerID;
+    private int customerID;
     protected AccountType accountType;
 
 
-    public Account(long accountNumber, double balance, Customer customerID) {
+    public Account(long accountNumber, double balance, int customerID) {
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.customerID = customerID;
@@ -81,6 +81,7 @@ public abstract class Account {
     }
 
     public abstract AccountType setAccountType();
+
 
     @Override
     public String toString() {
