@@ -28,12 +28,13 @@ public class Database {
             while ((line = reader.readLine()) != null){
                 current = new StringTokenizer(line);
 
-                short customerID = Short.parseShort(current.nextToken(";"));
+                int customerID = Integer.parseInt(current.nextToken(";"));
+                short customerPinCode = Short.parseShort(current.nextToken(";"));
                 String firstname = current.nextToken(";");
                 String lastname = current.nextToken(";");
-                double accountNumber = Double.parseDouble(current.nextToken(";"));
-                double balance = Double.parseDouble(current.nextToken(";"));
-                addAccount = new Banksystemet(customerID, firstname, lastname, accountNumber, balance);
+                int accountNumber = Integer.parseInt(current.nextToken(";"));
+                int balance = Integer.parseInt(current.nextToken(";"));
+                addAccount = new Banksystemet(customerID, customerPinCode, firstname, lastname, accountNumber, balance);
                 hashMap.put(addAccount.getCustomerID(), addAccount);
 
                // System.out.println("Account: " + current[0] + " Accnr: " + current[1] + " Amount: " + current[2] + " Description: " + current[3] + " Balance: " + current[4] + " Timestamp: " + current[5] );

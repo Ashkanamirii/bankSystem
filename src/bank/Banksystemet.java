@@ -5,11 +5,14 @@ public class Banksystemet implements Comparable<Banksystemet> {
     private String firstname = "";
     private String lastname = "";
     private int customerID;
-    private double balance;
-    private double accountNumber;
+    private int customerPinCode;
+    private int balance;
+    private int accountNumber;
 
-    public Banksystemet(int customerID, String firstname, String lastname, double accountNumber, double balance) {
+
+    public Banksystemet(int customerID, int customerPinCode, String firstname, String lastname, int accountNumber, int balance) {
         this.customerID = customerID;
+        this.customerPinCode = customerPinCode;
         this.firstname = firstname;
         this.lastname = lastname;
         this.accountNumber = accountNumber;
@@ -20,6 +23,10 @@ public class Banksystemet implements Comparable<Banksystemet> {
         return firstname;
     }
 
+    public int getCustomerPinCode() {
+        return customerPinCode;
+    }
+
     public String getLastname() {
         return lastname;
     }
@@ -28,11 +35,12 @@ public class Banksystemet implements Comparable<Banksystemet> {
         return customerID;
     }
 
+
     public double getBalance() {
         return balance;
     }
 
-    public double getAccountNumber() {
+    public int getAccountNumber() {
         return accountNumber;
     }
 
@@ -43,9 +51,9 @@ public class Banksystemet implements Comparable<Banksystemet> {
     }
 
     public void toString2() {
-        System.out.println("Namn: " + getFirstname() + " " + getLastname() +
+        System.out.println("\nNamn: " + getFirstname() + " " + getLastname() +
                 "\n" + "Saldo: " + getBalance() +
-                "\n" + "Kontonummer: " + getAccountNumber());
+                "\n" + "Kontonummer: " + getAccountNumber() + "\n" );
     }
 
 
