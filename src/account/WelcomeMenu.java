@@ -9,17 +9,14 @@ import java.util.Scanner;
 
 
 public class WelcomeMenu {
+    
+    /*LocalDateTime timeDateToday = LocalDateTime.now(); Kommer att användas för att registrera 
+    tid för sista inloggning och transactioner? Kan finnas också varje metod. Ta bort om oanvänt*/
 
-    LocalDateTime timeDateToday = LocalDateTime.now();
-  //  CustomerDatabase customerDatabase = new CustomerDatabase("xxxxx.txt");
 
    private HashMap<Integer, Banksystemet> listCustomer = new HashMap<>();
-    private Database dataDB = new Database();
-
-
-
-
-
+   private Database dataDB = new Database();
+    
     public void welcomeDialogue() {
 
         try {
@@ -155,6 +152,8 @@ public class WelcomeMenu {
    public void processTransfer(int customerID) {
         double transfer;
         boolean isValidOption = true;
+        Account originAccount = null;
+        Account destinationAccount = null;
         Scanner scanTrans = new Scanner(System.in);
         while (isValidOption == false) {
             System.out.println("If you want to transfer from current account to savings account \n" +
@@ -162,12 +161,12 @@ public class WelcomeMenu {
                     "pres 2.\n" + "If you want to exit this menu \n" + "press 3");
             String chosenOption = scanTrans.next();
             if (chosenOption.equals("1")) {
-                Account originAccount = customer.getCurrentAccount();
-                Account destinationAccount = customer.getSavingsAccount();
+                originAccount = customer.getCurrentAccount();
+                destinationAccount = customer.getSavingsAccount();
 
             } else if (chosenOption.equals("2")) {
-                Account originAccount = customer.getSavingsAccount();
-                Account destinationAccount = customer.getCurrentAccount();
+                originAccount = customer.getSavingsAccount();
+                destinationAccount = customer.getCurrentAccount();
 
             } else if (chosenOption.equals("3")) {
                 return;
@@ -179,13 +178,11 @@ public class WelcomeMenu {
         }
         System.out.println("Please introduce the amount you wish to transfer");
         transfer = getAmountFromUser();
-        //facade.transfer(customer, transfer, originAccount, destinationAccount);
-    }*/
+        facade.transfer(customer, transfer, originAccount, destinationAccount);
+    }
 
     public void run() {
         welcomeDialogue();
-
-
     }
 
     public static void main(String[] args) {
