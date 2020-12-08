@@ -22,11 +22,14 @@ public class WelcomeMenu {
                 //registerNewCustomer();
 
             } else if (chosenOption.equals("1")) {
-                System.out.println("Please enter your userID or name");
+                System.out.println("Please enter your userID");
                 String customer = scan.next();
                 customer = customer.trim();
-
-                Customer foundCustomer = findCustomer(customer);
+                System.out.println("Enter now your pincode");
+                String pincode = scan.next();
+                pincode = pincode.trim();
+                Customer foundCustomer = findCustomer(customer, pincode); /*metoden findCostumer kommer att ersättas
+                av Salems metod*/
                 if (foundCustomer == null) {
                     System.out.println("Customer not found");
                 } else {
@@ -38,8 +41,9 @@ public class WelcomeMenu {
             }
         }
     }
+    //metoden icke vidareutvecklad. Kommmer att ersättas
+    public Customer findCustomer(String customer, String pincode){
 
-    public Customer findCustomer(String customer){
 
         if (customer.matches("[0-9]")) {
             return null; //customerDatabase.findByPersonNumber(customer);
@@ -66,20 +70,27 @@ public class WelcomeMenu {
             switch (temp)
 
             {
-                Scanner scanMenu = new Scanner(System.in);
+
+                double amount;
+                double withdraw;
+                double transfer;
+
                 case 1:
                     System.out.println("Please introduce the amount you want to deposit");
-                    facade.makeDeposit(customer, amount, accountType);
+                    amount = getAmountFromUser();
+                    facade.makeDeposit(customer, amount);
                     break;
 
                 case 2:
                     System.out.println("Please introduce the amount you want to withdraw");
-                    facade.withdraw(customer, amount);
+                    withdraw = getAmountFromUser();
+                    facade.withdraw(customer, withdraw);
                     break;
 
                 case 3:
                     System.out.println("Please introduce the amount you want to transfer and destination account");
-                    facade.transfer(customer, amount, accountType, accountType);
+                    transfer = getAmountFromUser();
+                    facade.transfer(customer, transfer, account, account);
                     break;
 
                 case 4:
@@ -120,6 +131,10 @@ public class WelcomeMenu {
             }
         }
         return input;
+    }
+
+    public double getAmountFromUser(){
+
     }
 
     public void run() {
