@@ -1,10 +1,10 @@
 package bank;
 
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,23 +15,43 @@ import java.util.List;
  * Copyright: MIT
  */
 public class History {
-    List<Customer> customerList;
 
+    public static String getDateNowFormat() {
+        //Get current date time
+        LocalDateTime DateNow = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return DateNow.format(formatter);
+    }
 
-    public void saveToFile(List<Customer> customerList) throws ParseException {
-        System.out.println(" list\n " + customerList);
-        String filePathOut = "CustomerList.txt";
-        String textToAppend = customerList.get(0).toString();
-        try (FileWriter fileWriter = new FileWriter(filePathOut, true);//Set true for append mode.
-             PrintWriter printWriter = new PrintWriter(fileWriter)) {
-            printWriter.println(textToAppend);  //New line
-        } catch (FileNotFoundException e) {
-            System.out.println("File could not be found");
-        } catch (IOException e) {
-            System.out.println("Could not write to file");
-            e.printStackTrace();
+    public static void replaceSelected(String target, String replacement) {
+        try {
+            // input the file content to the StringBuffer "input"
+            BufferedReader file = new BufferedReader(new FileReader("src/bank/CustomerList.csv"));
+            StringBuffer inputBuffer = new StringBuffer();
+            String line;
+
+            while ((line = file.readLine()) != null) {
+                inputBuffer.append(line);
+                inputBuffer.append('\n');
+            }
+            file.close();
+            String inputStr = inputBuffer.toString();
+
+            System.out.println(inputStr); // display the original file for debugging
+
+            // logic to replace lines in the string (could use regex here to be generic)
+                inputStr = inputStr.replace(target, replacement);
+
+            // display the new file for debugging
+            System.out.println("----------------------------------\n" + inputStr);
+
+            // write the new string with the replaced line OVER the same file
+            FileOutputStream fileOut = new FileOutputStream("src/bank/CustomerList.csv");
+            fileOut.write(inputStr.getBytes());
+            fileOut.close();
+
         } catch (Exception e) {
-            System.out.println("File error");
+            System.out.println("Problem reading file.");
         }
     }
 }

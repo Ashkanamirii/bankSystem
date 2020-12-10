@@ -51,13 +51,14 @@ public class Database {
             int accountNumber = Integer.parseInt(accountHolder[4]);
             double balance = Double.parseDouble(accountHolder[5]);
             String accountType = accountHolder[6];
+            String date = accountHolder[7];
             if (accountType.equals("Saving")) {
                 customer.setAccountType(AccountType.getAccountType(1));
-                customer.setAccount(new SavingAccount(accountNumber, balance));
+                customer.setAccount(new SavingAccount(accountNumber, balance,date));
 
             } else if (accountType.equals("Current")) {
                 customer.setAccountType(AccountType.getAccountType(2));
-                customer.setAccount(new CurrentAccount(accountNumber, balance));
+                customer.setAccount(new CurrentAccount(accountNumber, balance,date));
             } else {
                 System.out.println(" Error AccountType");
             }

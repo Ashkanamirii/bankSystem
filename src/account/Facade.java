@@ -32,8 +32,8 @@ public class Facade {
         account.withDraw(amount);
     }
 
-    public void makeTransfer(double amount, Account fromAccount, Account toAccount, AccountType accounttype) {
-        fromAccount.transfer(amount, fromAccount, toAccount, accounttype);
+    public void makeTransfer(double amount, Account fromAccount, long toAccount) {
+        fromAccount.transfer(amount, toAccount);
     }
 
     public void welcomeDialogue() {
@@ -60,6 +60,7 @@ public class Facade {
 
                 System.out.println("Please enter your pin code:");
                 int inputCustomerPinCode = scan.nextInt();
+                // TODO: 2020-12-10 controll pin code 
                 findCustomer(inputCustomerID, inputCustomerPinCode);
 
                 System.out.println("Choose an account to make transactions");
@@ -68,14 +69,15 @@ public class Facade {
                 int choice = scan.nextInt();
                 getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
 
-                if (customerFromDB.size() == 0) {
-                    System.out.println("Empty list");
                 }
             }
         }
-    }
+
             public void findCustomer(int inputCustomerID, int inputCustomerPinCode) {
 
+                if (customerFromDB.size() == 0) {
+                    System.out.println("Empty list");
+                }
                     for (int i = 0; i < customerFromDB.size(); i++) {
                         if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID)
                             if(customerFromDB.get(i).getAccountType().getAccountType() == 1)
@@ -135,7 +137,8 @@ public class Facade {
                 case 3:
                     System.out.println("Please introduce the amount you want to Transfer");
                     amount = getAmountFromUser();
-                    makeTransfer(amount,account, account, accounttype);
+                    long destinationAccount = 27345888;
+                    makeTransfer(amount,account, destinationAccount);
                     break;
 
                 case 4:
