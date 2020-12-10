@@ -117,12 +117,14 @@ public class Facade {
 
                 Customer newCustomer = new Customer();
 
-                newCustomer.setCustomerId(generateRandomNumber(100, 1));
+             //   newCustomer.setCustomerId(generateRandomNumber(100, 1));
+                newCustomer.setCustomerId(customerFromDB.size()/2 +1);
                 newCustomer.setFirstName(name);
                 newCustomer.setLastName(lastName);
                 newCustomer.setCustomerPinCode((short) generateRandomNumber(9000, 1000));
                 newCustomer.setAccount(new CurrentAccount(generateRandomNumber(27400000, 27300000), 0));
                 newCustomer.setAccountType(AccountType.CURRENT_ACCOUNT);
+
 
                 customerFromDB.add(newCustomer);
 
