@@ -4,12 +4,14 @@ import account.Account;
 import account.AccountType;
 
 /**
- * Created by Ashkan Amiri
+ * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
  * Date:  2020-11-29
  * Time:  12:20
  * Project: bankSystem
  * Copyright: MIT
  */
+
+
 public class Customer {
     private int customerId;
     private String firstName;

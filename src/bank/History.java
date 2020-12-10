@@ -1,7 +1,5 @@
 package bank;
 
-
-
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,7 +8,7 @@ import java.text.ParseException;
 import java.util.List;
 
 /**
- * Created by Ashkan Amiri
+ * Created by Ashkan Amiri , Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
  * Date:  2020-11-29
  * Time:  12:21
  * Project: bankSystem
@@ -18,7 +16,6 @@ import java.util.List;
  */
 public class History {
     List<Customer> customerList;
-
 
 
     public void saveToFile(List<Customer> customerList) throws ParseException {

@@ -1,9 +1,7 @@
 package account;
 
-import bank.Customer;
-
 /**
- * Created by Ashkan Amiri
+ * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
  * Date:  2020-11-29
  * Time:  12:21
  * Project: bankSystem

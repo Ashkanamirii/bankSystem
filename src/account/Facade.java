@@ -2,14 +2,13 @@ package account;
 
 import bank.Customer;
 import bank.Database;
-
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 /**
- * Created by Ashkan Amiri
+ * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
  * Date:  2020-12-07
  * Time:  11:24
  * Project: bankSystem
@@ -19,6 +18,10 @@ public class Facade {
 
     List<Customer> customerFromDB = new ArrayList<>();
     private Database dataDB = new Database();
+
+    public Facade() {
+        welcomeDialogue();
+    }
 
 
     public void makeDeposit(double amount, Account account) {
@@ -36,7 +39,6 @@ public class Facade {
     public void welcomeDialogue() {
 
         try {
-            // dataDB.database(listCustomer);
             customerFromDB = dataDB.addDataToCustomerList();
 
         } catch (Exception e) {
@@ -87,22 +89,22 @@ public class Facade {
                         }
                     }
                 }
+
                 public void getChosenAccount(int inputCustomerID, int inputCustomerPinCode, int choice){
                         for (int i = 0; i < customerFromDB.size(); i++) {
                             if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
                                 if (customerFromDB.get(i).getAccountType().getAccountType() == 1 && choice == 1) {
                             Customer c = customerFromDB.get(i);
-                            displayMenu(c.getFirstName(), c.getAccount(), c.getAccountType());
+                            displayMenu(c.getAccount(), c.getAccountType());
                         } else if (customerFromDB.get(i).getAccountType().getAccountType() == 2 && choice == 2) {
                             Customer c = customerFromDB.get(i);
-                            displayMenu(c.getFirstName(), c.getAccount(), c.getAccountType());
+                            displayMenu(c.getAccount(), c.getAccountType());
                         }
                     }
                 }
             }
 
-    public void displayMenu(String name, Account account, AccountType accounttype) {
-        //    System.out.println("Welcome back " + customer.getName());
+    public void displayMenu(Account account, AccountType accounttype) {
         int temp = -1;
         while (temp != 0) {
             System.out.println("Please choose from the menu");
@@ -130,7 +132,7 @@ public class Facade {
                     break;
 
                 case 3:
-                    System.out.println("Please introduce the amount you want to Transfer and where");
+                    System.out.println("Please introduce the amount you want to Transfer");
                     amount = getAmountFromUser();
                     makeTransfer(amount,account, account, accounttype);
                     break;
@@ -140,7 +142,7 @@ public class Facade {
                     break;
 
                 case 5:
-                    account.getBalance();
+                    account.printBalance();
                     break;
 
                 case 6:
@@ -184,39 +186,5 @@ public class Facade {
         }
         return amount;
     }
-
-    //    public void processTransfer(Account fromAccount) {
-//        double transferAmount;
-//        boolean isValidOption = true;
-//        Account originAccount = null;
-//        Account destinationAccount = null;
-//        Scanner scanTrans = new Scanner(System.in);
-//        while (isValidOption == false) {
-//            System.out.println("If you want to transfer from current account to savings account \n" +
-//                    "press 1.\n" + "If you want to transfer from savings account to current account \n" +
-//                    "pres 2.\n" + "If you want to exit this menu \n" + "press 3");
-//            String chosenOption = scanTrans.next();
-//            if (chosenOption.equals("1")) {
-//                originAccount = fromAccount;
-//                destinationAccount = customer.getSavingsAccount();
-//
-//            } else if (chosenOption.equals("2")) {
-//                originAccount = customer.getSavingsAccount();
-//                destinationAccount = customer.getCurrentAccount();
-//
-//            } else if (chosenOption.equals("3")) {
-//                return;
-//
-//            } else {
-//                System.out.println("Invalid option");
-//                isValidOption = false;
-//            }
-//        }
-//        System.out.println("Please introduce the amount you wish to transfer");
-//        transferAmount = getAmountFromUser();
-//        makeTransfer(transferAmount, originAccount, destinationAccount);
-//    }
-
-
 }
 

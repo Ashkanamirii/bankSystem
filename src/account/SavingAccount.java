@@ -1,6 +1,7 @@
 package account;
+
 /**
- * Created by Ashkan Amiri
+ * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
  * Date:  2020-11-29
  * Time:  12:21
  * Project: bankSystem
@@ -13,9 +14,6 @@ public class SavingAccount extends Account {
         super(accountNumber, balance);
     }
 
-
-
-
     @Override
     void showInfo() {
         System.out.println("SavingAccount{" +
@@ -23,7 +21,6 @@ public class SavingAccount extends Account {
                 ", interestRate=" + interestRate +
                 '}');
     }
-
 
     public void calculateInterestRate() {
         this.interestRate = interestRate + (balance * interestRate / 100 / 365);

@@ -1,9 +1,7 @@
 package account;
 
-import bank.Customer;
-
 /**
- * Created by Ashkan Amiri
+ * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
  * Date:  2020-11-30
  * Time:  13:58
  * Project: bankSystem
@@ -55,7 +53,6 @@ public abstract class Account {
 
             if (transferAmount < balance) {
                 balance = balance - transferAmount;
-               // recieve.balance += transferAmount;
                 System.out.println("\nTransfering $ " + transferAmount + " from " + accountTypeforString2 + " to your " + accountTypeforString1);
             } else if (transferAmount <= 0) {
                 System.out.println("\nInvalid amount to transfer.  Transaction cancelled.");
@@ -66,34 +63,10 @@ public abstract class Account {
         printBalance();
     }
 
-//    public void transfer(String toWhere, double amount){
-//        if (amount < balance){
-//            balance = balance - amount;
-//            System.out.println("Transferring $" + amount + " to " + toWhere);
-//        }else {
-//            System.out.println("Your balance is not enough to complete this transaction");
-//        }
-//        printBalance();
-//    }
     public void printBalance (){
         System.out.println("Your balance is now: $" + balance + "\n");
     }
 
-    public long getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(long accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
     abstract void showInfo();
 
     @Override

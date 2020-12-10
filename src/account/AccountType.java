@@ -1,7 +1,7 @@
 package account;
 
 /**
- * Created by Ashkan Amiri
+ * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
  * Date:  2020-11-29
  * Time:  12:22
  * Project: bankSystem
@@ -27,9 +27,6 @@ public enum AccountType {
         return accountType;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
     public static AccountType getAccountType(int code) {
         AccountType[] values = values();
