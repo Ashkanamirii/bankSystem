@@ -1,7 +1,6 @@
 package bank;
 
 import account.AccountType;
-import account.Facade;
 import account.SavingAccount;
 
 import java.io.BufferedReader;

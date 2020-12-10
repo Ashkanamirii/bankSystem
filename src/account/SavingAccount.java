@@ -1,7 +1,4 @@
 package account;
-
-import bank.Customer;
-
 /**
  * Created by Ashkan Amiri
  * Date:  2020-11-29
@@ -10,29 +7,29 @@ import bank.Customer;
  * Copyright: MIT
  */
 public class SavingAccount extends Account {
-    double interestRate;
+    double interestRate = 2;
 
-    public SavingAccount(long accountNumber, double balance, int customerID ) {
-        super(accountNumber, balance, customerID);
-        this.accountType= setAccountType();
+    public SavingAccount(long accountNumber, double balance) {
+        super(accountNumber, balance);
     }
+
+
+
 
     @Override
-    public AccountType setAccountType() {
-        int accType = 1;
-        return AccountType.getAccountType(accType);
+    void showInfo() {
+        System.out.println("SavingAccount{" +
+                "balance=" + balance +
+                ", interestRate=" + interestRate +
+                '}');
     }
 
 
-    public void calculateInterestRate(double interestRate) {
+    public void calculateInterestRate() {
         this.interestRate = interestRate + (balance * interestRate / 100 / 365);
-
     }
-
-
     public void addInterest() {
         balance = balance + interestRate;
-        interestRate = 0;
     }
 
 }

@@ -1,8 +1,7 @@
 package bank;
 
 import account.Account;
-
-import java.util.ArrayList;
+import account.AccountType;
 
 /**
  * Created by Ashkan Amiri
@@ -12,21 +11,41 @@ import java.util.ArrayList;
  * Copyright: MIT
  */
 public class Customer {
-    int customerId;
-    String name;
-    String address;
-    String personalNumber; // används som customer ID vid inloggningen
-    ArrayList<Account> accounts;
+    private int customerId;
+    private String firstName;
+    private String lastName;
+    private Account account;
+    private short customerPinCode;
+    private AccountType accountType;
 
-    public Customer(int customerId, String name, String address, String personalNumber, ArrayList<Account> accounts) {
+    public Customer(int customerId, String firstName, String lastName, Account account,
+                    short customerPinCode, AccountType accountType) {
         this.customerId = customerId;
-        this.name = name;
-        this.address = address;
-        this.personalNumber = personalNumber;
-        this.accounts = new ArrayList<Account>();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.account = account;
+        this.customerPinCode = customerPinCode;
+        this.accountType = accountType;
     }
 
-    public Customer() {}
+    public Customer() {
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
+    }
+
+    public short getCustomerPinCode() {
+        return customerPinCode;
+    }
+
+    public void setCustomerPinCode(short customerPinCode) {
+        this.customerPinCode = customerPinCode;
+    }
 
     public int getCustomerId() {
         return customerId;
@@ -36,40 +55,39 @@ public class Customer {
         this.customerId = customerId;
     }
 
-
-
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getPersonalNumber() {
-        return personalNumber;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setPersonalNumber(String personalNumber) {
-        this.personalNumber = personalNumber;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override
     public String toString() {
         return "Customer{" +
                 "customerId=" + customerId +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", personalNumber='" + personalNumber + '\'' +
-                ", accounts=" + accounts +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", account=" + account +
+                ", customerPinCode=" + customerPinCode +
+                ", accountType=" + accountType +
                 '}';
     }
 }
