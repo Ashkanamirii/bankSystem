@@ -2,10 +2,8 @@ package account;
 
 import bank.Customer;
 import bank.Database;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+
+import java.util.*;
 
 /**
  * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
@@ -105,6 +103,60 @@ public class Facade {
                 }
             }
 
+    public void registerNewCustomer() {
+        try {
+            Scanner input = new Scanner(System.in);
+            System.out.println("Please state your name: ");
+            String name = input.nextLine().trim();
+            System.out.println("Please state your last name: ");
+            String lastName = input.nextLine().trim();
+
+//            if (!(listCustomer.containsKey(name) && listCustomer.containsKey(lastName))) {
+
+            int custID = checkId(generateRandomNumber(100,1));
+
+            short custPIN = (short) generateRandomNumber(9000,1000);
+
+            int accNumber = generateRandomNumber(926000000,925000000);
+
+            int balance = 0;
+            AccountType accountType = AccountType.CURRENT_ACCOUNT;
+
+            Account newAccount;
+            newAccount.set
+            Customer newCustomer = new Customer(custID, name, lastName, new Account(accNumber, balance), custPIN, accountType);
+            customerFromDB.add(newCustomer);
+
+            newCustomer.toString();
+
+            run();
+
+/*        }
+            else {
+            System.out.println("You are an existing customer. Please login.");
+            welcomeDialogue();
+        }
+*/
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    //the method generates a random number (ID, PIN, account number)
+    public int generateRandomNumber(int upperbound,int lowerbound) {
+
+        Random rand = new Random();
+        return rand.nextInt(upperbound - lowerbound) + lowerbound;
+    }
+
+    // the method checks if the key(ID) already exists in the HashMap
+    public int checkId(int randomId) {
+        boolean isKeyPresent = listCustomer.containsKey(randomId);
+        return randomId;
+    }
+
+    public void run() {
+        welcomeDialogue();
+    }
     public void displayMenu(Account account, AccountType accounttype) {
         int temp = -1;
         while (temp != 0) {
