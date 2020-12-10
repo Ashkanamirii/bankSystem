@@ -58,21 +58,39 @@ public class Facade {
 
                 System.out.println("Please enter your pin code:");
                 int inputCustomerPinCode = scan.nextInt();
+                findCustomer(inputCustomerID, inputCustomerPinCode);
 
+                System.out.println("Choose an account to make transactions");
                 System.out.println("1. Savings account");
                 System.out.println("2. Current account");
-                System.out.println("Choose account: ");
                 int choice = scan.nextInt();
+                getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
 
                 if (customerFromDB.size() == 0) {
                     System.out.println("Empty list");
                 }
+            }
+        }
+    }
+            public void findCustomer(int inputCustomerID, int inputCustomerPinCode) {
 
-                // todo måste man veta vilken account som gäller efter login !!!!
+                    for (int i = 0; i < customerFromDB.size(); i++) {
+                        if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID)
+                            if(customerFromDB.get(i).getAccountType().getAccountType() == 1)
+                        {
+                            System.out.println("Welcome back " + customerFromDB.get(i).getFirstName() + " " + customerFromDB.get(i).getLastName());
 
-                for (int i = 0; i <= customerFromDB.size(); i++) {
-                    if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
-                        if (customerFromDB.get(i).getAccountType().getAccountType() == 1 && choice == 1) {
+                        } else if(customerFromDB.get(i).getCustomerPinCode() != inputCustomerPinCode && customerFromDB.get(i).getCustomerId() != inputCustomerID) {
+
+                            System.out.println("Customer not found. Please try again");
+                            welcomeDialogue();
+                        }
+                    }
+                }
+                public void getChosenAccount(int inputCustomerID, int inputCustomerPinCode, int choice){
+                        for (int i = 0; i < customerFromDB.size(); i++) {
+                            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
+                                if (customerFromDB.get(i).getAccountType().getAccountType() == 1 && choice == 1) {
                             Customer c = customerFromDB.get(i);
                             displayMenu(c.getFirstName(), c.getAccount());
                         } else if (customerFromDB.get(i).getAccountType().getAccountType() == 2 && choice == 2) {
@@ -81,17 +99,12 @@ public class Facade {
                         }
                     }
                 }
-
             }
-        }
-    }
-
 
     public void displayMenu(String name, Account account) {
-        //    System.out.println("Welcome back " + customer.getName());
+
         int temp = -1;
         while (temp != 0) {
-            System.out.println("Welcome" + name);
             System.out.println("Please choose from the menu");
             System.out.println("1: make a deposit");
             System.out.println("2: withdraw");
@@ -128,7 +141,7 @@ public class Facade {
                     break;
 
                 case 5:
-                    account.getBalance();
+                    account.printBalance();
                     break;
 
                 case 6:
