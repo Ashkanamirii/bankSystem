@@ -23,9 +23,9 @@ public abstract class Account {
     public void withDraw(double amount) {
         if (amount < balance){
         balance = balance - amount;
-            System.out.println("Withdrawing $" + amount);
+            System.out.println("\nWithdrawing $" + amount);
         }else {
-            System.out.println("Your balance is not enough to complete this transaction");
+            System.out.println("\nYour balance is not enough to complete this transaction");
         }
         printBalance();
     }
@@ -33,9 +33,9 @@ public abstract class Account {
     public void deposit(double amount){
         if (amount > 0) {
             balance = balance + amount;
-            System.out.println("Depositing $" + amount);
+            System.out.println("\nDepositing $" + amount);
         } else{
-            System.out.println("Your amount is incorrect");
+            System.out.println("\nYour amount is incorrect");
         }
         printBalance();
     }
@@ -56,11 +56,11 @@ public abstract class Account {
             if (transferAmount < balance) {
                 balance = balance - transferAmount;
                // recieve.balance += transferAmount;
-                System.out.println("Transfering $ " + transferAmount + " from " + accountTypeforString2 + " to your " + accountTypeforString1);
+                System.out.println("\nTransfering $ " + transferAmount + " from " + accountTypeforString2 + " to your " + accountTypeforString1);
             } else if (transferAmount <= 0) {
-                System.out.println("Invalid amount to transfer.  Transaction cancelled.");
+                System.out.println("\nInvalid amount to transfer.  Transaction cancelled.");
             } else {
-                System.out.println("Transferring account balance is insufficient to transfer funds.");
+                System.out.println("\nTransferring account balance is insufficient to transfer funds.");
             }
 
         printBalance();
