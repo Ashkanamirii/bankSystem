@@ -137,6 +137,7 @@ public class Facade {
                 case 3:
                     System.out.println("Please introduce the amount you want to Transfer");
                     amount = getAmountFromUser();
+                    //todo läser konto från användaren (ska vara de som finns i listan , användaren kan skicka pengar till alla befintliga kunder)
                     long destinationAccount = 27345888;
                     makeTransfer(amount,account, destinationAccount);
                     break;
