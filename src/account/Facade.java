@@ -77,16 +77,16 @@ public class Facade {
             public void findCustomer(int inputCustomerID, int inputCustomerPinCode) {
 
                     for (int i = 0; i < customerFromDB.size(); i++) {
-                        if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID)
-                            if(customerFromDB.get(i).getAccountType().getAccountType() == 1)
+                        if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID && customerFromDB.get(i).getAccountType().getAccountType() == 1)
                         {
                             System.out.println("Welcome back " + customerFromDB.get(i).getFirstName() + " " + customerFromDB.get(i).getLastName());
+                            break;
 
-                        } else if(customerFromDB.get(i).getCustomerPinCode() != inputCustomerPinCode && customerFromDB.get(i).getCustomerId() != inputCustomerID) {
+                        } else if (customerFromDB.get(i).getCustomerPinCode() != inputCustomerPinCode && customerFromDB.get(i).getCustomerId() != inputCustomerID && customerFromDB.get(i).getAccountType().getAccountType() == 1)
 
-                            System.out.println("Customer not found. Please try again");
-                            welcomeDialogue();
-                        }
+                        {System.out.println("Customer not found. Please try again");
+                            welcomeDialogue(); }
+
                     }
                 }
 
