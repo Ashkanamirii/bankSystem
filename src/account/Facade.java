@@ -203,13 +203,7 @@ public class Facade {
 //        transferAmount = getAmountFromUser();
 //        makeTransfer(transferAmount, originAccount, destinationAccount);
 //    }
-    public static void main(String[] args) {
-        Facade welcomeMenu = new Facade();
 
-        while (true) {
-            welcomeMenu.welcomeDialogue();
-        }
-    }
 
 }
 
