@@ -49,7 +49,7 @@ public class Facade {
         while (scan.hasNext()) {
             String chosenOption = scan.next();
             if (chosenOption.equals("2")) {
-                //registerNewCustomer();
+                registerNewCustomer();
 
             } else if (chosenOption.equals("1")) {
 
@@ -72,91 +72,95 @@ public class Facade {
             }
         }
     }
-            public void findCustomer(int inputCustomerID, int inputCustomerPinCode) {
 
-                    for (int i = 0; i < customerFromDB.size(); i++) {
-                        if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID)
-                            if(customerFromDB.get(i).getAccountType().getAccountType() == 1)
-                        {
-                            System.out.println("Welcome back " + customerFromDB.get(i).getFirstName() + " " + customerFromDB.get(i).getLastName());
+    public void findCustomer(int inputCustomerID, int inputCustomerPinCode) {
+
+        for (int i = 0; i < customerFromDB.size(); i++) {
+            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID)
+                if (customerFromDB.get(i).getAccountType().getAccountType() == 1) {
+                    System.out.println("Welcome back " + customerFromDB.get(i).getFirstName() + " " + customerFromDB.get(i).getLastName());
 
 
-                        } else if(customerFromDB.get(i).getCustomerPinCode() != inputCustomerPinCode && customerFromDB.get(i).getCustomerId() != inputCustomerID) {
+                } else if (customerFromDB.get(i).getCustomerPinCode() != inputCustomerPinCode && customerFromDB.get(i).getCustomerId() != inputCustomerID) {
 
-                            System.out.println("Customer not found. Please try again");
-                            welcomeDialogue();
-                        }
-                    }
+                    System.out.println("Customer not found. Please try again");
+                    welcomeDialogue();
                 }
+        }
+    }
 
-                public void getChosenAccount(int inputCustomerID, int inputCustomerPinCode, int choice){
-                        for (int i = 0; i < customerFromDB.size(); i++) {
-                            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
-                                if (customerFromDB.get(i).getAccountType().getAccountType() == 1 && choice == 1) {
-                            Customer c = customerFromDB.get(i);
-                            displayMenu(c.getAccount(), c.getAccountType());
-                        } else if (customerFromDB.get(i).getAccountType().getAccountType() == 2 && choice == 2) {
-                            Customer c = customerFromDB.get(i);
-                            displayMenu(c.getAccount(), c.getAccountType());
-                        }
-                    }
+    public void getChosenAccount(int inputCustomerID, int inputCustomerPinCode, int choice) {
+        for (int i = 0; i < customerFromDB.size(); i++) {
+            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
+                if (customerFromDB.get(i).getAccountType().getAccountType() == 1 && choice == 1) {
+                    Customer c = customerFromDB.get(i);
+                    displayMenu(c.getAccount(), c.getAccountType());
+                } else if (customerFromDB.get(i).getAccountType().getAccountType() == 2 && choice == 2) {
+                    Customer c = customerFromDB.get(i);
+                    displayMenu(c.getAccount(), c.getAccountType());
                 }
             }
+        }
+    }
 
     public void registerNewCustomer() {
         try {
+
             Scanner input = new Scanner(System.in);
             System.out.println("Please state your name: ");
             String name = input.nextLine().trim();
             System.out.println("Please state your last name: ");
             String lastName = input.nextLine().trim();
 
-//            if (!(listCustomer.containsKey(name) && listCustomer.containsKey(lastName))) {
+            // ToDo: the condition is not working. Try to fix it
+            if (!findByName(name, lastName)) {
 
-            int custID = checkId(generateRandomNumber(100,1));
+                Customer newCustomer = new Customer();
 
-            short custPIN = (short) generateRandomNumber(9000,1000);
+                newCustomer.setCustomerId(generateRandomNumber(100, 1));
+                newCustomer.setFirstName(name);
+                newCustomer.setLastName(lastName);
+                newCustomer.setCustomerPinCode((short) generateRandomNumber(9000, 1000));
+                newCustomer.setAccount(new CurrentAccount(generateRandomNumber(27400000, 27300000), 0));
+                newCustomer.setAccountType(AccountType.CURRENT_ACCOUNT);
 
-            int accNumber = generateRandomNumber(926000000,925000000);
+                customerFromDB.add(newCustomer);
 
-            int balance = 0;
-            AccountType accountType = AccountType.CURRENT_ACCOUNT;
+                System.out.println();
+                System.out.println(newCustomer.toString3());
+                System.out.println();
 
-            Account newAccount;
-            newAccount.set
-            Customer newCustomer = new Customer(custID, name, lastName, new Account(accNumber, balance), custPIN, accountType);
-            customerFromDB.add(newCustomer);
+                displayMenu(newCustomer.getAccount(), AccountType.CURRENT_ACCOUNT);
 
-            newCustomer.toString();
+            } else {
+                System.out.println("You are an existing customer. Please login.");
+                welcomeDialogue();
+            }
 
-            run();
-
-/*        }
-            else {
-            System.out.println("You are an existing customer. Please login.");
-            welcomeDialogue();
-        }
-*/
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
     //the method generates a random number (ID, PIN, account number)
-    public int generateRandomNumber(int upperbound,int lowerbound) {
+    public int generateRandomNumber(int upperbound, int lowerbound) {
 
         Random rand = new Random();
         return rand.nextInt(upperbound - lowerbound) + lowerbound;
     }
 
-    // the method checks if the key(ID) already exists in the HashMap
-    public int checkId(int randomId) {
-        boolean isKeyPresent = listCustomer.containsKey(randomId);
-        return randomId;
+    public boolean findByName(String name, String lastName) {
+        boolean customer = false;
+        for (Customer c : customerFromDB) {
+            if (c.getFirstName().equalsIgnoreCase(name) && c.getLastName().equalsIgnoreCase(lastName)) {
+                customer = true;
+            } else customer = false;
+
+        }
+        return customer;
     }
 
-    public void run() {
-        welcomeDialogue();
-    }
     public void displayMenu(Account account, AccountType accounttype) {
         int temp = -1;
         while (temp != 0) {
@@ -187,7 +191,7 @@ public class Facade {
                 case 3:
                     System.out.println("Please introduce the amount you want to Transfer");
                     amount = getAmountFromUser();
-                    makeTransfer(amount,account, account, accounttype);
+                    makeTransfer(amount, account, account, accounttype);
                     break;
 
                 case 4:

@@ -92,4 +92,12 @@ public class Customer {
                 ", accountType=" + accountType +
                 '}';
     }
+
+    public String toString3() {
+        return "Welcome " + firstName + ' ' + lastName +
+                "\nYour customerId: " + customerId +
+                "\nYour pin code: " + customerPinCode + "\n" +
+                "\nYour account information: " + account
+                                ;
+    }
 }

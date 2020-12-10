@@ -71,10 +71,9 @@ public abstract class Account {
 
     @Override
     public String toString() {
-        return "Account{" +
-                "accountNumber=" + accountNumber +
-                ", balance=" + balance +
-                '}';
+        return "\nAccountNumber: " + accountNumber +
+                "\nBalance: " + balance
+                ;
     }
 }
 
