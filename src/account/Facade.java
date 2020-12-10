@@ -29,8 +29,8 @@ public class Facade {
         account.withDraw(amount);
     }
 
-    public void makeTransfer(double amount, Account fromAccount, Account toAccount) {
-        fromAccount.transfer(amount, fromAccount, toAccount);
+    public void makeTransfer(double amount, Account fromAccount, Account toAccount, AccountType accounttype) {
+        fromAccount.transfer(amount, fromAccount, toAccount, accounttype);
     }
 
     public void welcomeDialogue() {
@@ -74,10 +74,10 @@ public class Facade {
                     if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
                         if (customerFromDB.get(i).getAccountType().getAccountType() == 1 && choice == 1) {
                             Customer c = customerFromDB.get(i);
-                            displayMenu(c.getFirstName(), c.getAccount());
+                            displayMenu(c.getFirstName(), c.getAccount(), c.getAccountType());
                         } else if (customerFromDB.get(i).getAccountType().getAccountType() == 2 && choice == 2) {
                             Customer c = customerFromDB.get(i);
-                            displayMenu(c.getFirstName(), c.getAccount());
+                            displayMenu(c.getFirstName(), c.getAccount(), c.getAccountType());
                         }
                     }
                 }
@@ -87,7 +87,7 @@ public class Facade {
     }
 
 
-    public void displayMenu(String name, Account account) {
+    public void displayMenu(String name, Account account, AccountType accounttype) {
         //    System.out.println("Welcome back " + customer.getName());
         int temp = -1;
         while (temp != 0) {
@@ -118,9 +118,8 @@ public class Facade {
 
                 case 3:
                     System.out.println("Please introduce the amount you want to Transfer and where");
-                    amount = 1000;
-                    Long destinationAcc;
-                    makeTransfer(amount,account,account);
+                    amount = getAmountFromUser();
+                    makeTransfer(amount,account, account, accounttype);
                     break;
 
                 case 4:

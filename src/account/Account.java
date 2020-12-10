@@ -39,15 +39,30 @@ public abstract class Account {
         }
         printBalance();
     }
-    public void transfer(double transferAmount,Account send,Account recieve) {
-        if(send.balance > transferAmount && transferAmount > 0) {
-            send.balance -= transferAmount;
-            recieve.balance += transferAmount;
-        } else if(transferAmount <= 0) {
-            System.out.println("Invalid amount to transfer.  Transaction cancelled.");
-        } else {
-            System.out.println("Transferring account balance is insufficient to transfer funds.");
+    public void transfer(double transferAmount,Account send,Account recieve, AccountType accountType) {
+
+        String accountTypeforString1;
+        String accountTypeforString2;
+
+        if (accountType.equals(1)) {
+             accountTypeforString1 = "SavingsAccount";
+            accountTypeforString2 = "CurrentAccount";
+
+        } else{
+            accountTypeforString1 = "CurrentAccount";
+            accountTypeforString2 = "SavingsAccount";
         }
+
+            if (transferAmount < balance) {
+                balance = balance - transferAmount;
+               // recieve.balance += transferAmount;
+                System.out.println("Transfering $ " + transferAmount + " from " + accountTypeforString2 + " to your " + accountTypeforString1);
+            } else if (transferAmount <= 0) {
+                System.out.println("Invalid amount to transfer.  Transaction cancelled.");
+            } else {
+                System.out.println("Transferring account balance is insufficient to transfer funds.");
+            }
+
         printBalance();
     }
 
@@ -61,7 +76,7 @@ public abstract class Account {
 //        printBalance();
 //    }
     public void printBalance (){
-        System.out.println("Your balance is now: $" + balance);
+        System.out.println("Your balance is now: $" + balance + "\n");
     }
 
     public long getAccountNumber() {
