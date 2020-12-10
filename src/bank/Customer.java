@@ -14,7 +14,7 @@ public class Customer {
     private int customerId;
     private String firstName;
     private String lastName;
-    private Account account;
+    private Account account ;
     private short customerPinCode;
     private AccountType accountType;
 

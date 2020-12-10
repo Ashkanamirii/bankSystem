@@ -1,10 +1,12 @@
 package account;
 
-import bank.Banksystemet;
 import bank.Customer;
 import bank.Database;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by Ashkan Amiri
@@ -15,29 +17,27 @@ import java.util.*;
  */
 public class Facade {
 
-   // private HashMap<Integer, Banksystemet> listCustomer = new HashMap<>();
     List<Customer> customerFromDB = new ArrayList<>();
     private Database dataDB = new Database();
 
 
-
-
-    public void makeDeposit(double amount, Account account){
+    public void makeDeposit(double amount, Account account) {
         account.deposit(amount);
     }
 
-    public void makeWithdraw(double amount, Account account){
+    public void makeWithdraw(double amount, Account account) {
         account.withDraw(amount);
     }
-    public void makeTransfer(double amount, Account fromAccount , Account toAccount){
-      fromAccount.transfer(amount,fromAccount,toAccount);
+
+    public void makeTransfer(double amount, Account fromAccount, Account toAccount) {
+        fromAccount.transfer(amount, fromAccount, toAccount);
     }
 
     public void welcomeDialogue() {
 
         try {
-           // dataDB.database(listCustomer);
-            dataDB.addDataToCustomerList();
+            // dataDB.database(listCustomer);
+            customerFromDB = dataDB.addDataToCustomerList();
 
         } catch (Exception e) {
             System.out.println("Could not find file. ");
@@ -54,40 +54,44 @@ public class Facade {
             } else if (chosenOption.equals("1")) {
 
                 System.out.println("Please enter your customerID:");
-                int customer = scan.nextInt();
+                int inputCustomerID = scan.nextInt();
 
                 System.out.println("Please enter your pin code:");
-                int customerPinCode = scan.nextInt();
-                // todo måste man veta vilken account som gäller efter login !!!!
-                if (customerFromDB.contains(customerPinCode)) {
-                    System.out.println("Choose account: ");
-                    System.out.println("1. Savings account");
-                    System.out.println("2. Current account");
-                    int choice = scan.nextInt();
-                    if(choice == 1){
-                        customerFromDB.getAccount().getAccountNumber();
-                        customerFromDB.
-                        displayMenu(customer , savingAccount);
-                    }
+                int inputCustomerPinCode = scan.nextInt();
 
+                System.out.println("1. Savings account");
+                System.out.println("2. Current account");
+                System.out.println("Choose account: ");
+                int choice = scan.nextInt();
 
-                } else {
-                    System.out.print("Wrong customerID or pincode! Try Again! \n ");
-                    welcomeDialogue();
-
+                if (customerFromDB.size() == 0) {
+                    System.out.println("Empty list");
                 }
-            } else {
-                System.out.println("Option not valid");
+
+                // todo måste man veta vilken account som gäller efter login !!!!
+
+                for (int i = 0; i <= customerFromDB.size(); i++) {
+                    if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
+                        if (customerFromDB.get(i).getAccountType().getAccountType() == 1 && choice == 1) {
+                            Customer c = customerFromDB.get(i);
+                            displayMenu(c.getFirstName(), c.getAccount());
+                        } else if (customerFromDB.get(i).getAccountType().getAccountType() == 2 && choice == 2) {
+                            Customer c = customerFromDB.get(i);
+                            displayMenu(c.getFirstName(), c.getAccount());
+                        }
+                    }
+                }
+
             }
         }
     }
 
-    public void displayMenu(int customerID, Account account){
+
+    public void displayMenu(String name, Account account) {
         //    System.out.println("Welcome back " + customer.getName());
         int temp = -1;
-        while(temp != 0)
-        {
-            listCustomer.get(customerID).toString2();
+        while (temp != 0) {
+            System.out.println("Welcome" + name);
             System.out.println("Please choose from the menu");
             System.out.println("1: make a deposit");
             System.out.println("2: withdraw");
@@ -99,8 +103,7 @@ public class Facade {
 
             temp = getInfoFromUser();
             double amount;
-            switch (temp)
-            {
+            switch (temp) {
                 case 1:
                     System.out.println("Please introduce the amount you want to deposit");
                     amount = getAmountFromUser();
@@ -114,8 +117,10 @@ public class Facade {
                     break;
 
                 case 3:
-                    // todo fråga till vilken account vill skicka pengar
-                    //processTransfer(customerID);
+                    System.out.println("Please introduce the amount you want to Transfer and where");
+                    amount = 1000;
+                    Long destinationAcc;
+                    makeTransfer(amount,account,account);
                     break;
 
                 case 4:
@@ -142,69 +147,70 @@ public class Facade {
         }
     }
 
-    public int getInfoFromUser(){
+    public int getInfoFromUser() {
         int input = -2;
-        while (input == -2){
-            try
-            {
+        while (input == -2) {
+            try {
                 Scanner s = new Scanner(System.in);
                 input = s.nextInt();
-            }
-            catch (InputMismatchException e)
-            {
+            } catch (InputMismatchException e) {
                 System.out.println("Just numbers allowed. Please try again \n");
             }
         }
         return input;
     }
 
-    public double getAmountFromUser(){
+    public double getAmountFromUser() {
         double amount = -2;
-        while (amount == -2){
-            try
-            {
+        while (amount == -2) {
+            try {
                 Scanner s = new Scanner(System.in);
                 amount = s.nextDouble();
-            }
-            catch (InputMismatchException e)
-            {
+            } catch (InputMismatchException e) {
                 System.out.println("Just numbers allowed. Try again");
             }
         }
         return amount;
     }
-    public void processTransfer(Account fromAccount) {
-        double transferAmount;
-        boolean isValidOption = true;
-        Account originAccount = null;
-        Account destinationAccount = null;
-        Scanner scanTrans = new Scanner(System.in);
-        while (isValidOption == false) {
-            System.out.println("If you want to transfer from current account to savings account \n" +
-                    "press 1.\n" + "If you want to transfer from savings account to current account \n" +
-                    "pres 2.\n" + "If you want to exit this menu \n" + "press 3");
-            String chosenOption = scanTrans.next();
-            if (chosenOption.equals("1")) {
-                originAccount = fromAccount;
-                destinationAccount = customer.getSavingsAccount();
 
-            } else if (chosenOption.equals("2")) {
-                originAccount = customer.getSavingsAccount();
-                destinationAccount = customer.getCurrentAccount();
+    //    public void processTransfer(Account fromAccount) {
+//        double transferAmount;
+//        boolean isValidOption = true;
+//        Account originAccount = null;
+//        Account destinationAccount = null;
+//        Scanner scanTrans = new Scanner(System.in);
+//        while (isValidOption == false) {
+//            System.out.println("If you want to transfer from current account to savings account \n" +
+//                    "press 1.\n" + "If you want to transfer from savings account to current account \n" +
+//                    "pres 2.\n" + "If you want to exit this menu \n" + "press 3");
+//            String chosenOption = scanTrans.next();
+//            if (chosenOption.equals("1")) {
+//                originAccount = fromAccount;
+//                destinationAccount = customer.getSavingsAccount();
+//
+//            } else if (chosenOption.equals("2")) {
+//                originAccount = customer.getSavingsAccount();
+//                destinationAccount = customer.getCurrentAccount();
+//
+//            } else if (chosenOption.equals("3")) {
+//                return;
+//
+//            } else {
+//                System.out.println("Invalid option");
+//                isValidOption = false;
+//            }
+//        }
+//        System.out.println("Please introduce the amount you wish to transfer");
+//        transferAmount = getAmountFromUser();
+//        makeTransfer(transferAmount, originAccount, destinationAccount);
+//    }
+    public static void main(String[] args) {
+        Facade welcomeMenu = new Facade();
 
-            } else if (chosenOption.equals("3")) {
-                return;
-
-            } else {
-                System.out.println("Invalid option");
-                isValidOption = false;
-            }
+        while (true) {
+            welcomeMenu.welcomeDialogue();
         }
-        System.out.println("Please introduce the amount you wish to transfer");
-        transferAmount = getAmountFromUser();
-        makeTransfer(transferAmount, originAccount, destinationAccount);
     }
-
 
 }
 

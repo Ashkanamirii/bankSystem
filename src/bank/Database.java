@@ -68,7 +68,7 @@ public class Database {
         }
 
     }
-    public void addDataToCustomerList(){
+    public List<Customer> addDataToCustomerList(){
         String csVFile = "src/bank/CustomerList.csv";
         List<String[]> newAccountHolders = read(csVFile);
         List<Customer> customerList = new ArrayList<>();
@@ -97,6 +97,7 @@ public class Database {
             }
             customerList.add(customer);
         }
+        return customerList;
     }
 
     public static void main(String[] args) {

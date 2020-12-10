@@ -18,8 +18,7 @@ public enum AccountType {
     private final int accountType;
     private final String description;
 
-
-       AccountType(Integer accountType, String description) {
+    AccountType(Integer accountType, String description) {
         this.accountType = accountType;
         this.description = description;
     }
