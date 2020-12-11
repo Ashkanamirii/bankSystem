@@ -72,7 +72,7 @@ public class Facade {
                     System.out.println("2. Current account");
                     System.out.println("3. Close session");
                     int choice = getInfoFromUser();
-                        if (choice == 1 && choice == 2) {
+                        if (choice == 1 || choice == 2) {
                             getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
                         } else if (choice == 0) {
                             System.out.println("Closing session");
