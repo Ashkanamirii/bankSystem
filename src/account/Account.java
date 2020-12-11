@@ -80,7 +80,7 @@ public abstract class Account {
                 customerFromDB.get(i).getAccount().setBalance(destinationBalance);
                 replacement = String.valueOf(destinationBalance);
                 History.replaceSelected(target, replacement);
-                History.replaceSelected(date, History.getDateNowFormat());
+                History.replaceSelected(customerFromDB.get(i).getAccount().getDate(), History.getDateNowFormat());
             }
         }
     }

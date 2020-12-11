@@ -2,6 +2,8 @@ package account;
 
 import bank.Customer;
 import bank.Database;
+import bank.History;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -105,16 +107,16 @@ public class Facade {
             if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
                 if (customerFromDB.get(i).getAccountType().getAccountType() == 1 && choice == 1) {
                     Customer c = customerFromDB.get(i);
-                    displayMenu(c.getAccount(), c.getAccountType());
+                    displayMenu(c.getAccount(), c.getAccountType(),c.getCustomerPinCode());
                 } else if (customerFromDB.get(i).getAccountType().getAccountType() == 2 && choice == 2) {
                     Customer c = customerFromDB.get(i);
-                    displayMenu(c.getAccount(), c.getAccountType());
+                    displayMenu(c.getAccount(), c.getAccountType(),c.getCustomerPinCode());
                 }
             }
         }
     }
 
-    public void displayMenu(Account account, AccountType accounttype) {
+    public void displayMenu(Account account, AccountType accounttype, Short customerPinCode) {
         int temp = -1;
         while (temp != 0) {
             System.out.println("Please choose from the menu");
@@ -142,10 +144,10 @@ public class Facade {
                     break;
 
                 case 3:
-                    System.out.println("Please introduce the amount you want to Transfer");
+                    System.out.println("Please introduce the amount you want to Transfer ");
                     amount = getAmountFromUser();
-                    //todo läser konto från användaren (ska vara de som finns i listan , användaren kan skicka pengar till alla befintliga kunder)
-                    long destinationAccount = 27345888;
+                    System.out.println("please enter the account number that you want to send money to");
+                    long destinationAccount = (long) getAmountFromUser();
                     makeTransfer(amount,account, destinationAccount);
                     break;
 
@@ -158,7 +160,10 @@ public class Facade {
                     break;
 
                 case 6:
-                    //facade.updatePersonalInfo(customer);
+                    System.out.println("Do you want change pinCod?\n" +
+                            "Please enter your new pin code! ");
+                    String newPinCode = String.valueOf(getAmountFromUser());
+                    History.replaceSelected(String.valueOf(customerPinCode),newPinCode);
                     break;
 
                 case 0:
@@ -198,5 +203,6 @@ public class Facade {
         }
         return amount;
     }
+    // TODO: 2020-12-11  fix check balance method for withdraw, deposit and transfer 
 }
 
