@@ -70,8 +70,15 @@ public class Facade {
                     System.out.println("Choose an account to make transactions");
                     System.out.println("1. Savings account");
                     System.out.println("2. Current account");
+                    System.out.println("3. Close session");
                     int choice = getInfoFromUser();
-                    getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
+                        if (choice == 1 && choice == 2) {
+                            getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
+                        } else if (choice == 0) {
+                            System.out.println("Closing session");
+                            System.exit(0);
+                        } else
+                            System.out.println("Invalid option. Try again");
                 }
 
             } else
@@ -102,8 +109,8 @@ public class Facade {
                     displayMenu(c.getAccount(), c.getAccountType());
                 }
             }
+        }
     }
-}
 
     public void displayMenu(Account account, AccountType accounttype) {
         int temp = -1;
