@@ -32,8 +32,8 @@ public class Facade {
         account.withDraw(amount);
     }
 
-    public void makeTransfer(double amount, Account fromAccount, Account toAccount, AccountType accounttype) {
-        fromAccount.transfer(amount, fromAccount, toAccount, accounttype);
+    public void makeTransfer(double amount, Account fromAccount, long toAccount) {
+        fromAccount.transfer(amount, toAccount);
     }
 
     public void welcomeDialogue() {
@@ -89,17 +89,19 @@ public class Facade {
                     return c;
                 } else
                     return null;
-                }
-                return  null;
-            }
+        }
+        return  null;
+    }
 
     public void getChosenAccount(Customer customer, int choice){
-            if (customer.getAccountType().getAccountType() == 1 && choice == 1) {
-                displayMenu(customer.getAccount(), customer.getAccountType());
-                } else if (customer.getAccountType().getAccountType() == 2 && choice == 2) {
-                    displayMenu(customer.getAccount(), customer.getAccountType());
-                }
+        if (customer.getAccountType().getAccountType() == 1 && choice == 1) {
+            displayMenu(customer.getAccount(), customer.getAccountType());
+        } else if (customer.getAccountType().getAccountType() == 2 && choice == 2) {
+            displayMenu(customer.getAccount(), customer.getAccountType());
         }
+
+
+    }
 
     public void displayMenu(Account account, AccountType accounttype) {
         int temp = -1;
@@ -131,7 +133,9 @@ public class Facade {
                 case 3:
                     System.out.println("Please introduce the amount you want to Transfer");
                     amount = getAmountFromUser();
-                    makeTransfer(amount,account, account, accounttype);
+                    //todo läser konto från användaren (ska vara de som finns i listan , användaren kan skicka pengar till alla befintliga kunder)
+                    long destinationAccount = 27345888;
+                    makeTransfer(amount,account, destinationAccount);
                     break;
 
                 case 4:
