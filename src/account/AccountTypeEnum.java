@@ -11,13 +11,13 @@ public enum AccountTypeEnum {
 
     SAVING_ACCOUNT(1, "Saving account"),
     CURRENT_ACCOUNT(2, "Current account"),
-    DEPOSIT(3, "Make a deposit"),
-    WITHDRAW(4, "Withdraw"),
-    TRANSFER(2, "Make a transfer"),
-    HISTORY(2, "Check your transactions' history"),
-    CHECK_BALANCE(2, "Check your balance"),
-    UPDATE_INFO(2, "Update your personal information"),
-    LOGOUT(2, "Log out"),
+    DEPOSIT(3, "1: Make a deposit"),
+    WITHDRAW(4, "2: Withdraw"),
+    TRANSFER(5, "3: Make a transfer"),
+    HISTORY(6, "4: Check your transactions' history"),
+    CHECK_BALANCE(7, "5: Check your balance"),
+    UPDATE_INFO(8, "6: Update your personal information"),
+    LOGOUT(9, "0: Log out"),
 
 
     UNKNOWN(0, "Unknown");

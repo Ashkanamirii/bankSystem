@@ -114,17 +114,17 @@ public class Facade {
         }
     }
 
-    public void displayMenu(Account account, AccountTypeEnum accounttype, Customer customer) {
+    public void displayMenu(Account account, AccountTypeEnum accountType, Customer customer) {
         int temp = -1;
         while (temp != 0) {
             System.out.println("Please choose from the menu");
-            System.out.println("1: make a deposit");
-            System.out.println("2: withdraw");
-            System.out.println("3: make a transfer");
-            System.out.println("4: check your transactions' history");
-            System.out.println("5: check your balance");
-            System.out.println("6: update your personal information");
-            System.out.println("0: log out");
+            System.out.println(AccountTypeEnum.getAccountType(3).getDescription());
+            System.out.println(AccountTypeEnum.getAccountType(4).getDescription());
+            System.out.println(AccountTypeEnum.getAccountType(5).getDescription());
+            System.out.println(AccountTypeEnum.getAccountType(6).getDescription());
+            System.out.println(AccountTypeEnum.getAccountType(7).getDescription());
+            System.out.println(AccountTypeEnum.getAccountType(8).getDescription());
+            System.out.println(AccountTypeEnum.getAccountType(9).getDescription());
 
             temp = getInfoFromUser();
             double amount;
