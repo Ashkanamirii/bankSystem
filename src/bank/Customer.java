@@ -1,7 +1,7 @@
 package bank;
 
 import account.Account;
-import account.AccountType;
+import account.AccountTypeEnum;
 
 /**
  * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
@@ -16,29 +16,29 @@ public class Customer {
     private int customerId;
     private String firstName;
     private String lastName;
-    private Account account ;
+    private Account account;
     private short customerPinCode;
-    private AccountType accountType;
+    private AccountTypeEnum accountTypeEnum;
 
     public Customer(int customerId, String firstName, String lastName, Account account,
-                    short customerPinCode, AccountType accountType) {
+                    short customerPinCode, AccountTypeEnum accountTypeEnum) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.account = account;
         this.customerPinCode = customerPinCode;
-        this.accountType = accountType;
+        this.accountTypeEnum = accountTypeEnum;
     }
 
     public Customer() {
     }
 
-    public AccountType getAccountType() {
-        return accountType;
+    public AccountTypeEnum getAccountType() {
+        return accountTypeEnum;
     }
 
-    public void setAccountType(AccountType accountType) {
-        this.accountType = accountType;
+    public void setAccountType(AccountTypeEnum accountTypeEnum) {
+        this.accountTypeEnum = accountTypeEnum;
     }
 
     public short getCustomerPinCode() {
@@ -89,7 +89,16 @@ public class Customer {
                 ", lastName='" + lastName + '\'' +
                 ", account=" + account +
                 ", customerPinCode=" + customerPinCode +
-                ", accountType=" + accountType +
+                ", accountType=" + accountTypeEnum +
                 '}';
+    }
+
+    public String customToString(int action, int action1,double amount) {
+        return account.getAccountNumber() + "; " +
+                AccountTypeEnum.getAccountType(action1).getDescription() + "; " +
+                AccountTypeEnum.getAccountType(action).getDescription() + "; " +
+                "amount: " + amount + "; " +
+                "New Balance--> "+account.getBalance() + "; " +
+                History.getDateNowFormat();
     }
 }

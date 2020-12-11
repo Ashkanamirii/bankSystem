@@ -7,10 +7,18 @@ package account;
  * Project: bankSystem
  * Copyright: MIT
  */
-public enum AccountType {
+public enum AccountTypeEnum {
 
     SAVING_ACCOUNT(1, "Saving account"),
     CURRENT_ACCOUNT(2, "Current account"),
+    DEPOSIT(3, "Make a deposit"),
+    WITHDRAW(4, "Withdraw"),
+    TRANSFER(2, "Make a transfer"),
+    HISTORY(2, "Check your transactions' history"),
+    CHECK_BALANCE(2, "Check your balance"),
+    UPDATE_INFO(2, "Update your personal information"),
+    LOGOUT(2, "Log out"),
+
 
     UNKNOWN(0, "Unknown");
 
@@ -18,7 +26,7 @@ public enum AccountType {
     private final int accountType;
     private final String description;
 
-    AccountType(Integer accountType, String description) {
+    AccountTypeEnum(Integer accountType, String description) {
         this.accountType = accountType;
         this.description = description;
     }
@@ -27,24 +35,19 @@ public enum AccountType {
         return accountType;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
-    public static AccountType getAccountType(int code) {
-        AccountType[] values = values();
-        AccountType[] array = values;
+    public static AccountTypeEnum getAccountType(int code) {
+        AccountTypeEnum[] values = values();
+        AccountTypeEnum[] array = values;
         int length = values().length;
         for (int i = 0; i < length; i++) {
-            AccountType value = array[i];
+            AccountTypeEnum value = array[i];
             if (value.getAccountType() == code)
                 return value;
         }
-        return AccountType.getAccountType(0);
-    }
-
-    @Override
-    public String toString() {
-        return
-                "accountType=" + accountType +
-                ", description='" + description + '\'' +
-                '}';
+        return AccountTypeEnum.getAccountType(0);
     }
 }

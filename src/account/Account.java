@@ -26,7 +26,7 @@ public abstract class Account {
     }
 
 
-    public void withDraw(double amount) {
+    public void withDraw(double amount, Customer customer) {
         String target = String.valueOf(balance);
         String replacement = null;
         if (amount < balance) {
@@ -39,9 +39,10 @@ public abstract class Account {
         printBalance();
         History.replaceSelected(target, replacement);
         History.replaceSelected(date, History.getDateNowFormat());
+        History.historyLog(customer , amount, AccountTypeEnum.WITHDRAW.getAccountType(),customer.getAccountType().getAccountType());
     }
 
-    public void deposit(double amount) {
+    public void deposit(double amount,Customer customer) {
         String target = String.valueOf(balance);
         String replacement = null;
         if (amount > 0) {
@@ -54,25 +55,25 @@ public abstract class Account {
         printBalance();
         History.replaceSelected(target, replacement);
         History.replaceSelected(date, History.getDateNowFormat());
-        //Todo History.saveToFile(customer);
+        History.historyLog(customer , amount, AccountTypeEnum.DEPOSIT.getAccountType(),customer.getAccountType().getAccountType());
     }
 
-    public void transfer(double transferAmount, long destinationAcc) {
+    public void transfer(double transferAmount, long destinationAcc ) {
         Database database = new Database();
         String target;
         String replacement;
         List<Customer> customerFromDB = database.addDataToCustomerList();
-        double newSoiurceAccBlnce;
         double destinationBalance;
 
         for (int i = 0; i < customerFromDB.size(); i++) {
             if (customerFromDB.get(i).getAccount().accountNumber == accountNumber) {
                 target = String.valueOf(balance);
-                newSoiurceAccBlnce = balance - transferAmount;
-                setBalance(newSoiurceAccBlnce);
-                replacement = String.valueOf(newSoiurceAccBlnce);
+                balance = balance - transferAmount;
+                customerFromDB.get(i).getAccount().setBalance(balance);
+                replacement = String.valueOf(balance);
                 History.replaceSelected(target, replacement);
                 History.replaceSelected(date, History.getDateNowFormat());
+                History.historyLog(customerFromDB.get(i), transferAmount, AccountTypeEnum.TRANSFER.getAccountType(),customerFromDB.get(i).getAccountType().getAccountType());
             }
             if (customerFromDB.get(i).getAccount().accountNumber == destinationAcc) {
                 target = String.valueOf(customerFromDB.get(i).getAccount().getBalance());
@@ -81,8 +82,10 @@ public abstract class Account {
                 replacement = String.valueOf(destinationBalance);
                 History.replaceSelected(target, replacement);
                 History.replaceSelected(customerFromDB.get(i).getAccount().getDate(), History.getDateNowFormat());
+                History.historyLog(customerFromDB.get(i) , transferAmount, AccountTypeEnum.TRANSFER.getAccountType(),customerFromDB.get(i).getAccountType().getAccountType());
             }
         }
+        printBalance();
     }
 
     public long getAccountNumber() {
@@ -120,6 +123,7 @@ public abstract class Account {
         return "Account{" +
                 "accountNumber=" + accountNumber +
                 ", balance=" + balance +
+                ", date='" + date + '\'' +
                 '}';
     }
 }

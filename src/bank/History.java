@@ -1,6 +1,7 @@
 package bank;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,7 +27,7 @@ public class History {
     public static void replaceSelected(String target, String replacement) {
         try {
             // input the file content to the StringBuffer "input"
-            BufferedReader file = new BufferedReader(new FileReader("src/bank/CustomerList.csv"));
+            BufferedReader file = new BufferedReader(new FileReader("resources/CustomerList.csv"));
             StringBuffer inputBuffer = new StringBuffer();
             String line;
 
@@ -46,12 +47,30 @@ public class History {
             System.out.println("----------------------------------\n" + inputStr);
 
             // write the new string with the replaced line OVER the same file
-            FileOutputStream fileOut = new FileOutputStream("src/bank/CustomerList.csv");
+            FileOutputStream fileOut = new FileOutputStream("resources/CustomerList.csv");
             fileOut.write(inputStr.getBytes());
             fileOut.close();
 
         } catch (Exception e) {
             System.out.println("Problem reading file.");
+        }
+    }
+
+
+    public static void historyLog(Customer customer, double amount , int action, int action1) {
+        System.out.println("customer\n " + customer.customToString(action,action1,amount));
+        String filePathOut = "resources/CustomersHistory.csv";
+        String textToAppend = customer.customToString(action, action1,amount);
+        try (FileWriter fileWriter = new FileWriter(filePathOut, true);//Set true for append mode.
+             PrintWriter printWriter = new PrintWriter(fileWriter)) {
+            printWriter.println(textToAppend);  //New line
+        } catch (FileNotFoundException e) {
+            System.out.println("File could not be found");
+        } catch (IOException e) {
+            System.out.println("Could not write to file");
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("File error");
         }
     }
 }
