@@ -10,8 +10,8 @@ package account;
 public class SavingAccount extends Account {
     double interestRate = 2;
 
-    public SavingAccount(long accountNumber, double balance) {
-        super(accountNumber, balance);
+    public SavingAccount(long accountNumber, double balance,String date) {
+        super(accountNumber, balance,date);
     }
 
     @Override

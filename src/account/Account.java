@@ -1,5 +1,11 @@
 package account;
 
+import bank.Customer;
+import bank.Database;
+import bank.History;
+
+import java.util.List;
+
 /**
  * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
  * Date:  2020-11-30
@@ -10,61 +16,101 @@ package account;
 public abstract class Account {
     private long accountNumber;
     protected double balance;
+    protected String date;
 
 
-    public Account(long accountNumber, double balance) {
+    public Account(long accountNumber, double balance, String date) {
         this.accountNumber = accountNumber;
         this.balance = balance;
+        this.date = date;
     }
 
 
     public void withDraw(double amount) {
-        if (amount < balance){
-        balance = balance - amount;
+        String target = String.valueOf(balance);
+        String replacement = null;
+        if (amount < balance) {
+            balance = balance - amount;
+            replacement = String.valueOf(balance);
             System.out.println("\nWithdrawing $" + amount);
-        }else {
+        } else {
             System.out.println("\nYour balance is not enough to complete this transaction");
         }
         printBalance();
+        History.replaceSelected(target, replacement);
+        History.replaceSelected(date, History.getDateNowFormat());
     }
 
-    public void deposit(double amount){
+    public void deposit(double amount) {
+        String target = String.valueOf(balance);
+        String replacement = null;
         if (amount > 0) {
             balance = balance + amount;
+            replacement = String.valueOf(balance);
             System.out.println("\nDepositing $" + amount);
-        } else{
+        } else {
             System.out.println("\nYour amount is incorrect");
         }
         printBalance();
+        History.replaceSelected(target, replacement);
+        History.replaceSelected(date, History.getDateNowFormat());
+        //Todo History.saveToFile(customer);
     }
-    public void transfer(double transferAmount,Account send,Account recieve, AccountType accountType) {
 
-        String accountTypeforString1;
-        String accountTypeforString2;
+    public void transfer(double transferAmount, long destinationAcc) {
+        Database database = new Database();
+        String target;
+        String replacement;
+        List<Customer> customerFromDB = database.addDataToCustomerList();
+        double newSoiurceAccBlnce;
+        double destinationBalance;
 
-        if (accountType.equals(1)) {
-             accountTypeforString1 = "SavingsAccount";
-            accountTypeforString2 = "CurrentAccount";
-
-        } else{
-            accountTypeforString1 = "CurrentAccount";
-            accountTypeforString2 = "SavingsAccount";
-        }
-
-            if (transferAmount < balance) {
-                balance = balance - transferAmount;
-                System.out.println("\nTransfering $ " + transferAmount + " from " + accountTypeforString2 + " to your " + accountTypeforString1);
-            } else if (transferAmount <= 0) {
-                System.out.println("\nInvalid amount to transfer.  Transaction cancelled.");
-            } else {
-                System.out.println("\nTransferring account balance is insufficient to transfer funds.");
+        for (int i = 0; i < customerFromDB.size(); i++) {
+            if (customerFromDB.get(i).getAccount().accountNumber == accountNumber) {
+                target = String.valueOf(balance);
+                newSoiurceAccBlnce = balance - transferAmount;
+                setBalance(newSoiurceAccBlnce);
+                replacement = String.valueOf(newSoiurceAccBlnce);
+                History.replaceSelected(target, replacement);
+                History.replaceSelected(date, History.getDateNowFormat());
             }
-
-        printBalance();
+            if (customerFromDB.get(i).getAccount().accountNumber == destinationAcc) {
+                target = String.valueOf(customerFromDB.get(i).getAccount().getBalance());
+                destinationBalance = customerFromDB.get(i).getAccount().getBalance() + transferAmount;
+                customerFromDB.get(i).getAccount().setBalance(destinationBalance);
+                replacement = String.valueOf(destinationBalance);
+                History.replaceSelected(target, replacement);
+                History.replaceSelected(date, History.getDateNowFormat());
+            }
+        }
     }
 
-    public void printBalance (){
+    public long getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(long accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public void printBalance() {
         System.out.println("Your balance is now: $" + balance + "\n");
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     abstract void showInfo();
