@@ -86,7 +86,9 @@ public class Facade {
         }
     }
     public Customer findCustomer(int inputCustomerID, int inputCustomerPinCode) {
-
+        if (customerFromDB.size() == 0) {
+            System.out.println("Empty list");
+        }
         for (int i = 0; i < customerFromDB.size(); i++) {
             if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID)
                 if (customerFromDB.get(i).getAccountType().getAccountType() == 1) {
