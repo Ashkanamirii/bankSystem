@@ -71,11 +71,9 @@ public class Facade {
                     System.out.println("1. Savings account");
                     System.out.println("2. Current account");
                     int choice = getInfoFromUser();
-                    getChosenAccount(c, choice);
+                    getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
                 }
-                if (customerFromDB.size() == 0) {
-                    System.out.println("Empty list");
-                }
+
             } else
                 System.out.println("Invalid option. Press 1 to login. Press 2 to register as a new customer");
         }
@@ -93,15 +91,19 @@ public class Facade {
         return  null;
     }
 
-    public void getChosenAccount(Customer customer, int choice){
-        if (customer.getAccountType().getAccountType() == 1 && choice == 1) {
-            displayMenu(customer.getAccount(), customer.getAccountType());
-        } else if (customer.getAccountType().getAccountType() == 2 && choice == 2) {
-            displayMenu(customer.getAccount(), customer.getAccountType());
-        }
-
-
+    public void getChosenAccount(int inputCustomerID, int inputCustomerPinCode, int choice){
+        for (int i = 0; i < customerFromDB.size(); i++) {
+            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
+                if (customerFromDB.get(i).getAccountType().getAccountType() == 1 && choice == 1) {
+                    Customer c = customerFromDB.get(i);
+                    displayMenu(c.getAccount(), c.getAccountType());
+                } else if (customerFromDB.get(i).getAccountType().getAccountType() == 2 && choice == 2) {
+                    Customer c = customerFromDB.get(i);
+                    displayMenu(c.getAccount(), c.getAccountType());
+                }
+            }
     }
+}
 
     public void displayMenu(Account account, AccountType accounttype) {
         int temp = -1;
