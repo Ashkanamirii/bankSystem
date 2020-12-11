@@ -32,8 +32,8 @@ public class Facade {
         account.withDraw(amount);
     }
 
-    public void makeTransfer(double amount, Account fromAccount, long toAccount) {
-        fromAccount.transfer(amount, toAccount);
+    public void makeTransfer(double amount, Account fromAccount, Account toAccount, AccountType accounttype) {
+        fromAccount.transfer(amount, fromAccount, toAccount, accounttype);
     }
 
     public void welcomeDialogue() {
@@ -56,56 +56,50 @@ public class Facade {
             } else if (chosenOption.equals("1")) {
 
                 System.out.println("Please enter your customerID:");
-                int inputCustomerID = scan.nextInt();
+                int inputCustomerID = getInfoFromUser();
 
                 System.out.println("Please enter your pin code:");
-                int inputCustomerPinCode = scan.nextInt();
-                // TODO: 2020-12-10 controll pin code 
-                findCustomer(inputCustomerID, inputCustomerPinCode);
-
-                System.out.println("Choose an account to make transactions");
-                System.out.println("1. Savings account");
-                System.out.println("2. Current account");
-                int choice = scan.nextInt();
-                getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
-
+                int inputCustomerPinCode = getInfoFromUser();
+                if(findCustomer(inputCustomerID, inputCustomerPinCode) == null){
+                    System.out.println("Wrong customerID or pincode. Try again");
+                    welcomeDialogue();
                 }
-            }
-        }
-
-            public void findCustomer(int inputCustomerID, int inputCustomerPinCode) {
-
+                else {
+                    Customer c = findCustomer(inputCustomerID, inputCustomerPinCode);
+                    System.out.println("Welcome " + c.getFirstName() + " " + c.getLastName());
+                    System.out.println("Choose an account to make transactions");
+                    System.out.println("1. Savings account");
+                    System.out.println("2. Current account");
+                    int choice = getInfoFromUser();
+                    getChosenAccount(c, choice);
+                }
                 if (customerFromDB.size() == 0) {
                     System.out.println("Empty list");
                 }
-                    for (int i = 0; i < customerFromDB.size(); i++) {
-                        if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID)
-                            if(customerFromDB.get(i).getAccountType().getAccountType() == 1)
-                        {
-                            System.out.println("Welcome back " + customerFromDB.get(i).getFirstName() + " " + customerFromDB.get(i).getLastName());
+            } else
+                System.out.println("Invalid option. Press 1 to login. Press 2 to register as a new customer");
+        }
+    }
+    public Customer findCustomer(int inputCustomerID, int inputCustomerPinCode) {
 
-
-                        } else if(customerFromDB.get(i).getCustomerPinCode() != inputCustomerPinCode && customerFromDB.get(i).getCustomerId() != inputCustomerID) {
-
-                            System.out.println("Customer not found. Please try again");
-                            welcomeDialogue();
-                        }
-                    }
+        for (int i = 0; i < customerFromDB.size(); i++) {
+            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID)
+                if (customerFromDB.get(i).getAccountType().getAccountType() == 1) {
+                    Customer c = customerFromDB.get(i);
+                    return c;
+                } else
+                    return null;
                 }
-
-                public void getChosenAccount(int inputCustomerID, int inputCustomerPinCode, int choice){
-                        for (int i = 0; i < customerFromDB.size(); i++) {
-                            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
-                                if (customerFromDB.get(i).getAccountType().getAccountType() == 1 && choice == 1) {
-                            Customer c = customerFromDB.get(i);
-                            displayMenu(c.getAccount(), c.getAccountType());
-                        } else if (customerFromDB.get(i).getAccountType().getAccountType() == 2 && choice == 2) {
-                            Customer c = customerFromDB.get(i);
-                            displayMenu(c.getAccount(), c.getAccountType());
-                        }
-                    }
-                }
+                return  null;
             }
+
+    public void getChosenAccount(Customer customer, int choice){
+            if (customer.getAccountType().getAccountType() == 1 && choice == 1) {
+                displayMenu(customer.getAccount(), customer.getAccountType());
+                } else if (customer.getAccountType().getAccountType() == 2 && choice == 2) {
+                    displayMenu(customer.getAccount(), customer.getAccountType());
+                }
+        }
 
     public void displayMenu(Account account, AccountType accounttype) {
         int temp = -1;
@@ -137,9 +131,7 @@ public class Facade {
                 case 3:
                     System.out.println("Please introduce the amount you want to Transfer");
                     amount = getAmountFromUser();
-                    //todo läser konto från användaren (ska vara de som finns i listan , användaren kan skicka pengar till alla befintliga kunder)
-                    long destinationAccount = 27345888;
-                    makeTransfer(amount,account, destinationAccount);
+                    makeTransfer(amount,account, account, accounttype);
                     break;
 
                 case 4:
