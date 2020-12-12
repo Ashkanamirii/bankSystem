@@ -98,15 +98,15 @@ public class Customer {
                 "\nYour customerId: " + customerId +
                 "\nYour pin code: " + customerPinCode + "\n" +
                 "\nYour account information: " + account
-                                ;
+                ;
     }
 
-    public String customToString(int action, int action1,double amount) {
+    public String customToString(int action, int action1, double amount) {
         return account.getAccountNumber() + "; " +
                 AccountTypeEnum.getAccountType(action1).getDescription() + "; " +
                 AccountTypeEnum.getAccountType(action).getDescription() + "; " +
                 "amount: " + amount + "; " +
-                "New Balance--> "+account.getBalance() + "; " +
+                "New Balance--> " + account.getBalance() + "; " +
                 History.getDateNowFormat();
     }
 }

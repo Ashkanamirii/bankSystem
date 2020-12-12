@@ -4,7 +4,6 @@ import bank.Customer;
 import bank.Database;
 import bank.History;
 
-import java.sql.Array;
 import java.util.*;
 
 /**
@@ -123,19 +122,17 @@ public class Facade {
             System.out.println("Please state your last name: ");
             String lastName = input.nextLine().trim();
 
-            // ToDo: the condition is not working. Try to fix it
             if (!findByName(name, lastName)) {
 
                 Customer newCustomer = new Customer();
 
-             //   newCustomer.setCustomerId(generateRandomNumber(100, 1));
-                newCustomer.setCustomerId(customerFromDB.size()/2 +1);
+                //   newCustomer.setCustomerId(generateRandomNumber(100, 1));
+                newCustomer.setCustomerId(customerFromDB.size() / 2 + 1);
                 newCustomer.setFirstName(name);
                 newCustomer.setLastName(lastName);
                 newCustomer.setCustomerPinCode((short) generateRandomNumber(9000, 1000));
-                newCustomer.setAccount(new CurrentAccount(generateRandomNumber(27400000, 27300000), 0));
-                newCustomer.setAccountType(AccountType.CURRENT_ACCOUNT);
-
+                newCustomer.setAccount(new CurrentAccount(generateRandomNumber(27400000, 27300000), 0, History.getDateNowFormat()));
+                newCustomer.setAccountType(AccountTypeEnum.CURRENT_ACCOUNT);
 
                 customerFromDB.add(newCustomer);
 
@@ -143,11 +140,8 @@ public class Facade {
                 System.out.println(newCustomer.toString3());
                 System.out.println();
 
-                displayMenu(newCustomer.getAccount(), AccountType.CURRENT_ACCOUNT);
+                displayMenu(newCustomer.getAccount(), AccountTypeEnum.CURRENT_ACCOUNT, newCustomer);
 
-            } else {
-                System.out.println("You are an existing customer. Please login.");
-                welcomeDialogue();
             }
 
         } catch (Exception e) {
@@ -156,25 +150,29 @@ public class Facade {
     }
 
 
-    //the method generates a random number (ID, PIN, account number)
+    //a method to generate a random number (ID, PIN, account number)
     public int generateRandomNumber(int upperbound, int lowerbound) {
 
         Random rand = new Random();
         return rand.nextInt(upperbound - lowerbound) + lowerbound;
     }
 
+    // a method to check if a person truing to register is already an existing customer
     public boolean findByName(String name, String lastName) {
         boolean customer = false;
         for (Customer c : customerFromDB) {
             if (c.getFirstName().equalsIgnoreCase(name) && c.getLastName().equalsIgnoreCase(lastName)) {
+                System.out.println("You are an existing customer. Please login.");
+                welcomeDialogue();
                 customer = true;
+
             } else customer = false;
 
         }
         return customer;
     }
 
-    public void displayMenu(Account account, AccountType accounttype) {
+
     public void displayMenu(Account account, AccountTypeEnum accountType, Customer customer) {
         int temp = -1;
         while (temp != 0) {
