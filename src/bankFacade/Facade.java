@@ -2,11 +2,9 @@ package bankFacade;
 
 import account.Account;
 import account.AccountEnum;
-import account.CurrentAccount;
 import customer.Customer;
 import database.Database;
 import database.History;
-
 import java.util.*;
 
 /**
@@ -38,6 +36,40 @@ public class Facade {
         fromAccount.transfer(amount, toAccount);
     }
 
+    public void blankspaces(){
+        for(int clear = 0; clear < 1000; clear++) {
+            System.out.println("\b") ;
+        }
+    }
+
+    public void continueORquit(){
+        System.out.println("What would you like to do next?\nPress (1) for Main menu or press (2) for EXIT");
+        Scanner s = new Scanner(System.in);
+        int customerchoise = s.nextInt();
+        if (customerchoise == 1) {
+            blankspaces();
+        } else if (customerchoise == 2) {
+            System.out.println("Thanks for choosing JavaBank. Good Bye!");
+            System.exit(0);
+        } else {
+            System.out.println("Invalid choice\n\n");
+        }
+    }
+
+    public void welcomeMenuORquit(){
+        System.out.println("What would you like to do next?\nPress (1) for Main menu or press (2) for EXIT");
+        Scanner s = new Scanner(System.in);
+        int customerchoise = s.nextInt();
+        if (customerchoise == 1) {
+            welcomeDialogue();
+        } else if (customerchoise == 2) {
+            System.out.println("Thanks for choosing JavaBank. Good Bye!");
+            System.exit(0);
+        } else {
+            System.out.println("Invalid choice\n\n");
+        }
+    }
+
     public void welcomeDialogue() {
 
         try {
@@ -48,6 +80,7 @@ public class Facade {
             e.printStackTrace();
         }
 
+        blankspaces();
         Scanner scan = new Scanner(System.in);
         System.out.println("Welcome to Your Bank! \n Please press your desired option: \n (1)login | (2)register ");
         while (scan.hasNext()) {
@@ -67,15 +100,17 @@ public class Facade {
                     welcomeDialogue();
                 } else {
                     Customer c = findCustomer(inputCustomerID, inputCustomerPinCode);
-                    System.out.println("Welcome " + c.getFirstName() + " " + c.getLastName());
+                    blankspaces();
+                    System.out.println("Welcome " + c.getFirstName() + " " + c.getLastName() + "\n");
                     System.out.println("Choose an account to make transactions");
                     System.out.println("1. Savings account");
                     System.out.println("2. Current account");
                     System.out.println("3. Close session");
                     int choice = getInfoFromUser();
                     if (choice == 1 || choice == 2) {
+                        blankspaces();
                         getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
-                    } else if (choice == 0) {
+                    } else if (choice == 3) {
                         System.out.println("Closing session");
                         System.exit(0);
                     } else
@@ -107,10 +142,10 @@ public class Facade {
             if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
                 if (customerFromDB.get(i).getAccountType().getAccountType() == 1 && choice == 1) {
                     Customer customer = customerFromDB.get(i);
-                    displayMenu(customer.getAccount(), customer.getAccountType(), customer);
+                    displayMenu(customer.getAccount(), customer.getAccountType(), customer, customer.getFirstName(), customer.getLastName());
                 } else if (customerFromDB.get(i).getAccountType().getAccountType() == 2 && choice == 2) {
                     Customer c = customerFromDB.get(i);
-                    displayMenu(c.getAccount(), c.getAccountType(), c);
+                    displayMenu(c.getAccount(), c.getAccountType(), c, c.getFirstName(), c.getLastName());
                 }
             }
         }
@@ -118,11 +153,15 @@ public class Facade {
 
     public void registerNewCustomer() {
         try {
-
+            blankspaces();
             Scanner input = new Scanner(System.in);
-            System.out.println("Please state your name: ");
+            System.out.println("Welcome to JavaBANK!");
+            System.out.println("!!Christmas Offer!!");
+            System.out.println("Register now to recive 1-year 0% No-Fee checking account and saving account");
+            System.out.println("\n ------------------------- \n");
+            System.out.println("Please state your First name: ");
             String name = input.nextLine().trim();
-            System.out.println("Please state your last name: ");
+            System.out.println("Please state your Last name: ");
             String lastName = input.nextLine().trim();
 
             if (!findByName(name, lastName)) {
@@ -134,8 +173,9 @@ public class Facade {
                 newCustomer.setFirstName(name);
                 newCustomer.setLastName(lastName);
                 newCustomer.setCustomerPinCode((short) generateRandomNumber(9000, 1000));
-                newCustomer.setAccount(new CurrentAccount(generateRandomNumber(27400000, 27300000), 0, History.getDateNowFormat()));
-                newCustomer.setAccountType(AccountEnum.CURRENT_ACCOUNT);
+                newCustomer.setAccount2(generateRandomNumber(27400000, 27300000));
+                newCustomer.setBalance(generateRandomNumber(90, 10));
+                newCustomer.setAccountTypeNewuser("Saving");
 
                 customerFromDB.add(newCustomer);
 
@@ -143,10 +183,17 @@ public class Facade {
                 System.out.println(newCustomer.toString3());
                 System.out.println();
 
-                displayMenu(newCustomer.getAccount(), AccountEnum.CURRENT_ACCOUNT, newCustomer);
+                newCustomer.setAccount2(generateRandomNumber(27400000, 27300000));
+                newCustomer.setBalance(generateRandomNumber(90, 10));
+                newCustomer.setAccountTypeNewuser("Current");
 
+                customerFromDB.add(newCustomer);
+
+                System.out.println();
+                System.out.println(newCustomer.toString4());
+                System.out.println();
+                welcomeMenuORquit();
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -176,9 +223,10 @@ public class Facade {
     }
 
 
-    public void displayMenu(Account account, AccountEnum accountType, Customer customer) {
+    public void displayMenu(Account account, AccountEnum accountType, Customer customer, String Firstname, String Lastname) {
         int temp = -1;
         while (temp != 0) {
+            System.out.println("Welcome " + Firstname + " " + Lastname + "\n");
             System.out.println("Please choose from the menu");
             System.out.println("1: " + AccountEnum.getAccountType(3).getDescription());
             System.out.println("2: " + AccountEnum.getAccountType(4).getDescription());
@@ -195,12 +243,14 @@ public class Facade {
                     System.out.println("Please introduce the amount you want to deposit");
                     amount = getAmountFromUser();
                     makeDeposit(amount, account, customer);
+                    continueORquit();
                     break;
 
                 case 2:
                     System.out.println("Please introduce the amount you want to withdraw");
                     amount = getAmountFromUser();
                     makeWithdraw(amount, account, customer);
+                    continueORquit();
                     break;
 
                 case 3:
@@ -209,6 +259,7 @@ public class Facade {
                     System.out.println("please enter the account number that you want to send money to");
                     long destinationAccount = (long) getAmountFromUser();
                     makeTransfer(amount, account, destinationAccount);
+                    continueORquit();
                     break;
 
                 case 4:
@@ -217,13 +268,16 @@ public class Facade {
                     for (String[] s : customersInfoList) {
                         long accountNumber = Long.parseLong(s[0]);
                         if (accountNumber == account.getAccountNumber()) {
-                            System.out.println(Arrays.toString(s));
+                            System.out.println("Accountnumber: " + s[0] + " | Accounttype:" + s[1] + " | Operation:" + s[2] + " | Amount:" + s[3] + " | New balance:" + s[4] + " | Datestamp:" + s[5]);
+                           // System.out.println(Arrays.toString(s));
                         }
                     }
+                    continueORquit();
                     break;
 
                 case 5:
                     account.printBalance();
+                    continueORquit();
                     break;
 
                 case 6:
@@ -232,6 +286,7 @@ public class Facade {
                     Scanner scanner = new Scanner(System.in);
                     String newPinCode = scanner.next();
                     History.replaceSelected(String.valueOf(customer.getCustomerPinCode()), newPinCode);
+                    continueORquit();
                     break;
 
                 case 0:

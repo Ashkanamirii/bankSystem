@@ -2,7 +2,10 @@ package customer;
 
 import account.Account;
 import account.AccountEnum;
+import bankFacade.Facade;
 import database.History;
+import database.RegisterCustomer;
+import bankFacade.Facade;
 
 /**
  * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
@@ -18,8 +21,11 @@ public class Customer {
     private String firstName;
     private String lastName;
     private Account account;
+    private long account2;
+    private double balance;
     private short customerPinCode;
     private AccountEnum accountEnum;
+    private String accountTypeNewuser;
 
     public Customer(int customerId, String firstName, String lastName, Account account,
                     short customerPinCode, AccountEnum accountEnum) {
@@ -40,6 +46,14 @@ public class Customer {
 
     public void setAccountType(AccountEnum accountEnum) {
         this.accountEnum = accountEnum;
+    }
+
+    public void setAccountTypeNewuser(String accountTypeNewuser){
+        this.accountTypeNewuser = accountTypeNewuser;
+    }
+
+    public String getAccountTypeNewuser() {
+        return accountTypeNewuser;
     }
 
     public short getCustomerPinCode() {
@@ -82,6 +96,16 @@ public class Customer {
         this.account = account;
     }
 
+    public long getAccount2() {
+        return account2;
+    }
+
+    public void setBalance(double balance) { this.balance = balance;}
+
+    public void setAccount2(long account2) {
+        this.account2 = account2;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -95,19 +119,34 @@ public class Customer {
     }
 
     public String toString3() {
+        for(int clear = 0; clear < 1000; clear++) {
+            System.out.println("\b") ;
+        }
+        RegisterCustomer.addNewUserToList(customerId, customerPinCode, firstName, lastName, account2, balance, accountTypeNewuser);
         return "Welcome " + firstName + ' ' + lastName +
-                "\nYour customerId: " + customerId +
+                "\nYour customerID: " + customerId +
                 "\nYour pin code: " + customerPinCode + "\n" +
-                "\nYour account information: " + account
-                ;
+                "\nYour " + accountTypeNewuser + " account number is: " +  account2;
+
+    }
+
+    public String toString4() {
+        RegisterCustomer.addNewUserToList(customerId, customerPinCode, firstName, lastName, account2, balance, accountTypeNewuser);
+        return "Your " + accountTypeNewuser + " account number is: " +  account2;
+
+    }
+
+    public String customToString2(int customerId, short customerPinCode, String firstName, String lastName, long accountnr, Double balance1, String accountTypeNewuser) {
+        return customerId + ";" + customerPinCode + ";" + firstName + ";" + lastName + ";" + accountnr + ";" + balance1 + ";" + accountTypeNewuser + ";" +
+                History.getDateNowFormat();
     }
 
     public String customToString(int action, int action1, double amount) {
         return account.getAccountNumber() + "; " +
                 accountEnum.getAccountType(action1).getDescription() + "; " +
                 accountEnum.getAccountType(action).getDescription() + "; " +
-                "amount: " + amount + "; " +
-                "New Balance--> " + account.getBalance() + "; " +
+                amount + "; " +
+                account.getBalance() + "; " +
                 History.getDateNowFormat();
     }
 }

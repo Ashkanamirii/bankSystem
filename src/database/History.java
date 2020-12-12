@@ -16,7 +16,6 @@ import java.time.format.DateTimeFormatter;
 public class History {
 
     public static String getDateNowFormat() {
-        //Get current date time
         LocalDateTime DateNow = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return DateNow.format(formatter);
@@ -24,7 +23,6 @@ public class History {
 
     public static void replaceSelected(String target, String replacement) {
         try {
-            // input the file content to the StringBuffer "input"
             BufferedReader file = new BufferedReader(new FileReader("resources/CustomerList.csv"));
             StringBuffer inputBuffer = new StringBuffer();
             String line;
@@ -36,15 +34,8 @@ public class History {
             file.close();
             String inputStr = inputBuffer.toString();
 
-            System.out.println(inputStr); // display the original file for debugging
-
-            // logic to replace lines in the string (could use regex here to be generic)
                 inputStr = inputStr.replace(target, replacement);
 
-            // display the new file for debugging
-            System.out.println("----------------------------------\n" + inputStr);
-
-            // write the new string with the replaced line OVER the same file
             FileOutputStream fileOut = new FileOutputStream("resources/CustomerList.csv");
             fileOut.write(inputStr.getBytes());
             fileOut.close();
@@ -56,7 +47,6 @@ public class History {
 
 
     public static void historyLog(Customer customer, double amount , int action, int action1) {
-        System.out.println("customer\n " + customer.customToString(action,action1,amount));
         String filePathOut = "resources/CustomersHistory.csv";
         String textToAppend = customer.customToString(action, action1,amount);
         try (FileWriter fileWriter = new FileWriter(filePathOut, true);//Set true for append mode.

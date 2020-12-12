@@ -3,7 +3,7 @@ package account;
 import customer.Customer;
 import database.Database;
 import database.History;
-
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -31,8 +31,10 @@ public abstract class Account {
         String newBalance = null;
         if (amount < balance) {
             balance = balance - amount;
+            DecimalFormat decimalFormat = new DecimalFormat("0.#####");
+            String amountToPrint = decimalFormat.format(Double.valueOf(amount));
             newBalance = String.valueOf(balance);
-            System.out.println("\nWithdrawing $" + amount);
+            System.out.println("\nWithdrawing $" + amountToPrint);
         } else {
             System.out.println("\nYour balance is not enough to complete this transaction");
         }
@@ -47,8 +49,12 @@ public abstract class Account {
         String newBalance = null;
         if (amount > 0) {
             balance = balance + amount;
+            DecimalFormat decimalFormat = new DecimalFormat("0.#####");
+            String amountToPrint = decimalFormat.format(Double.valueOf(amount));
+            System.out.println(amountToPrint);
             newBalance = String.valueOf(balance);
-            System.out.println("\nDepositing $" + amount);
+            System.out.println("\n----------------------------------\n");
+            System.out.println("Depositing $" + amountToPrint);
         } else {
             System.out.println("\nYour amount is incorrect");
         }
@@ -101,7 +107,13 @@ public abstract class Account {
     }
 
     public void printBalance() {
-        System.out.println("Your balance is now: $" + balance + "\n");
+        for(int clear = 0; clear < 1000; clear++) {
+            System.out.println("\b") ;
+        }
+        DecimalFormat decimalFormat = new DecimalFormat("0.#####");
+        String balanceToPrint = decimalFormat.format(Double.valueOf(balance));
+        System.out.println("Your balance is now: $" + balanceToPrint + "\n");
+        System.out.println("----------------------------------\n");
     }
 
     public String getDate() {

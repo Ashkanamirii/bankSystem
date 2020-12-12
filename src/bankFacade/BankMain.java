@@ -1,8 +1,5 @@
 package bankFacade;
 
-import bankFacade.Facade;
-
-
 /**
  * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
  * Date:  2020-11-29
