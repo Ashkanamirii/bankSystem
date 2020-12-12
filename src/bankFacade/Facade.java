@@ -263,12 +263,14 @@ public class Facade {
                     break;
 
                 case 4:
+                    blankspaces();
+                    System.out.println("Transaction history:");
                     String filePathOut = "resources/CustomersHistory.csv";
                     List<String[]> customersInfoList = Database.read(filePathOut);
                     for (String[] s : customersInfoList) {
                         long accountNumber = Long.parseLong(s[0]);
                         if (accountNumber == account.getAccountNumber()) {
-                            System.out.println("Accountnumber: " + s[0] + " | Accounttype:" + s[1] + " | Operation:" + s[2] + " | Amount:" + s[3] + " | New balance:" + s[4] + " | Datestamp:" + s[5]);
+                            System.out.println("Accountnumber: " + s[0] + " | Accounttype:" + s[1] + " | Operation:" + s[2] + " | Amount:" + s[3] + " | New balance:" + s[4] + " | Datestamp:" + s[5] + "\n");
                            // System.out.println(Arrays.toString(s));
                         }
                     }
