@@ -14,14 +14,6 @@ public class SavingAccount extends Account {
         super(accountNumber, balance,date);
     }
 
-    @Override
-    void showInfo() {
-        System.out.println("SavingAccount{" +
-                "balance=" + balance +
-                ", interestRate=" + interestRate +
-                '}');
-    }
-
     public void calculateInterestRate() {
         this.interestRate = interestRate + (balance * interestRate / 100 / 365);
     }

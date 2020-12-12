@@ -7,17 +7,17 @@ package account;
  * Project: bankSystem
  * Copyright: MIT
  */
-public enum AccountTypeEnum {
+public enum AccountEnum {
 
     SAVING_ACCOUNT(1, "Saving account"),
     CURRENT_ACCOUNT(2, "Current account"),
-    DEPOSIT(3, "1: Make a deposit"),
-    WITHDRAW(4, "2: Withdraw"),
-    TRANSFER(5, "3: Make a transfer"),
-    HISTORY(6, "4: Check your transactions' history"),
-    CHECK_BALANCE(7, "5: Check your balance"),
-    UPDATE_INFO(8, "6: Update your personal information"),
-    LOGOUT(9, "0: Log out"),
+    DEPOSIT(3, "Make a deposit"),
+    WITHDRAW(4, "Withdraw"),
+    TRANSFER(5, "Make a transfer"),
+    HISTORY(6, "Check your transactions' history"),
+    CHECK_BALANCE(7, "Check your balance"),
+    UPDATE_INFO(8, "Update your personal information"),
+    LOGOUT(9, "Log out"),
 
 
     UNKNOWN(0, "Unknown");
@@ -26,7 +26,7 @@ public enum AccountTypeEnum {
     private final int accountType;
     private final String description;
 
-    AccountTypeEnum(Integer accountType, String description) {
+    AccountEnum(Integer accountType, String description) {
         this.accountType = accountType;
         this.description = description;
     }
@@ -39,15 +39,15 @@ public enum AccountTypeEnum {
         return description;
     }
 
-    public static AccountTypeEnum getAccountType(int code) {
-        AccountTypeEnum[] values = values();
-        AccountTypeEnum[] array = values;
+    public static AccountEnum getAccountType(int code) {
+        AccountEnum[] values = values();
+        AccountEnum[] array = values;
         int length = values().length;
         for (int i = 0; i < length; i++) {
-            AccountTypeEnum value = array[i];
+            AccountEnum value = array[i];
             if (value.getAccountType() == code)
                 return value;
         }
-        return AccountTypeEnum.getAccountType(0);
+        return AccountEnum.getAccountType(0);
     }
 }

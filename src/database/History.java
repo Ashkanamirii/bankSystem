@@ -1,12 +1,10 @@
-package bank;
+package database;
+
+import customer.Customer;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Ashkan Amiri , Jacaranda Perez, Iryna Gnatenko och Salem Koldzo

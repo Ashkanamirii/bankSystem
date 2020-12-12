@@ -14,10 +14,5 @@ public class CurrentAccount extends Account {
         super(accountNumber, balance, date);
     }
 
-    @Override
-    void showInfo() {
-        System.out.println("CurrentAccount{" +
-                "balance=" + balance +
-                '}');
-    }
+
 }

@@ -1,7 +1,8 @@
-package bank;
+package customer;
 
 import account.Account;
-import account.AccountTypeEnum;
+import account.AccountEnum;
+import database.History;
 
 /**
  * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
@@ -18,27 +19,27 @@ public class Customer {
     private String lastName;
     private Account account;
     private short customerPinCode;
-    private AccountTypeEnum accountTypeEnum;
+    private AccountEnum accountEnum;
 
     public Customer(int customerId, String firstName, String lastName, Account account,
-                    short customerPinCode, AccountTypeEnum accountTypeEnum) {
+                    short customerPinCode, AccountEnum accountEnum) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.account = account;
         this.customerPinCode = customerPinCode;
-        this.accountTypeEnum = accountTypeEnum;
+        this.accountEnum = accountEnum;
     }
 
     public Customer() {
     }
 
-    public AccountTypeEnum getAccountType() {
-        return accountTypeEnum;
+    public AccountEnum getAccountType() {
+        return accountEnum;
     }
 
-    public void setAccountType(AccountTypeEnum accountTypeEnum) {
-        this.accountTypeEnum = accountTypeEnum;
+    public void setAccountType(AccountEnum accountEnum) {
+        this.accountEnum = accountEnum;
     }
 
     public short getCustomerPinCode() {
@@ -89,7 +90,7 @@ public class Customer {
                 ", lastName='" + lastName + '\'' +
                 ", account=" + account +
                 ", customerPinCode=" + customerPinCode +
-                ", accountType=" + accountTypeEnum +
+                ", accountType=" + accountEnum +
                 '}';
     }
 
@@ -103,8 +104,8 @@ public class Customer {
 
     public String customToString(int action, int action1, double amount) {
         return account.getAccountNumber() + "; " +
-                AccountTypeEnum.getAccountType(action1).getDescription() + "; " +
-                AccountTypeEnum.getAccountType(action).getDescription() + "; " +
+                accountEnum.getAccountType(action1).getDescription() + "; " +
+                accountEnum.getAccountType(action).getDescription() + "; " +
                 "amount: " + amount + "; " +
                 "New Balance--> " + account.getBalance() + "; " +
                 History.getDateNowFormat();

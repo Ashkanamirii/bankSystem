@@ -1,8 +1,8 @@
 package account;
 
-import bank.Customer;
-import bank.Database;
-import bank.History;
+import customer.Customer;
+import database.Database;
+import database.History;
 
 import java.util.List;
 
@@ -27,35 +27,35 @@ public abstract class Account {
 
 
     public void withDraw(double amount, Customer customer) {
-        String target = String.valueOf(balance);
-        String replacement = null;
+        String oldBalance = String.valueOf(balance);
+        String newBalance = null;
         if (amount < balance) {
             balance = balance - amount;
-            replacement = String.valueOf(balance);
+            newBalance = String.valueOf(balance);
             System.out.println("\nWithdrawing $" + amount);
         } else {
             System.out.println("\nYour balance is not enough to complete this transaction");
         }
         printBalance();
-        History.replaceSelected(target, replacement);
+        History.replaceSelected(oldBalance, newBalance);
         History.replaceSelected(date, History.getDateNowFormat());
-        History.historyLog(customer , amount, AccountTypeEnum.WITHDRAW.getAccountType(),customer.getAccountType().getAccountType());
+        History.historyLog(customer, amount, AccountEnum.WITHDRAW.getAccountType(), customer.getAccountType().getAccountType());
     }
 
     public void deposit(double amount,Customer customer) {
-        String target = String.valueOf(balance);
-        String replacement = null;
+        String oldBalance = String.valueOf(balance);
+        String newBalance = null;
         if (amount > 0) {
             balance = balance + amount;
-            replacement = String.valueOf(balance);
+            newBalance = String.valueOf(balance);
             System.out.println("\nDepositing $" + amount);
         } else {
             System.out.println("\nYour amount is incorrect");
         }
         printBalance();
-        History.replaceSelected(target, replacement);
+        History.replaceSelected(oldBalance, newBalance);
         History.replaceSelected(date, History.getDateNowFormat());
-        History.historyLog(customer , amount, AccountTypeEnum.DEPOSIT.getAccountType(),customer.getAccountType().getAccountType());
+        History.historyLog(customer, amount, AccountEnum.DEPOSIT.getAccountType(), customer.getAccountType().getAccountType());
     }
 
     public void transfer(double transferAmount, long destinationAcc ) {
@@ -73,7 +73,7 @@ public abstract class Account {
                 replacement = String.valueOf(balance);
                 History.replaceSelected(target, replacement);
                 History.replaceSelected(date, History.getDateNowFormat());
-                History.historyLog(customerFromDB.get(i), transferAmount, AccountTypeEnum.TRANSFER.getAccountType(),customerFromDB.get(i).getAccountType().getAccountType());
+                History.historyLog(customerFromDB.get(i), transferAmount, AccountEnum.TRANSFER.getAccountType(), customerFromDB.get(i).getAccountType().getAccountType());
             }
             if (customerFromDB.get(i).getAccount().accountNumber == destinationAcc) {
                 target = String.valueOf(customerFromDB.get(i).getAccount().getBalance());
@@ -82,7 +82,7 @@ public abstract class Account {
                 replacement = String.valueOf(destinationBalance);
                 History.replaceSelected(target, replacement);
                 History.replaceSelected(customerFromDB.get(i).getAccount().getDate(), History.getDateNowFormat());
-                History.historyLog(customerFromDB.get(i) , transferAmount, AccountTypeEnum.TRANSFER.getAccountType(),customerFromDB.get(i).getAccountType().getAccountType());
+                History.historyLog(customerFromDB.get(i), transferAmount, AccountEnum.TRANSFER.getAccountType(), customerFromDB.get(i).getAccountType().getAccountType());
             }
         }
         printBalance();
@@ -90,10 +90,6 @@ public abstract class Account {
 
     public long getAccountNumber() {
         return accountNumber;
-    }
-
-    public void setAccountNumber(long accountNumber) {
-        this.accountNumber = accountNumber;
     }
 
     public double getBalance() {
@@ -112,24 +108,12 @@ public abstract class Account {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    abstract void showInfo();
 
     @Override
     public String toString() {
         return "\nAccountNumber: " + accountNumber +
                 "\nBalance: " + balance
                 ;
-    }
-        public String toString4() {
-        return "Account{" +
-                "accountNumber=" + accountNumber +
-                ", balance=" + balance +
-                ", date='" + date + '\'' +
-                '}';
     }
 }
 

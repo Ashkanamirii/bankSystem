@@ -1,8 +1,10 @@
-package bank;
+package database;
 
-import account.AccountTypeEnum;
+import account.AccountEnum;
 import account.CurrentAccount;
 import account.SavingAccount;
+import customer.Customer;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -53,11 +55,11 @@ public class Database {
             String accountType = accountHolder[6];
             String date = accountHolder[7];
             if (accountType.equals("Saving")) {
-                customer.setAccountType(AccountTypeEnum.getAccountType(1));
+                customer.setAccountType(AccountEnum.getAccountType(1));
                 customer.setAccount(new SavingAccount(accountNumber, balance,date));
 
             } else if (accountType.equals("Current")) {
-                customer.setAccountType(AccountTypeEnum.getAccountType(2));
+                customer.setAccountType(AccountEnum.getAccountType(2));
                 customer.setAccount(new CurrentAccount(accountNumber, balance,date));
             } else {
                 System.out.println(" Error AccountType");

@@ -1,6 +1,6 @@
-package bank;
+package bankFacade;
 
-import account.Facade;
+import bankFacade.Facade;
 
 
 /**

@@ -1,8 +1,11 @@
-package account;
+package bankFacade;
 
-import bank.Customer;
-import bank.Database;
-import bank.History;
+import account.Account;
+import account.AccountEnum;
+import account.CurrentAccount;
+import customer.Customer;
+import database.Database;
+import database.History;
 
 import java.util.*;
 
@@ -132,7 +135,7 @@ public class Facade {
                 newCustomer.setLastName(lastName);
                 newCustomer.setCustomerPinCode((short) generateRandomNumber(9000, 1000));
                 newCustomer.setAccount(new CurrentAccount(generateRandomNumber(27400000, 27300000), 0, History.getDateNowFormat()));
-                newCustomer.setAccountType(AccountTypeEnum.CURRENT_ACCOUNT);
+                newCustomer.setAccountType(AccountEnum.CURRENT_ACCOUNT);
 
                 customerFromDB.add(newCustomer);
 
@@ -140,7 +143,7 @@ public class Facade {
                 System.out.println(newCustomer.toString3());
                 System.out.println();
 
-                displayMenu(newCustomer.getAccount(), AccountTypeEnum.CURRENT_ACCOUNT, newCustomer);
+                displayMenu(newCustomer.getAccount(), AccountEnum.CURRENT_ACCOUNT, newCustomer);
 
             }
 
@@ -173,17 +176,17 @@ public class Facade {
     }
 
 
-    public void displayMenu(Account account, AccountTypeEnum accountType, Customer customer) {
+    public void displayMenu(Account account, AccountEnum accountType, Customer customer) {
         int temp = -1;
         while (temp != 0) {
             System.out.println("Please choose from the menu");
-            System.out.println(AccountTypeEnum.getAccountType(3).getDescription());
-            System.out.println(AccountTypeEnum.getAccountType(4).getDescription());
-            System.out.println(AccountTypeEnum.getAccountType(5).getDescription());
-            System.out.println(AccountTypeEnum.getAccountType(6).getDescription());
-            System.out.println(AccountTypeEnum.getAccountType(7).getDescription());
-            System.out.println(AccountTypeEnum.getAccountType(8).getDescription());
-            System.out.println(AccountTypeEnum.getAccountType(9).getDescription());
+            System.out.println("1: " + AccountEnum.getAccountType(3).getDescription());
+            System.out.println("2: " + AccountEnum.getAccountType(4).getDescription());
+            System.out.println("3: " + AccountEnum.getAccountType(5).getDescription());
+            System.out.println("4: " + AccountEnum.getAccountType(6).getDescription());
+            System.out.println("5: " + AccountEnum.getAccountType(7).getDescription());
+            System.out.println("6: " + AccountEnum.getAccountType(8).getDescription());
+            System.out.println("0: " + AccountEnum.getAccountType(9).getDescription());
 
             temp = getInfoFromUser();
             double amount;
@@ -269,5 +272,6 @@ public class Facade {
         return amount;
     }
     // TODO: 2020-12-11  fix check balance method for withdraw, deposit and transfer
+
 }
 
