@@ -6,10 +6,14 @@
 27345889; Current account; Current account; amount: 1000.0; New Balance--> 60000.0; 2020-12-11 18:56:34
 17345888; Saving account; Current account; amount: 1500.0; New Balance--> 65200.0; 2020-12-11 18:58:55
 27345883; Current account; Current account; amount: 1500.0; New Balance--> 52723.0; 2020-12-11 18:58:55
-1517888; Saving account; Withdraw; amount: 92000.0; New Balance--> 500.0; 2020-12-11 21:03:3617345888; Saving account; 1: Make a deposit; amount: 2000.0; New Balance--> 67200.0; 2020-12-12 10:07:42
 17345888; Saving account; 3: Make a transfer; amount: 6000.0; New Balance--> 61200.0; 2020-12-12 10:09:05
 27345888; Current account; 3: Make a transfer; amount: 6000.0; New Balance--> 54000.0; 2020-12-12 10:09:05
 27334652; Current account; 1: Make a deposit; amount: 25000.0; New Balance--> 25000.0; 2020-12-12 10:10:05
 27334652; Current account; 2: Withdraw; amount: 2000.0; New Balance--> 23000.0; 2020-12-12 10:10:33
 27319149; Current account; 1: Make a deposit; amount: 12000.0; New Balance--> 12000.0; 2020-12-12 10:12:00
 27319149; Current account; 2: Withdraw; amount: 40000.0; New Balance--> 12000.0; 2020-12-12 10:12:08
+27378358; Current account; 1: Make a deposit; amount: 50000.0; New Balance--> 50000.0; 2020-12-12 11:35:24
+27345888; Current account; 1: Make a deposit; amount: 10000.0; New Balance--> 64000.0; 2020-12-12 11:39:20
+27345888; Current account; 2: Withdraw; amount: 5000.0; New Balance--> 59000.0; 2020-12-12 11:39:33
+17345888; Saving account; 3: Make a transfer; amount: 12000.0; New Balance--> 73200.0; 2020-12-12 11:40:48
+27345888; Current account; 3: Make a transfer; amount: 12000.0; New Balance--> 47000.0; 2020-12-12 11:40:48
