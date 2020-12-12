@@ -10,8 +10,8 @@ package account;
 public class CurrentAccount extends Account {
 
 
-    public CurrentAccount(long accountNumber, double balance) {
-        super(accountNumber, balance);
+    public CurrentAccount(long accountNumber, double balance, String date) {
+        super(accountNumber, balance, date);
     }
 
     @Override

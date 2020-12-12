@@ -1,6 +1,6 @@
 package bank;
 
-import account.AccountType;
+import account.AccountTypeEnum;
 import account.CurrentAccount;
 import account.SavingAccount;
 import java.io.BufferedReader;
@@ -35,7 +35,7 @@ public class Database {
     }
 
     public List<Customer> addDataToCustomerList(){
-        String csVFile = "src/bank/CustomerList.csv";
+        String csVFile = "resources/CustomerList.csv";
         List<String[]> newAccountHolders = read(csVFile);
         List<Customer> customerList = new ArrayList<>();
         for (String[] accountHolder : newAccountHolders) {
@@ -51,13 +51,14 @@ public class Database {
             int accountNumber = Integer.parseInt(accountHolder[4]);
             double balance = Double.parseDouble(accountHolder[5]);
             String accountType = accountHolder[6];
+            String date = accountHolder[7];
             if (accountType.equals("Saving")) {
-                customer.setAccountType(AccountType.getAccountType(1));
-                customer.setAccount(new SavingAccount(accountNumber, balance));
+                customer.setAccountType(AccountTypeEnum.getAccountType(1));
+                customer.setAccount(new SavingAccount(accountNumber, balance,date));
 
             } else if (accountType.equals("Current")) {
-                customer.setAccountType(AccountType.getAccountType(2));
-                customer.setAccount(new CurrentAccount(accountNumber, balance));
+                customer.setAccountType(AccountTypeEnum.getAccountType(2));
+                customer.setAccount(new CurrentAccount(accountNumber, balance,date));
             } else {
                 System.out.println(" Error AccountType");
             }
