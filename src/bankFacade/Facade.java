@@ -80,7 +80,7 @@ public class Facade {
             e.printStackTrace();
         }
 
-        blankspaces();
+
         Scanner scan = new Scanner(System.in);
         System.out.println("Welcome to Your Bank! \n Please press your desired option: \n (1)login | (2)register ");
         while (scan.hasNext()) {
