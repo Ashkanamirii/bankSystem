@@ -90,7 +90,7 @@ public class RegisterOperation {
 
             System.out.println("\nWaiting for a bank worker to connect..... \n");
             try {
-                Thread.sleep(7000);
+                Thread.sleep(4000);
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -99,7 +99,7 @@ public class RegisterOperation {
             System.out.println("Please wait....\n ");
 
             try {
-                Thread.sleep(12000);
+                Thread.sleep(6000);
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -110,7 +110,7 @@ public class RegisterOperation {
             System.out.println("Please wait....");
 
             try {
-                Thread.sleep(15000);
+                Thread.sleep(4000);
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -128,7 +128,7 @@ public class RegisterOperation {
                 customerFromDB.add(newCustomer);
                 System.out.println();
                 System.out.println(newCustomer.toString3());
-                newCustomer.setAccount2(generateRandomNumber(27400000, 27300000));
+                newCustomer.setAccount2(generateRandomNumber(27500000, 27600000));
                 newCustomer.setBalance(generateRandomNumber(90, 10));
                 newCustomer.setAccountTypeNewuser("Current");
                 customerFromDB.add(newCustomer);

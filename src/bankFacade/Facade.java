@@ -38,6 +38,10 @@ public class Facade {
         newCustomer.registerNewCustomer();
     }
 
+    public Facade () {
+        welcomeDialogue();
+    }
+
     public void welcomeDialogue() {
         newCustomer = new RegisterOperation();
         customers = new Customer();
@@ -87,7 +91,7 @@ public class Facade {
         }
     }
 
-    public void displayMenu(Account account, AccountEnum accountType, Customer customer, String Firstname, String Lastname) {
+    public void displayMenu(Account account, Customer customer, String Firstname, String Lastname) {
         int temp = -1;
         while (temp != 0) {
             System.out.println("Welcome " + Firstname + " " + Lastname + "\n");
@@ -198,10 +202,10 @@ public class Facade {
             if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
                 if (customerFromDB.get(i).getAccountType().getAccountType() == 1 && choice == 1) {
                     Customer customer = customerFromDB.get(i);
-                    displayMenu(customer.getAccount(), customer.getAccountType(), customer, customer.getFirstName(), customer.getLastName());
+                    displayMenu(customer.getAccount(), customer, customer.getFirstName(), customer.getLastName());
                 } else if (customerFromDB.get(i).getAccountType().getAccountType() == 2 && choice == 2) {
                     Customer c = customerFromDB.get(i);
-                    displayMenu(c.getAccount(), c.getAccountType(), c, c.getFirstName(), c.getLastName());
+                    displayMenu(c.getAccount(), c, c.getFirstName(), c.getLastName());
                 }
             }
         }
