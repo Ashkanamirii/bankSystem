@@ -25,7 +25,6 @@ public abstract class Account {
         this.date = date;
     }
 
-
     public void withDraw(double amount, Customer customer) {
         String oldBalance = String.valueOf(balance);
         String newBalance = null;
@@ -94,7 +93,6 @@ public abstract class Account {
         printBalance();
     }
 
-
     public long getAccountNumber() {
         return accountNumber;
     }
@@ -120,7 +118,6 @@ public abstract class Account {
     public String getDate() {
         return date;
     }
-
 
     @Override
     public String toString() {

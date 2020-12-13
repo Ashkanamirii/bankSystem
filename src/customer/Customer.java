@@ -2,12 +2,9 @@ package customer;
 
 import account.Account;
 import account.AccountEnum;
-import bankFacade.Facade;
 import database.Database;
 import database.History;
 import database.RegisterCustomer;
-import bankFacade.Facade;
-
 import java.util.ArrayList;
 import java.util.List;
 

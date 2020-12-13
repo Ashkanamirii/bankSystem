@@ -14,7 +14,7 @@ public class RegisterCustomer {
         Customer newCustomer = new Customer();
         String filePathOut = "resources/CustomerList.csv";
         String textToAppend = newCustomer.customToString2(customerId, customerPinCode, firstName, lastName, accountnr, balance1, accountTypeNewUser);
-        try (FileWriter fileWriter = new FileWriter(filePathOut, true);  //Set true for append mode.
+        try (FileWriter fileWriter = new FileWriter(filePathOut, true);
              PrintWriter printWriter = new PrintWriter(fileWriter)) {
             printWriter.println(textToAppend);  //New line
         } catch (FileNotFoundException e) {
