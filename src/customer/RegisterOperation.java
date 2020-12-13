@@ -10,6 +10,9 @@ import java.util.Scanner;
 
 public class RegisterOperation {
 
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
+
    protected List<Customer> customerFromDB = new ArrayList<>();
     protected Database dataDB = new Database();
     Facade bankFacade;
@@ -70,6 +73,7 @@ public class RegisterOperation {
         }
     }
 
+
     public void registerNewCustomer() {
         customerFromDB = dataDB.addDataToCustomerList();
         try {
@@ -84,6 +88,33 @@ public class RegisterOperation {
             System.out.println("Please state your Last name: ");
             String lastName = input.nextLine().trim();
 
+            System.out.println("\nWaiting for a bank worker to connect..... \n");
+            try {
+                Thread.sleep(7000);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            System.out.println("--------------------------------\n");
+            System.out.println("You have been assigned an bank officer and will now verify your application. ");
+            System.out.println("Please wait....\n ");
+
+            try {
+                Thread.sleep(12000);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            System.out.println("--------------------------------\n");
+            System.out.println("Your application has been" + ANSI_GREEN + " approved!\n" + ANSI_RESET);
+            System.out.println("You will now be redirected to your account information\n");
+            System.out.println("Please wait....");
+
+            try {
+                Thread.sleep(15000);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
             if (!findByName(name, lastName)) {
 
                 Customer newCustomer = new Customer();
@@ -95,17 +126,12 @@ public class RegisterOperation {
                 newCustomer.setBalance(generateRandomNumber(90, 10));
                 newCustomer.setAccountTypeNewuser("Saving");
                 customerFromDB.add(newCustomer);
-
                 System.out.println();
                 System.out.println(newCustomer.toString3());
-                System.out.println();
-
                 newCustomer.setAccount2(generateRandomNumber(27400000, 27300000));
                 newCustomer.setBalance(generateRandomNumber(90, 10));
                 newCustomer.setAccountTypeNewuser("Current");
                 customerFromDB.add(newCustomer);
-
-                System.out.println();
                 System.out.println(newCustomer.toString4());
                 System.out.println();
                 welcomeMenuORquit();
