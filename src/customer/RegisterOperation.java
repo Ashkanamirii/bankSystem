@@ -128,7 +128,7 @@ public class RegisterOperation {
                 customerFromDB.add(newCustomer);
                 System.out.println();
                 System.out.println(newCustomer.toString3());
-                newCustomer.setAccount2(generateRandomNumber(27500000, 27600000));
+                newCustomer.setAccount2(generateRandomNumber(27600000, 27500000));
                 newCustomer.setBalance(generateRandomNumber(90, 10));
                 newCustomer.setAccountTypeNewuser("Current");
                 customerFromDB.add(newCustomer);
