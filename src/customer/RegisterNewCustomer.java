@@ -1,7 +1,6 @@
-package account;
+package customer;
 
 import bankFacade.Facade;
-import customer.Customer;
 import database.Database;
 
 import java.util.ArrayList;
@@ -114,7 +113,7 @@ public class RegisterNewCustomer {
                 System.out.println();
                 System.out.println(newCustomer.toString4());
                 System.out.println();
-                welcomeMenuORquit();
+                continueORquit();
             }
         } catch (Exception e) {
             e.printStackTrace();

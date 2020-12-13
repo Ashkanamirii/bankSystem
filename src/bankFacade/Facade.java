@@ -2,7 +2,7 @@ package bankFacade;
 
 import account.Account;
 import account.AccountEnum;
-import account.RegisterNewCustomer;
+import customer.RegisterNewCustomer;
 import customer.Customer;
 import database.Database;
 import database.History;
@@ -20,6 +20,7 @@ public class Facade {
     List<Customer> customerFromDB = new ArrayList<>();
    protected Database dataDB = new Database();
     RegisterNewCustomer newCustomer;
+    Customer customers;
 
     public Facade() {
         welcomeDialogue();
@@ -42,6 +43,8 @@ public class Facade {
     public void welcomeDialogue() {
 
         newCustomer = new RegisterNewCustomer();
+        customers = new Customer();
+
 
         try {
             customerFromDB = dataDB.addDataToCustomerList();
@@ -66,11 +69,11 @@ public class Facade {
 
                 System.out.println("Please enter your pin code:");
                 int inputCustomerPinCode = getInfoFromUser();
-                if (findCustomer(inputCustomerID, inputCustomerPinCode) == null) {
+                if (customers.findCustomer(inputCustomerID, inputCustomerPinCode) == null) {
                     System.out.println("Wrong customerID or pincode. Try again");
                     welcomeDialogue();
                 } else {
-                    Customer c = findCustomer(inputCustomerID, inputCustomerPinCode);
+                    Customer c = customers.findCustomer(inputCustomerID, inputCustomerPinCode);
                     newCustomer.blankspaces();
                     System.out.println("Welcome " + c.getFirstName() + " " + c.getLastName() + "\n");
                     System.out.println("Choose an account to make transactions");
@@ -93,20 +96,6 @@ public class Facade {
         }
     }
 
-    public Customer findCustomer(int inputCustomerID, int inputCustomerPinCode) {
-        if (customerFromDB.size() == 0) {
-            System.out.println("Empty list");
-        }
-        for (int i = 0; i < customerFromDB.size(); i++) {
-            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID)
-                if (customerFromDB.get(i).getAccountType().getAccountType() == 1) {
-                    Customer c = customerFromDB.get(i);
-                    return c;
-                } else
-                    return null;
-        }
-        return null;
-    }
 
     public void getChosenAccount(int inputCustomerID, int inputCustomerPinCode, int choice) {
         for (int i = 0; i < customerFromDB.size(); i++) {
@@ -120,24 +109,6 @@ public class Facade {
                 }
             }
         }
-    }
-
-
-
-
-    // a method to check if a person truing to register is already an existing customer
-    public boolean findByName(String name, String lastName) {
-        boolean customer = false;
-        for (Customer c : customerFromDB) {
-            if (c.getFirstName().equalsIgnoreCase(name) && c.getLastName().equalsIgnoreCase(lastName)) {
-                System.out.println("You are an existing customer. Please login.");
-                welcomeDialogue();
-                customer = true;
-
-            } else customer = false;
-
-        }
-        return customer;
     }
 
 

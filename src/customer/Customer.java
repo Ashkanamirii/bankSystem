@@ -3,9 +3,13 @@ package customer;
 import account.Account;
 import account.AccountEnum;
 import bankFacade.Facade;
+import database.Database;
 import database.History;
 import database.RegisterCustomer;
 import bankFacade.Facade;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
@@ -52,10 +56,6 @@ public class Customer {
         this.accountTypeNewuser = accountTypeNewuser;
     }
 
-    public String getAccountTypeNewuser() {
-        return accountTypeNewuser;
-    }
-
     public short getCustomerPinCode() {
         return customerPinCode;
     }
@@ -96,14 +96,30 @@ public class Customer {
         this.account = account;
     }
 
-    public long getAccount2() {
-        return account2;
-    }
-
     public void setBalance(double balance) { this.balance = balance;}
 
     public void setAccount2(long account2) {
         this.account2 = account2;
+    }
+
+    List<Customer> customerFromDB = new ArrayList<>();
+    protected Database dataDB = new Database();
+
+    public Customer findCustomer(int inputCustomerID, int inputCustomerPinCode) {
+        customerFromDB = dataDB.addDataToCustomerList();
+
+        if (customerFromDB.size() == 0) {
+            System.out.println("Empty list");
+        }
+        for (int i = 0; i < customerFromDB.size(); i++) {
+            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID)
+                if (customerFromDB.get(i).getAccountType().getAccountType() == 1) {
+                    Customer c = customerFromDB.get(i);
+                    return c;
+                } else
+                    return null;
+        }
+        return null;
     }
 
     @Override
