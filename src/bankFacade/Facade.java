@@ -2,11 +2,15 @@ package bankFacade;
 
 import account.Account;
 import account.AccountEnum;
-import customer.RegisterOperation;
 import customer.Customer;
+import customer.RegisterOperation;
 import database.Database;
 import database.History;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
@@ -18,27 +22,11 @@ import java.util.*;
 public class Facade {
 
     List<Customer> customerFromDB = new ArrayList<>();
-   protected Database dataDB = new Database();
+    protected Database dataDB = new Database();
     RegisterOperation newCustomer;
     Customer customers;
 
-    public void makeDeposit(double amount, Account account, Customer customer) {
-        account.deposit(amount, customer);
-    }
-
-    public void makeWithdraw(double amount, Account account, Customer customer) {
-        account.withDraw(amount, customer);
-    }
-
-    public void makeTransfer(double amount, Account fromAccount, long toAccount) {
-        fromAccount.transfer(amount, toAccount);
-    }
-
-    public void makeNewCustomer(){
-        newCustomer.registerNewCustomer();
-    }
-
-    public Facade () {
+    public Facade() {
         welcomeDialogue();
     }
 
@@ -77,8 +65,8 @@ public class Facade {
                     System.out.println("3. Close session");
                     int choice = getInfoFromUser();
                     if (choice == 1 || choice == 2) {
-                    newCustomer.blankspaces();
-                    getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
+                        newCustomer.blankspaces();
+                        getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
                     } else if (choice == 3) {
                         System.out.println("Closing session");
                         System.exit(0);
@@ -139,7 +127,9 @@ public class Facade {
                     for (String[] s : customersInfoList) {
                         long accountNumber = Long.parseLong(s[0]);
                         if (accountNumber == account.getAccountNumber()) {
-                            System.out.println("Accountnumber: " + s[0] + " | Accounttype:" + s[1] + " | Operation:" + s[2] + " | Amount:" + s[3] + " | New balance:" + s[4] + " | Datestamp:" + s[5] + "\n");
+                            System.out.println("Accountnumber: " + s[0] + " | Accounttype:" + s[1] +
+                                    " | Operation:" + s[2] + " | Amount:" + s[3] + " | New balance:" + s[4]
+                                    + " | Datestamp:" + s[5] + "\n");
                         }
                     }
                     newCustomer.continueORquit();
@@ -169,6 +159,22 @@ public class Facade {
                     break;
             }
         }
+    }
+
+    public void makeDeposit(double amount, Account account, Customer customer) {
+        account.deposit(amount, customer);
+    }
+
+    public void makeWithdraw(double amount, Account account, Customer customer) {
+        account.withDraw(amount, customer);
+    }
+
+    public void makeTransfer(double amount, Account fromAccount, long toAccount) {
+        fromAccount.transfer(amount, toAccount);
+    }
+
+    public void makeNewCustomer() {
+        newCustomer.registerNewCustomer();
     }
 
     public double getAmountFromUser() {

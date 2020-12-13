@@ -13,18 +13,18 @@ public class RegisterOperation {
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
 
-   protected List<Customer> customerFromDB = new ArrayList<>();
+    protected List<Customer> customerFromDB = new ArrayList<>();
     protected Database dataDB = new Database();
     Facade bankFacade;
 
-    public void blankspaces(){
-        for(int clear = 0; clear < 1000; clear++) {
-            System.out.println("\b") ;
+    public void blankspaces() {
+        for (int clear = 0; clear < 1000; clear++) {
+            System.out.println("\b");
         }
     }
+
     //a method to generate a random number (ID, PIN, account number)
     public int generateRandomNumber(int upperbound, int lowerbound) {
-
         Random rand = new Random();
         return rand.nextInt(upperbound - lowerbound) + lowerbound;
     }
@@ -44,7 +44,7 @@ public class RegisterOperation {
         return customer;
     }
 
-    public void welcomeMenuORquit(){
+    public void welcomeMenuORquit() {
         System.out.println("What would you like to do next?\nPress (1) for Main menu or press (2) for EXIT");
         Scanner s = new Scanner(System.in);
         int customerchoise = s.nextInt();
@@ -59,7 +59,7 @@ public class RegisterOperation {
         }
     }
 
-    public void continueORquit(){
+    public void continueORquit() {
         System.out.println("What would you like to do next?\nPress (1) for Main menu or press (2) for EXIT");
         Scanner s = new Scanner(System.in);
         int customerchoise = s.nextInt();
@@ -83,9 +83,9 @@ public class RegisterOperation {
             System.out.println("!!Christmas Offer!!");
             System.out.println("Register now to recive 1-year 0% No-Fee checking account and saving account");
             System.out.println("\n ------------------------- \n");
-            System.out.println("Please state your First name: ");
+            System.out.println("Please enter your First name: ");
             String name = input.nextLine().trim();
-            System.out.println("Please state your Last name: ");
+            System.out.println("Please enter your Last name: ");
             String lastName = input.nextLine().trim();
 
             System.out.println("\nWaiting for a bank worker to connect..... \n");
@@ -99,7 +99,7 @@ public class RegisterOperation {
             System.out.println("Please wait....\n ");
 
             try {
-                Thread.sleep(6000);
+                Thread.sleep(4000);
             } catch (Exception e) {
                 System.out.println(e);
             }
