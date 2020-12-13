@@ -43,51 +43,40 @@ public class Facade {
     }
 
     public void welcomeDialogue() {
-        newCustomer = new RegisterOperation();
-        customers = new Customer();
 
-        try {
+    }
+
+    public void checkCustomer(int inputCustomerID, int inputCustomerPinCode){
+            try {
             customerFromDB = dataDB.addDataToCustomerList();
         } catch (Exception e) {
             System.out.println("Could not find file. ");
             e.printStackTrace();
         }
 
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Welcome to Your Bank! \n Please press your desired option: \n (1)login | (2)register ");
-        while (scan.hasNext()) {
-            String chosenOption = scan.next();
-            if (chosenOption.equals("2")) {
-                makeNewCustomer();
-            } else if (chosenOption.equals("1")) {
-                System.out.println("Please enter your customerID:");
-                int inputCustomerID = getInfoFromUser();
-                System.out.println("Please enter your pin code:");
-                int inputCustomerPinCode = getInfoFromUser();
-                if (customers.findCustomer(inputCustomerID, inputCustomerPinCode) == null) {
-                    System.out.println("Wrong customerID or pincode. Try again");
-                    welcomeDialogue();
-                } else {
-                    Customer c = customers.findCustomer(inputCustomerID, inputCustomerPinCode);
-                    newCustomer.blankspaces();
-                    System.out.println("Welcome " + c.getFirstName() + " " + c.getLastName() + "\n");
-                    System.out.println("Choose an account to make transactions");
-                    System.out.println("1. Savings account");
-                    System.out.println("2. Current account");
-                    System.out.println("3. Close session");
-                    int choice = getInfoFromUser();
-                    if (choice == 1 || choice == 2) {
-                    newCustomer.blankspaces();
-                    getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
-                    } else if (choice == 3) {
-                        System.out.println("Closing session");
-                        System.exit(0);
-                    } else
-                        System.out.println("Invalid option. Try again");
-                }
+        newCustomer = new RegisterOperation();
+        customers = new Customer();
 
+        if (customers.findCustomer(inputCustomerID, inputCustomerPinCode) == null) {
+            System.out.println("Wrong customerID or pincode. Try again");
+            welcomeDialogue();
+        } else {
+            Customer c = customers.findCustomer(inputCustomerID, inputCustomerPinCode);
+            newCustomer.blankspaces();
+            System.out.println("Welcome " + c.getFirstName() + " " + c.getLastName() + "\n");
+            System.out.println("Choose an account to make transactions");
+            System.out.println("1. Savings account");
+            System.out.println("2. Current account");
+            System.out.println("3. Close session");
+            int choice = getInfoFromUser();
+            if (choice == 1 || choice == 2) {
+                newCustomer.blankspaces();
+                getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
+            } else if (choice == 3) {
+                System.out.println("Closing session");
+                System.exit(0);
             } else
-                System.out.println("Invalid option. Press 1 to login. Press 2 to register as a new customer");
+                System.out.println("Invalid option. Try again");
         }
     }
 
