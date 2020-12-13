@@ -14,7 +14,6 @@ public class RegisterOperation {
     protected Database dataDB = new Database();
     Facade bankFacade;
 
-
     public void blankspaces(){
         for(int clear = 0; clear < 1000; clear++) {
             System.out.println("\b") ;
