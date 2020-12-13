@@ -26,6 +26,13 @@ public abstract class Account {
     }
 
 
+    public void blankspaces(){
+        for(int clear = 0; clear < 1000; clear++) {
+            System.out.println("\b") ;
+        }
+    }
+
+
     public void withDraw(double amount, Customer customer) {
         String oldBalance = String.valueOf(balance);
         String newBalance = null;
@@ -93,6 +100,7 @@ public abstract class Account {
         }
         printBalance();
     }
+
 
     public long getAccountNumber() {
         return accountNumber;

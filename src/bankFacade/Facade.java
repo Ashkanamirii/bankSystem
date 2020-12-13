@@ -2,6 +2,7 @@ package bankFacade;
 
 import account.Account;
 import account.AccountEnum;
+import account.RegisterNewCustomer;
 import customer.Customer;
 import database.Database;
 import database.History;
@@ -17,7 +18,8 @@ import java.util.*;
 public class Facade {
 
     List<Customer> customerFromDB = new ArrayList<>();
-    private Database dataDB = new Database();
+   protected Database dataDB = new Database();
+    RegisterNewCustomer newCustomer;
 
     public Facade() {
         welcomeDialogue();
@@ -36,41 +38,10 @@ public class Facade {
         fromAccount.transfer(amount, toAccount);
     }
 
-    public void blankspaces(){
-        for(int clear = 0; clear < 1000; clear++) {
-            System.out.println("\b") ;
-        }
-    }
-
-    public void continueORquit(){
-        System.out.println("What would you like to do next?\nPress (1) for Main menu or press (2) for EXIT");
-        Scanner s = new Scanner(System.in);
-        int customerchoise = s.nextInt();
-        if (customerchoise == 1) {
-            blankspaces();
-        } else if (customerchoise == 2) {
-            System.out.println("Thanks for choosing JavaBank. Good Bye!");
-            System.exit(0);
-        } else {
-            System.out.println("Invalid choice\n\n");
-        }
-    }
-
-    public void welcomeMenuORquit(){
-        System.out.println("What would you like to do next?\nPress (1) for Main menu or press (2) for EXIT");
-        Scanner s = new Scanner(System.in);
-        int customerchoise = s.nextInt();
-        if (customerchoise == 1) {
-            welcomeDialogue();
-        } else if (customerchoise == 2) {
-            System.out.println("Thanks for choosing JavaBank. Good Bye!");
-            System.exit(0);
-        } else {
-            System.out.println("Invalid choice\n\n");
-        }
-    }
 
     public void welcomeDialogue() {
+
+        newCustomer = new RegisterNewCustomer();
 
         try {
             customerFromDB = dataDB.addDataToCustomerList();
@@ -86,7 +57,7 @@ public class Facade {
         while (scan.hasNext()) {
             String chosenOption = scan.next();
             if (chosenOption.equals("2")) {
-                registerNewCustomer();
+                newCustomer.registerNewCustomer();
 
             } else if (chosenOption.equals("1")) {
 
@@ -100,7 +71,7 @@ public class Facade {
                     welcomeDialogue();
                 } else {
                     Customer c = findCustomer(inputCustomerID, inputCustomerPinCode);
-                    blankspaces();
+                    newCustomer.blankspaces();
                     System.out.println("Welcome " + c.getFirstName() + " " + c.getLastName() + "\n");
                     System.out.println("Choose an account to make transactions");
                     System.out.println("1. Savings account");
@@ -108,7 +79,7 @@ public class Facade {
                     System.out.println("3. Close session");
                     int choice = getInfoFromUser();
                     if (choice == 1 || choice == 2) {
-                        blankspaces();
+                    newCustomer.blankspaces();
                         getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
                     } else if (choice == 3) {
                         System.out.println("Closing session");
@@ -151,61 +122,8 @@ public class Facade {
         }
     }
 
-    public void registerNewCustomer() {
-        try {
-            blankspaces();
-            Scanner input = new Scanner(System.in);
-            System.out.println("Welcome to JavaBANK!");
-            System.out.println("!!Christmas Offer!!");
-            System.out.println("Register now to recive 1-year 0% No-Fee checking account and saving account");
-            System.out.println("\n ------------------------- \n");
-            System.out.println("Please state your First name: ");
-            String name = input.nextLine().trim();
-            System.out.println("Please state your Last name: ");
-            String lastName = input.nextLine().trim();
-
-            if (!findByName(name, lastName)) {
-
-                Customer newCustomer = new Customer();
-
-                //   newCustomer.setCustomerId(generateRandomNumber(100, 1));
-                newCustomer.setCustomerId(customerFromDB.size() / 2 + 1);
-                newCustomer.setFirstName(name);
-                newCustomer.setLastName(lastName);
-                newCustomer.setCustomerPinCode((short) generateRandomNumber(9000, 1000));
-                newCustomer.setAccount2(generateRandomNumber(27400000, 27300000));
-                newCustomer.setBalance(generateRandomNumber(90, 10));
-                newCustomer.setAccountTypeNewuser("Saving");
-
-                customerFromDB.add(newCustomer);
-
-                System.out.println();
-                System.out.println(newCustomer.toString3());
-                System.out.println();
-
-                newCustomer.setAccount2(generateRandomNumber(27400000, 27300000));
-                newCustomer.setBalance(generateRandomNumber(90, 10));
-                newCustomer.setAccountTypeNewuser("Current");
-
-                customerFromDB.add(newCustomer);
-
-                System.out.println();
-                System.out.println(newCustomer.toString4());
-                System.out.println();
-                welcomeMenuORquit();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 
-    //a method to generate a random number (ID, PIN, account number)
-    public int generateRandomNumber(int upperbound, int lowerbound) {
-
-        Random rand = new Random();
-        return rand.nextInt(upperbound - lowerbound) + lowerbound;
-    }
 
     // a method to check if a person truing to register is already an existing customer
     public boolean findByName(String name, String lastName) {
@@ -243,14 +161,14 @@ public class Facade {
                     System.out.println("Please introduce the amount you want to deposit");
                     amount = getAmountFromUser();
                     makeDeposit(amount, account, customer);
-                    continueORquit();
+                    newCustomer.continueORquit();
                     break;
 
                 case 2:
                     System.out.println("Please introduce the amount you want to withdraw");
                     amount = getAmountFromUser();
                     makeWithdraw(amount, account, customer);
-                    continueORquit();
+                    newCustomer.continueORquit();
                     break;
 
                 case 3:
@@ -259,11 +177,11 @@ public class Facade {
                     System.out.println("please enter the account number that you want to send money to");
                     long destinationAccount = (long) getAmountFromUser();
                     makeTransfer(amount, account, destinationAccount);
-                    continueORquit();
+                    newCustomer.continueORquit();
                     break;
 
                 case 4:
-                    blankspaces();
+                  //  doit.blankspaces();
                     System.out.println("Transaction history:");
                     String filePathOut = "resources/CustomersHistory.csv";
                     List<String[]> customersInfoList = Database.read(filePathOut);
@@ -274,12 +192,12 @@ public class Facade {
                            // System.out.println(Arrays.toString(s));
                         }
                     }
-                    continueORquit();
+                    newCustomer.continueORquit();
                     break;
 
                 case 5:
                     account.printBalance();
-                    continueORquit();
+                    newCustomer.continueORquit();
                     break;
 
                 case 6:
@@ -288,7 +206,7 @@ public class Facade {
                     Scanner scanner = new Scanner(System.in);
                     String newPinCode = scanner.next();
                     History.replaceSelected(String.valueOf(customer.getCustomerPinCode()), newPinCode);
-                    continueORquit();
+                    newCustomer.continueORquit();
                     break;
 
                 case 0:
