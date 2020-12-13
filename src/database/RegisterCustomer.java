@@ -26,5 +26,4 @@ public class RegisterCustomer {
             System.out.println("File error");
         }
     }
-
 }
