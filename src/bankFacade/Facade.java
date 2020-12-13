@@ -36,6 +36,10 @@ public class Facade {
         fromAccount.transfer(amount, toAccount);
     }
 
+    public void makeNewCustomer(){
+        newCustomer.registerNewCustomer();
+    }
+
     public void welcomeDialogue() {
         newCustomer = new RegisterOperation();
         customers = new Customer();
@@ -53,7 +57,7 @@ public class Facade {
         while (scan.hasNext()) {
             String chosenOption = scan.next();
             if (chosenOption.equals("2")) {
-                newCustomer.registerNewCustomer();
+                makeNewCustomer();
             } else if (chosenOption.equals("1")) {
                 System.out.println("Please enter your customerID:");
                 int inputCustomerID = userOptions.getInfoFromUser();
