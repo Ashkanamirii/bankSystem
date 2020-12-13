@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class RegisterNewCustomer {
+public class RegisterOperation {
 
-   protected List<Customer> customerFromDB1 = new ArrayList<>();
-    protected Database dataDB1 = new Database();
+   protected List<Customer> customerFromDB = new ArrayList<>();
+    protected Database dataDB = new Database();
     Facade bankFacade;
 
 
@@ -29,9 +29,10 @@ public class RegisterNewCustomer {
 
     public boolean findByName(String name, String lastName) {
         boolean customer = false;
-        for (Customer c : customerFromDB1) {
+        for (Customer c : customerFromDB) {
             if (c.getFirstName().equalsIgnoreCase(name) && c.getLastName().equalsIgnoreCase(lastName)) {
                 System.out.println("You are an existing customer. Please login.");
+                bankFacade = new Facade();
                 bankFacade.welcomeDialogue();
                 customer = true;
 
@@ -42,11 +43,11 @@ public class RegisterNewCustomer {
     }
 
     public void welcomeMenuORquit(){
-        bankFacade = new Facade();
         System.out.println("What would you like to do next?\nPress (1) for Main menu or press (2) for EXIT");
         Scanner s = new Scanner(System.in);
         int customerchoise = s.nextInt();
         if (customerchoise == 1) {
+            bankFacade = new Facade();
             bankFacade.welcomeDialogue();
         } else if (customerchoise == 2) {
             System.out.println("Thanks for choosing JavaBank. Good Bye!");
@@ -61,7 +62,7 @@ public class RegisterNewCustomer {
         Scanner s = new Scanner(System.in);
         int customerchoise = s.nextInt();
         if (customerchoise == 1) {
-            //doit.blankspaces();
+            blankspaces();
         } else if (customerchoise == 2) {
             System.out.println("Thanks for choosing JavaBank. Good Bye!");
             System.exit(0);
@@ -71,8 +72,7 @@ public class RegisterNewCustomer {
     }
 
     public void registerNewCustomer() {
-
-        customerFromDB1 = dataDB1.addDataToCustomerList();
+        customerFromDB = dataDB.addDataToCustomerList();
         try {
             blankspaces();
             Scanner input = new Scanner(System.in);
@@ -88,17 +88,14 @@ public class RegisterNewCustomer {
             if (!findByName(name, lastName)) {
 
                 Customer newCustomer = new Customer();
-
-                //   newCustomer.setCustomerId(generateRandomNumber(100, 1));
-                newCustomer.setCustomerId(customerFromDB1.size() / 2 + 1);
+                newCustomer.setCustomerId(customerFromDB.size() / 2 + 1);
                 newCustomer.setFirstName(name);
                 newCustomer.setLastName(lastName);
                 newCustomer.setCustomerPinCode((short) generateRandomNumber(9000, 1000));
                 newCustomer.setAccount2(generateRandomNumber(27400000, 27300000));
                 newCustomer.setBalance(generateRandomNumber(90, 10));
                 newCustomer.setAccountTypeNewuser("Saving");
-
-                customerFromDB1.add(newCustomer);
+                customerFromDB.add(newCustomer);
 
                 System.out.println();
                 System.out.println(newCustomer.toString3());
@@ -107,13 +104,12 @@ public class RegisterNewCustomer {
                 newCustomer.setAccount2(generateRandomNumber(27400000, 27300000));
                 newCustomer.setBalance(generateRandomNumber(90, 10));
                 newCustomer.setAccountTypeNewuser("Current");
-
-                customerFromDB1.add(newCustomer);
+                customerFromDB.add(newCustomer);
 
                 System.out.println();
                 System.out.println(newCustomer.toString4());
                 System.out.println();
-                continueORquit();
+                welcomeMenuORquit();
             }
         } catch (Exception e) {
             e.printStackTrace();

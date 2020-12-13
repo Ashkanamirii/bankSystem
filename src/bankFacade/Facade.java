@@ -2,7 +2,7 @@ package bankFacade;
 
 import account.Account;
 import account.AccountEnum;
-import customer.RegisterNewCustomer;
+import customer.RegisterOperation;
 import customer.Customer;
 import database.Database;
 import database.History;
@@ -19,12 +19,9 @@ public class Facade {
 
     List<Customer> customerFromDB = new ArrayList<>();
    protected Database dataDB = new Database();
-    RegisterNewCustomer newCustomer;
+    RegisterOperation newCustomer;
     Customer customers;
-
-    public Facade() {
-        welcomeDialogue();
-    }
+    UserOperations userOptions;
 
 
     public void makeDeposit(double amount, Account account, Customer customer) {
@@ -39,21 +36,17 @@ public class Facade {
         fromAccount.transfer(amount, toAccount);
     }
 
-
     public void welcomeDialogue() {
-
-        newCustomer = new RegisterNewCustomer();
+        newCustomer = new RegisterOperation();
         customers = new Customer();
-
+        userOptions = new UserOperations();
 
         try {
             customerFromDB = dataDB.addDataToCustomerList();
-
         } catch (Exception e) {
             System.out.println("Could not find file. ");
             e.printStackTrace();
         }
-
 
         Scanner scan = new Scanner(System.in);
         System.out.println("Welcome to Your Bank! \n Please press your desired option: \n (1)login | (2)register ");
@@ -61,14 +54,11 @@ public class Facade {
             String chosenOption = scan.next();
             if (chosenOption.equals("2")) {
                 newCustomer.registerNewCustomer();
-
             } else if (chosenOption.equals("1")) {
-
                 System.out.println("Please enter your customerID:");
-                int inputCustomerID = getInfoFromUser();
-
+                int inputCustomerID = userOptions.getInfoFromUser();
                 System.out.println("Please enter your pin code:");
-                int inputCustomerPinCode = getInfoFromUser();
+                int inputCustomerPinCode = userOptions.getInfoFromUser();
                 if (customers.findCustomer(inputCustomerID, inputCustomerPinCode) == null) {
                     System.out.println("Wrong customerID or pincode. Try again");
                     welcomeDialogue();
@@ -80,10 +70,10 @@ public class Facade {
                     System.out.println("1. Savings account");
                     System.out.println("2. Current account");
                     System.out.println("3. Close session");
-                    int choice = getInfoFromUser();
+                    int choice = userOptions.getInfoFromUser();
                     if (choice == 1 || choice == 2) {
                     newCustomer.blankspaces();
-                        getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
+                    getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
                     } else if (choice == 3) {
                         System.out.println("Closing session");
                         System.exit(0);
@@ -95,22 +85,6 @@ public class Facade {
                 System.out.println("Invalid option. Press 1 to login. Press 2 to register as a new customer");
         }
     }
-
-
-    public void getChosenAccount(int inputCustomerID, int inputCustomerPinCode, int choice) {
-        for (int i = 0; i < customerFromDB.size(); i++) {
-            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
-                if (customerFromDB.get(i).getAccountType().getAccountType() == 1 && choice == 1) {
-                    Customer customer = customerFromDB.get(i);
-                    displayMenu(customer.getAccount(), customer.getAccountType(), customer, customer.getFirstName(), customer.getLastName());
-                } else if (customerFromDB.get(i).getAccountType().getAccountType() == 2 && choice == 2) {
-                    Customer c = customerFromDB.get(i);
-                    displayMenu(c.getAccount(), c.getAccountType(), c, c.getFirstName(), c.getLastName());
-                }
-            }
-        }
-    }
-
 
     public void displayMenu(Account account, AccountEnum accountType, Customer customer, String Firstname, String Lastname) {
         int temp = -1;
@@ -125,34 +99,35 @@ public class Facade {
             System.out.println("6: " + AccountEnum.getAccountType(8).getDescription());
             System.out.println("0: " + AccountEnum.getAccountType(9).getDescription());
 
-            temp = getInfoFromUser();
+            userOptions = new UserOperations();
+            temp = userOptions.getInfoFromUser();
             double amount;
             switch (temp) {
                 case 1:
                     System.out.println("Please introduce the amount you want to deposit");
-                    amount = getAmountFromUser();
+                    amount = userOptions.getAmountFromUser();
                     makeDeposit(amount, account, customer);
                     newCustomer.continueORquit();
                     break;
 
                 case 2:
                     System.out.println("Please introduce the amount you want to withdraw");
-                    amount = getAmountFromUser();
+                    amount = userOptions.getAmountFromUser();
                     makeWithdraw(amount, account, customer);
                     newCustomer.continueORquit();
                     break;
 
                 case 3:
                     System.out.println("Please introduce the amount you want to Transfer ");
-                    amount = getAmountFromUser();
+                    amount = userOptions.getAmountFromUser();
                     System.out.println("please enter the account number that you want to send money to");
-                    long destinationAccount = (long) getAmountFromUser();
+                    long destinationAccount = (long) userOptions.getAmountFromUser();
                     makeTransfer(amount, account, destinationAccount);
                     newCustomer.continueORquit();
                     break;
 
                 case 4:
-                  //  doit.blankspaces();
+                    newCustomer.blankspaces();
                     System.out.println("Transaction history:");
                     String filePathOut = "resources/CustomersHistory.csv";
                     List<String[]> customersInfoList = Database.read(filePathOut);
@@ -160,7 +135,6 @@ public class Facade {
                         long accountNumber = Long.parseLong(s[0]);
                         if (accountNumber == account.getAccountNumber()) {
                             System.out.println("Accountnumber: " + s[0] + " | Accounttype:" + s[1] + " | Operation:" + s[2] + " | Amount:" + s[3] + " | New balance:" + s[4] + " | Datestamp:" + s[5] + "\n");
-                           // System.out.println(Arrays.toString(s));
                         }
                     }
                     newCustomer.continueORquit();
@@ -192,31 +166,20 @@ public class Facade {
         }
     }
 
-    public int getInfoFromUser() {
-        int input = -2;
-        while (input == -2) {
-            try {
-                Scanner s = new Scanner(System.in);
-                input = s.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Just numbers allowed. Please try again \n");
+    public void getChosenAccount(int inputCustomerID, int inputCustomerPinCode, int choice) {
+        for (int i = 0; i < customerFromDB.size(); i++) {
+            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
+                if (customerFromDB.get(i).getAccountType().getAccountType() == 1 && choice == 1) {
+                    Customer customer = customerFromDB.get(i);
+                    displayMenu(customer.getAccount(), customer.getAccountType(), customer, customer.getFirstName(), customer.getLastName());
+                } else if (customerFromDB.get(i).getAccountType().getAccountType() == 2 && choice == 2) {
+                    Customer c = customerFromDB.get(i);
+                    displayMenu(c.getAccount(), c.getAccountType(), c, c.getFirstName(), c.getLastName());
+                }
             }
         }
-        return input;
     }
 
-    public double getAmountFromUser() {
-        double amount = -2;
-        while (amount == -2) {
-            try {
-                Scanner s = new Scanner(System.in);
-                amount = s.nextDouble();
-            } catch (InputMismatchException e) {
-                System.out.println("Just numbers allowed. Try again");
-            }
-        }
-        return amount;
-    }
     // TODO: 2020-12-11  fix check balance method for withdraw, deposit and transfer
 
 }
