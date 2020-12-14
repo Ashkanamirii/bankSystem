@@ -99,26 +99,6 @@ public class Customer {
         this.account2 = account2;
     }
 
-    List<Customer> customerFromDB = new ArrayList<>();
-    protected Database dataDB = new Database();
-
-    public Customer findCustomer(int inputCustomerID, int inputCustomerPinCode) {
-        customerFromDB = dataDB.addDataToCustomerList();
-
-        if (customerFromDB.size() == 0) {
-            System.out.println("Empty list");
-        }
-        for (int i = 0; i < customerFromDB.size(); i++) {
-            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID)
-                if (customerFromDB.get(i).getAccountType().getAccountType() == 1) {
-                    Customer c = customerFromDB.get(i);
-                    return c;
-                } else
-                    return null;
-        }
-        return null;
-    }
-
     @Override
     public String toString() {
         return "Customer{" +

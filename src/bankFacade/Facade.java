@@ -52,11 +52,11 @@ public class Facade {
                 int inputCustomerID = getInfoFromUser();
                 System.out.println("Please enter your pin code:");
                 int inputCustomerPinCode = getInfoFromUser();
-                if (customers.findCustomer(inputCustomerID, inputCustomerPinCode) == null) {
+                if (findCustomer(inputCustomerID, inputCustomerPinCode) == null) {
                     System.out.println("Wrong customerID or pincode. Try again");
                     welcomeDialogue();
                 } else {
-                    Customer c = customers.findCustomer(inputCustomerID, inputCustomerPinCode);
+                    Customer c = findCustomer(inputCustomerID, inputCustomerPinCode);
                     newCustomer.blankspaces();
                     System.out.println("Welcome " + c.getFirstName() + " " + c.getLastName() + "\n");
                     System.out.println("Choose an account to make transactions");
@@ -188,6 +188,23 @@ public class Facade {
             }
         }
         return amount;
+    }
+
+    public Customer findCustomer(int inputCustomerID, int inputCustomerPinCode) {
+        customerFromDB = dataDB.addDataToCustomerList();
+
+        if (customerFromDB.size() == 0) {
+            System.out.println("Empty list");
+        }
+        for (int i = 0; i < customerFromDB.size(); i++) {
+            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID)
+                if (customerFromDB.get(i).getAccountType().getAccountType() == 1) {
+                    Customer c = customerFromDB.get(i);
+                    return c;
+                } else
+                    return null;
+        }
+        return null;
     }
 
     public int getInfoFromUser() {
