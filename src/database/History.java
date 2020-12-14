@@ -45,7 +45,6 @@ public class History {
         }
     }
 
-
     public static void historyLog(Customer customer, double amount , int action, int action1) {
         String filePathOut = "resources/CustomersHistory.csv";
         String textToAppend = customer.customToString(action, action1,amount);
