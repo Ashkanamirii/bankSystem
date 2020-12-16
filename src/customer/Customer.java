@@ -2,11 +2,7 @@ package customer;
 
 import account.Account;
 import account.AccountEnum;
-import database.Database;
 import database.History;
-import database.RegisterCustomer;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
@@ -22,11 +18,10 @@ public class Customer {
     private String firstName;
     private String lastName;
     private Account account;
-    private long account2;
-    private double balance;
     private short customerPinCode;
     private AccountEnum accountEnum;
-    private String accountTypeNewuser;
+    private double salary;
+
 
     public Customer(int customerId, String firstName, String lastName, Account account,
                     short customerPinCode, AccountEnum accountEnum) {
@@ -41,7 +36,7 @@ public class Customer {
     public Customer() {
     }
 
-    public AccountEnum getAccountType() {
+    public AccountEnum getAccountEnum() {
         return accountEnum;
     }
 
@@ -49,8 +44,14 @@ public class Customer {
         this.accountEnum = accountEnum;
     }
 
-    public void setAccountTypeNewuser(String accountTypeNewuser){
-        this.accountTypeNewuser = accountTypeNewuser;
+
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
 
     public short getCustomerPinCode() {
@@ -93,11 +94,6 @@ public class Customer {
         this.account = account;
     }
 
-    public void setBalance(double balance) { this.balance = balance;}
-
-    public void setAccount2(long account2) {
-        this.account2 = account2;
-    }
 
     @Override
     public String toString() {
@@ -108,38 +104,35 @@ public class Customer {
                 ", account=" + account +
                 ", customerPinCode=" + customerPinCode +
                 ", accountType=" + accountEnum +
+                salary +
                 '}';
     }
 
-    public String toString3() {
-        for(int clear = 0; clear < 1000; clear++) {
-            System.out.println("\b") ;
-        }
-        RegisterCustomer.addNewUserToList(customerId, customerPinCode, firstName, lastName, account2, balance, accountTypeNewuser);
+    public String customerRegisterInfoShowToUser() {
         return "Welcome " + firstName + ' ' + lastName +
                 "\nYour customerID: " + customerId +
                 "\nYour pin code: " + customerPinCode + "\n" +
-                "\nYour " + accountTypeNewuser + " account number is: " +  account2;
-
+                "\nYour " + accountEnum.getAccountType(1).getDescription() + " account number is: " + account.getAccountNumber();
     }
 
-    public String toString4() {
-        RegisterCustomer.addNewUserToList(customerId, customerPinCode, firstName, lastName, account2, balance, accountTypeNewuser);
-        return "Your " + accountTypeNewuser + " account number is: " +  account2;
-
+    public String customerRegisterInfoShowUserCurrentAcc() {
+        return "Your " + accountEnum.getAccountType(2).getDescription() + " account number is: " +  account.getAccountNumber();
     }
 
-    public String customToString2(int customerId, short customerPinCode, String firstName, String lastName, long accountnr, Double balance1, String accountTypeNewuser) {
-        return customerId + ";" + customerPinCode + ";" + firstName + ";" + lastName + ";" + accountnr + ";" + balance1 + ";" + accountTypeNewuser + ";" +
+
+    public String customToString(int typeOfTransaction, int typeOfAccount, double amount) {
+        return account.getAccountNumber() + "; " +
+                accountEnum.getAccountType(typeOfAccount).getDescription() + "; " +
+                accountEnum.getAccountType(typeOfTransaction).getDescription() + "; " +
+                amount + "; " +
+                account.getBalance() + "; " +
                 History.getDateNowFormat();
     }
 
-    public String customToString(int action, int action1, double amount) {
-        return account.getAccountNumber() + "; " +
-                accountEnum.getAccountType(action1).getDescription() + "; " +
-                accountEnum.getAccountType(action).getDescription() + "; " +
-                amount + "; " +
-                account.getBalance() + "; " +
+    public String toStringCustomerList(int typeOfAccount) {
+        return customerId + ";" + customerPinCode + ";" + firstName + ";" +
+                lastName + ";" + getAccount().getAccountNumber() + ";" + account.getBalance() +
+                ";" + salary + ";" + accountEnum.getAccountType(typeOfAccount).getDescription() + ";" +
                 History.getDateNowFormat();
     }
 }

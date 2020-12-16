@@ -18,6 +18,7 @@ public enum AccountEnum {
     CHECK_BALANCE(7, "Check your balance"),
     UPDATE_INFO(8, "Update your personal information"),
     LOGOUT(9, "Log out"),
+    CREDIT_ACCOUNT(10, "Credit account"),
 
 
     UNKNOWN(0, "Unknown");

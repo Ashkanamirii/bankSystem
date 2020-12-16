@@ -48,16 +48,6 @@ public class History {
     public static void historyLog(Customer customer, double amount , int action, int action1) {
         String filePathOut = "resources/CustomersHistory.csv";
         String textToAppend = customer.customToString(action, action1,amount);
-        try (FileWriter fileWriter = new FileWriter(filePathOut, true);//Set true for append mode.
-             PrintWriter printWriter = new PrintWriter(fileWriter)) {
-            printWriter.println(textToAppend);  //New line
-        } catch (FileNotFoundException e) {
-            System.out.println("File could not be found");
-        } catch (IOException e) {
-            System.out.println("Could not write to file");
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.out.println("File error");
-        }
+        Database.AddDataToFile(filePathOut, textToAppend);
     }
 }

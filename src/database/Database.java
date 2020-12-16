@@ -5,10 +5,7 @@ import account.CurrentAccount;
 import account.SavingAccount;
 import customer.Customer;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -20,7 +17,21 @@ import java.util.*;
  */
 public class Database {
 
-    public static List<String[]> read(String file) {
+    public static void AddDataToFile(String filePathOut, String textToAppend) {
+        try (FileWriter fileWriter = new FileWriter(filePathOut, true);
+             PrintWriter printWriter = new PrintWriter(fileWriter)) {
+            printWriter.println(textToAppend);  //New line
+        } catch (FileNotFoundException e) {
+            System.out.println("File could not be found");
+        } catch (IOException e) {
+            System.out.println("Could not write to file");
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("File error");
+        }
+    }
+
+    public static List<String[]> readDataFromFile(String file) {
         List<String[]> data = new LinkedList<>();
         String dataRow;
         try (BufferedReader inputReader = new BufferedReader((new FileReader(file)))) {
@@ -38,7 +49,7 @@ public class Database {
 
     public List<Customer> addDataToCustomerList(){
         String csVFile = "resources/CustomerList.csv";
-        List<String[]> newAccountHolders = read(csVFile);
+        List<String[]> newAccountHolders = readDataFromFile(csVFile);
         List<Customer> customerList = new ArrayList<>();
         for (String[] accountHolder : newAccountHolders) {
             Customer customer = new Customer();
@@ -52,13 +63,16 @@ public class Database {
             customer.setLastName(lastName);
             int accountNumber = Integer.parseInt(accountHolder[4]);
             double balance = Double.parseDouble(accountHolder[5]);
-            String accountType = accountHolder[6];
-            String date = accountHolder[7];
-            if (accountType.equals("Saving")) {
+            double salary = Double.parseDouble(accountHolder[6]);
+            customer.setSalary(salary);
+            String accountType = accountHolder[7];
+            String date = accountHolder[8];
+
+            if (accountType.equals("Saving account")) {
                 customer.setAccountType(AccountEnum.getAccountType(1));
                 customer.setAccount(new SavingAccount(accountNumber, balance,date));
 
-            } else if (accountType.equals("Current")) {
+            } else if (accountType.equals("Current account")) {
                 customer.setAccountType(AccountEnum.getAccountType(2));
                 customer.setAccount(new CurrentAccount(accountNumber, balance,date));
             } else {

@@ -1,8 +1,11 @@
 package customer;
 
+import account.AccountEnum;
+import account.CurrentAccount;
+import account.SavingAccount;
 import bankFacade.Facade;
 import database.Database;
-
+import database.History;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -12,17 +15,16 @@ public class RegisterOperation {
 
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
-
+    String filePathOut = "resources/CustomerList.csv";
     protected List<Customer> customerFromDB = new ArrayList<>();
     protected Database dataDB = new Database();
     Facade bankFacade;
 
-    public void blankspaces() {
+    public static void blankspaces() {
         for (int clear = 0; clear < 1000; clear++) {
             System.out.println("\b");
         }
     }
-
     //a method to generate a random number (ID, PIN, account number)
     public int generateRandomNumber(int upperbound, int lowerbound) {
         Random rand = new Random();
@@ -35,7 +37,6 @@ public class RegisterOperation {
             if (c.getFirstName().equalsIgnoreCase(name) && c.getLastName().equalsIgnoreCase(lastName)) {
                 System.out.println("You are an existing customer. Please login.");
                 bankFacade = new Facade();
-                bankFacade.welcomeDialogue();
                 customer = true;
 
             } else customer = false;
@@ -87,6 +88,9 @@ public class RegisterOperation {
             String name = input.nextLine().trim();
             System.out.println("Please enter your Last name: ");
             String lastName = input.nextLine().trim();
+            System.out.println("Please enter your Salery: ");
+            double salary = Double.parseDouble(input.nextLine().trim());
+
 
             System.out.println("\nWaiting for a bank worker to connect..... \n");
             try {
@@ -121,18 +125,24 @@ public class RegisterOperation {
                 newCustomer.setCustomerId(customerFromDB.size() / 2 + 1);
                 newCustomer.setFirstName(name);
                 newCustomer.setLastName(lastName);
+                newCustomer.setSalary(salary);
                 newCustomer.setCustomerPinCode((short) generateRandomNumber(9000, 1000));
-                newCustomer.setAccount2(generateRandomNumber(27400000, 27300000));
-                newCustomer.setBalance(generateRandomNumber(90, 10));
-                newCustomer.setAccountTypeNewuser("Saving");
+                newCustomer.setAccount(new SavingAccount((generateRandomNumber(17400000, 17300000)),
+                        (generateRandomNumber(90, 10)), History.getDateNowFormat()));
+                newCustomer.setAccountType(AccountEnum.SAVING_ACCOUNT);
+                String newCustomerToFile = newCustomer.toStringCustomerList(newCustomer.getAccountEnum().getAccountType());
+                Database.AddDataToFile(filePathOut,newCustomerToFile);
                 customerFromDB.add(newCustomer);
                 System.out.println();
-                System.out.println(newCustomer.toString3());
-                newCustomer.setAccount2(generateRandomNumber(27600000, 27500000));
-                newCustomer.setBalance(generateRandomNumber(90, 10));
-                newCustomer.setAccountTypeNewuser("Current");
+                System.out.println(newCustomer.customerRegisterInfoShowToUser());
+
+                newCustomer.setAccount(new CurrentAccount((generateRandomNumber(27400000, 27300000)),
+                        (generateRandomNumber(90, 10)), History.getDateNowFormat()));
+                newCustomer.setAccountType(AccountEnum.CURRENT_ACCOUNT);
+                String newCustomerToFile1 = newCustomer.toStringCustomerList(newCustomer.getAccountEnum().getAccountType());
+                Database.AddDataToFile(filePathOut,newCustomerToFile1);
                 customerFromDB.add(newCustomer);
-                System.out.println(newCustomer.toString4());
+                System.out.println(newCustomer.customerRegisterInfoShowUserCurrentAcc());
                 System.out.println();
                 welcomeMenuORquit();
             }

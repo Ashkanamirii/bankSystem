@@ -40,7 +40,8 @@ public abstract class Account {
         printBalance();
         History.replaceSelected(oldBalance, newBalance);
         History.replaceSelected(date, History.getDateNowFormat());
-        History.historyLog(customer, amount, AccountEnum.WITHDRAW.getAccountType(), customer.getAccountType().getAccountType());
+        History.historyLog(customer, amount, AccountEnum.WITHDRAW.getAccountType(),
+                customer.getAccountEnum().getAccountType());
     }
 
     public void deposit(double amount,Customer customer) {
@@ -60,7 +61,8 @@ public abstract class Account {
         printBalance();
         History.replaceSelected(oldBalance, newBalance);
         History.replaceSelected(date, History.getDateNowFormat());
-        History.historyLog(customer, amount, AccountEnum.DEPOSIT.getAccountType(), customer.getAccountType().getAccountType());
+        History.historyLog(customer, amount, AccountEnum.DEPOSIT.getAccountType(),
+                customer.getAccountEnum().getAccountType());
     }
 
     public void transfer(double transferAmount, long destinationAcc ) {
@@ -78,7 +80,8 @@ public abstract class Account {
                 replacement = String.valueOf(balance);
                 History.replaceSelected(target, replacement);
                 History.replaceSelected(date, History.getDateNowFormat());
-                History.historyLog(customerFromDB.get(i), transferAmount, AccountEnum.TRANSFER.getAccountType(), customerFromDB.get(i).getAccountType().getAccountType());
+                History.historyLog(customerFromDB.get(i), transferAmount, AccountEnum.TRANSFER.getAccountType(),
+                        customerFromDB.get(i).getAccountEnum().getAccountType());
             }
             if (customerFromDB.get(i).getAccount().accountNumber == destinationAcc) {
                 target = String.valueOf(customerFromDB.get(i).getAccount().getBalance());
@@ -87,7 +90,8 @@ public abstract class Account {
                 replacement = String.valueOf(destinationBalance);
                 History.replaceSelected(target, replacement);
                 History.replaceSelected(customerFromDB.get(i).getAccount().getDate(), History.getDateNowFormat());
-                History.historyLog(customerFromDB.get(i), transferAmount, AccountEnum.TRANSFER.getAccountType(), customerFromDB.get(i).getAccountType().getAccountType());
+                History.historyLog(customerFromDB.get(i), transferAmount, AccountEnum.TRANSFER.getAccountType(),
+                        customerFromDB.get(i).getAccountEnum().getAccountType());
             }
         }
         printBalance();

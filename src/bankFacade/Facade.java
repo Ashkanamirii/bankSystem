@@ -23,16 +23,14 @@ public class Facade {
 
     List<Customer> customerFromDB = new ArrayList<>();
     protected Database dataDB = new Database();
-    RegisterOperation newCustomer;
-    Customer customers;
+    RegisterOperation registerOperation;
 
     public Facade() {
         welcomeDialogue();
     }
 
     public void welcomeDialogue() {
-        newCustomer = new RegisterOperation();
-        customers = new Customer();
+        registerOperation = new RegisterOperation();
 
         try {
             customerFromDB = dataDB.addDataToCustomerList();
@@ -52,20 +50,22 @@ public class Facade {
                 int inputCustomerID = getInfoFromUser();
                 System.out.println("Please enter your pin code:");
                 int inputCustomerPinCode = getInfoFromUser();
-                if (findCustomer(inputCustomerID, inputCustomerPinCode) == null) {
+                if (checkInputInfo(inputCustomerID, inputCustomerPinCode) == null) {
                     System.out.println("Wrong customerID or pincode. Try again");
                     welcomeDialogue();
                 } else {
-                    Customer c = findCustomer(inputCustomerID, inputCustomerPinCode);
-                    newCustomer.blankspaces();
+                    Customer c = checkInputInfo(inputCustomerID, inputCustomerPinCode);
+                    registerOperation.blankspaces();
                     System.out.println("Welcome " + c.getFirstName() + " " + c.getLastName() + "\n");
+                    System.out.println(c.getSalary());
                     System.out.println("Choose an account to make transactions");
                     System.out.println("1. Savings account");
                     System.out.println("2. Current account");
+                    System.out.println("2. Credit account");
                     System.out.println("3. Close session");
                     int choice = getInfoFromUser();
                     if (choice == 1 || choice == 2) {
-                        newCustomer.blankspaces();
+                        registerOperation.blankspaces();
                         getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
                     } else if (choice == 3) {
                         System.out.println("Closing session");
@@ -79,10 +79,10 @@ public class Facade {
         }
     }
 
-    public void displayMenu(Account account, Customer customer, String Firstname, String Lastname) {
+    public void displayMenu(Customer customer) {
         int temp = -1;
         while (temp != 0) {
-            System.out.println("Welcome " + Firstname + " " + Lastname + "\n");
+            System.out.println("Welcome " + customer.getFirstName() + " " + customer.getLastName() + "\n");
             System.out.println("Please choose from the menu");
             System.out.println("1: " + AccountEnum.getAccountType(3).getDescription());
             System.out.println("2: " + AccountEnum.getAccountType(4).getDescription());
@@ -99,15 +99,15 @@ public class Facade {
                 case 1:
                     System.out.println("Please introduce the amount you want to deposit");
                     amount = getAmountFromUser();
-                    makeDeposit(amount, account, customer);
-                    newCustomer.continueORquit();
+                    makeDeposit(amount, customer.getAccount(), customer);
+                    registerOperation.continueORquit();
                     break;
 
                 case 2:
                     System.out.println("Please introduce the amount you want to withdraw");
                     amount = getAmountFromUser();
-                    makeWithdraw(amount, account, customer);
-                    newCustomer.continueORquit();
+                    makeWithdraw(amount, customer.getAccount(), customer);
+                    registerOperation.continueORquit();
                     break;
 
                 case 3:
@@ -115,38 +115,37 @@ public class Facade {
                     amount = getAmountFromUser();
                     System.out.println("please enter the account number that you want to send money to");
                     long destinationAccount = (long) getAmountFromUser();
-                    makeTransfer(amount, account, destinationAccount);
-                    newCustomer.continueORquit();
+                    makeTransfer(amount, customer.getAccount(), destinationAccount);
+                    registerOperation.continueORquit();
                     break;
 
                 case 4:
-                    newCustomer.blankspaces();
+                    registerOperation.blankspaces();
                     System.out.println("Transaction history:");
                     String filePathOut = "resources/CustomersHistory.csv";
-                    List<String[]> customersInfoList = Database.read(filePathOut);
+                    List<String[]> customersInfoList = Database.readDataFromFile(filePathOut);
                     for (String[] s : customersInfoList) {
                         long accountNumber = Long.parseLong(s[0]);
-                        if (accountNumber == account.getAccountNumber()) {
+                        if (accountNumber == customer.getAccount().getAccountNumber()) {
                             System.out.println("Accountnumber: " + s[0] + " | Accounttype:" + s[1] +
                                     " | Operation:" + s[2] + " | Amount:" + s[3] + " | New balance:" + s[4]
                                     + " | Datestamp:" + s[5] + "\n");
                         }
                     }
-                    newCustomer.continueORquit();
+                    registerOperation.continueORquit();
                     break;
 
                 case 5:
-                    account.printBalance();
-                    newCustomer.continueORquit();
+                    customer.getAccount().printBalance();
+                    registerOperation.continueORquit();
                     break;
 
                 case 6:
                     System.out.println("Do you want change pinCod?\n" +
                             "Please enter your new pin code! ");
-                    Scanner scanner = new Scanner(System.in);
-                    String newPinCode = scanner.next();
+                    String newPinCode = String.valueOf(getInfoFromUser());
                     History.replaceSelected(String.valueOf(customer.getCustomerPinCode()), newPinCode);
-                    newCustomer.continueORquit();
+                    registerOperation.continueORquit();
                     break;
 
                 case 0:
@@ -174,7 +173,7 @@ public class Facade {
     }
 
     public void makeNewCustomer() {
-        newCustomer.registerNewCustomer();
+        registerOperation.registerNewCustomer();
     }
 
     public double getAmountFromUser() {
@@ -190,15 +189,16 @@ public class Facade {
         return amount;
     }
 
-    public Customer findCustomer(int inputCustomerID, int inputCustomerPinCode) {
+    public Customer checkInputInfo(int inputCustomerID, int inputCustomerPinCode) {
         customerFromDB = dataDB.addDataToCustomerList();
 
         if (customerFromDB.size() == 0) {
             System.out.println("Empty list");
         }
         for (int i = 0; i < customerFromDB.size(); i++) {
-            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID)
-                if (customerFromDB.get(i).getAccountType().getAccountType() == 1) {
+            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode
+                    && customerFromDB.get(i).getCustomerId() == inputCustomerID)
+                if (customerFromDB.get(i).getAccountEnum().getAccountType() == 1) {
                     Customer c = customerFromDB.get(i);
                     return c;
                 } else
@@ -222,16 +222,29 @@ public class Facade {
 
     public void getChosenAccount(int inputCustomerID, int inputCustomerPinCode, int choice) {
         for (int i = 0; i < customerFromDB.size(); i++) {
-            if (customerFromDB.get(i).getCustomerPinCode() == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
-                if (customerFromDB.get(i).getAccountType().getAccountType() == 1 && choice == 1) {
-                    Customer customer = customerFromDB.get(i);
-                    displayMenu(customer.getAccount(), customer, customer.getFirstName(), customer.getLastName());
-                } else if (customerFromDB.get(i).getAccountType().getAccountType() == 2 && choice == 2) {
-                    Customer c = customerFromDB.get(i);
-                    displayMenu(c.getAccount(), c, c.getFirstName(), c.getLastName());
+            if (customerFromDB.get(i).getCustomerPinCode()
+                    == inputCustomerPinCode && customerFromDB.get(i).getCustomerId() == inputCustomerID) {
+                if (customerFromDB.get(i).getAccountEnum().getAccountType() == 1 && choice == 1) {
+                    Customer customerSavingAccInfo = customerFromDB.get(i);
+                    displayMenu(customerSavingAccInfo);
+                } else if (customerFromDB.get(i).getAccountEnum().getAccountType() == 2 && choice == 2) {
+                    Customer customerCurrentAccInfo = customerFromDB.get(i);
+                    displayMenu(customerCurrentAccInfo);
                 }
             }
         }
+    }
+
+    private boolean checkApprovalBalanceReq(double balanceReq, Customer customer) {
+
+        if(customer.getSalary() >= 50000 & balanceReq <= 100000){
+            return true;
+    }else if (customer.getSalary() >= 30000 & balanceReq <= 50000){
+            return true;
+    }else if (customer.getSalary() >= 10000 & balanceReq <= 20000){
+            return true;
+        }else
+        return false;
     }
 }
 
