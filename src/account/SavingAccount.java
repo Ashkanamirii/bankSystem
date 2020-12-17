@@ -9,7 +9,6 @@ package account;
  */
 public class SavingAccount extends Account implements IInterestRate {
     public long myLong = 1234;
-    ;
 
     public SavingAccount() {
     }

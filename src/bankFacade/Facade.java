@@ -52,7 +52,7 @@ public class Facade {
                     welcomeDialogue();
                 } else {
                     Customer c = checkInputInfo(inputCustomerID, inputCustomerPinCode);
-                    registerOperation.blankspaces();
+                    RegisterOperation.blankspaces();
                     System.out.println("Welcome " + c.getFirstName() + " " + c.getLastName() + "\n");
                     System.out.println("Choose an account to make transactions");
                     System.out.println("1. Savings account");
@@ -61,7 +61,7 @@ public class Facade {
                     System.out.println("4. Close session");
                     int choice = (int) getInfoFromUser();
                     if (choice == 1 || choice == 2 || choice == 3) {
-                        registerOperation.blankspaces();
+                        RegisterOperation.blankspaces();
                         List<Customer> customerListOfAcc = new ArrayList<>();
                         customerListOfAcc = getChosenAccount(inputCustomerID, inputCustomerPinCode, choice);
                         System.out.println(" Pleas enter your selected account number that you want to continue with!");
@@ -139,7 +139,7 @@ public class Facade {
                     break;
 
                 case 4:
-                    registerOperation.blankspaces();
+                    RegisterOperation.blankspaces();
                     System.out.println("Transaction history:");
                     String filePathOut = "resources/CustomersHistory.csv";
                     List<String[]> customersInfoList = Database.readDataFromFile(filePathOut);

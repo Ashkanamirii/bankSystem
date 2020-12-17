@@ -43,9 +43,6 @@ public class CreditAccount extends Account {
             return true;
         } else if (customer.getSalary() >= 30000 && balanceReq <= 50000) {
             return true;
-        } else if (customer.getSalary() >= 10000 && balanceReq <= 20000) {
-            return true;
-        } else
-            return false;
+        } else return customer.getSalary() >= 10000 && balanceReq <= 20000;
     }
 }

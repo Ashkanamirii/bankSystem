@@ -120,8 +120,8 @@ public class Customer {
 
     public String historyToString(int typeOfTransaction, int typeOfAccount, double amount , String desName) {
         return account.getAccountNumber() + "; " +
-                accountEnum.getAccountType(typeOfAccount).getDescription() + "; " +
-                accountEnum.getAccountType(typeOfTransaction).getDescription() + "; " +
+                AccountEnum.getAccountType(typeOfAccount).getDescription() + "; " +
+                AccountEnum.getAccountType(typeOfTransaction).getDescription() + "; " +
                 amount + "; " +
                 account.getBalance() + "; " + desName + ";"+
                 History.getDateNowFormat();
@@ -130,12 +130,12 @@ public class Customer {
     public String toStringCustomerList(int typeOfAccount) {
         return customerId + ";" + customerPinCode + ";" + firstName + ";" +
                 lastName + ";" + getAccount().getAccountNumber() + ";" + account.getBalance() +
-                ";" + salary + ";" + accountEnum.getAccountType(typeOfAccount).getDescription() + ";" +
+                ";" + salary + ";" + AccountEnum.getAccountType(typeOfAccount).getDescription() + ";" +
                 History.getDateNowFormat();
     }
 
     public String[] customerAccountListToString(List<Customer> customerList) {
-        String s[] = new String[customerList.size()];
+        String[] s = new String[customerList.size()];
         for (int i = 0; i < customerList.size(); i++) {
             s[i] = customerList.get(i).getAccount().toString();
         }

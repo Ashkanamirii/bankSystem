@@ -17,9 +17,7 @@ import java.util.*;
  * Copyright: MIT
  */
 public class Database {
-    String csVFile = "resources/CustomerList.csv";
-    List<String[]> newAccountHolders = readDataFromFile(csVFile);
-    List<Customer> customerList = new ArrayList<>();
+
 
 
 
@@ -54,7 +52,9 @@ public class Database {
     }
 
     public List<Customer> addDataToCustomerList(){
-
+        String csVFile = "resources/CustomerList.csv";
+        List<String[]> newAccountHolders = readDataFromFile(csVFile);
+        List<Customer> customerList = new ArrayList<>();
         for (String[] accountHolder : newAccountHolders) {
             Customer customer = new Customer();
             int customerID = Integer.parseInt(accountHolder[0]);
