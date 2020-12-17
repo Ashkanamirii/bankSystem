@@ -7,19 +7,24 @@ package account;
  * Project: bankSystem
  * Copyright: MIT
  */
-public class SavingAccount extends Account {
-    double interestRate = 2;
+public class SavingAccount extends Account implements IInterestRate {
+    public long myLong = 1234;
+    ;
 
-    public SavingAccount(long accountNumber, double balance,String date) {
-        super(accountNumber, balance,date);
+    public SavingAccount() {
     }
 
+    public SavingAccount(long accountNumber, double balance, String date) {
+        super(accountNumber, balance, date);
+        setRate();
+    }
+
+    public void setRate() {
+        rate = (getBaseRate() + .5) / 100;
+    }
 
     public void calculateInterestRate() {
-        this.interestRate = interestRate + (balance * interestRate / 100 / 365);
+        rate = (balance * getBaseRate() / 100 / 365);
+        balance = balance + (balance * getBaseRate() / 100 / 365);
     }
-    public void addInterest() {
-        balance = balance + interestRate;
-    }
-
 }

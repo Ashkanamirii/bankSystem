@@ -1,5 +1,7 @@
 package account;
 
+import customer.Customer;
+
 /**
  * Created by Ashkan Amiri
  * Date:  2020-12-16
@@ -8,4 +10,9 @@ package account;
  * Copyright: MIT
  */
 public interface IInterestRate {
-}
+     default double getBaseRate(){
+      return 2.5;
+     }
+     void calculateInterestRate();
+     void balanceWithRate(double amount ,int year);
+     }

@@ -3,6 +3,7 @@ package account;
 import customer.Customer;
 import database.Database;
 import database.History;
+
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -17,12 +18,28 @@ public abstract class Account {
     private long accountNumber;
     protected double balance;
     protected String date;
+    double rate;
 
 
     public Account(long accountNumber, double balance, String date) {
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.date = date;
+    }
+
+    public Account() {
+    }
+
+    // Sparkalkylator – räkna på hur ditt sparande kan växa
+    public void balanceWithRate(double amount, int year) {
+        double yearlyInterestPaid;
+        double totalAmount = amount;
+        System.out.println(totalAmount + " :- " + " grows with the interest rate of " + rate);
+        for (int i = 0; i <= year; i++) {
+            yearlyInterestPaid = totalAmount * rate;
+            totalAmount += yearlyInterestPaid;
+            System.out.println("YEAR - " + i + "   " + totalAmount);
+        }
     }
 
     public void withDraw(double amount, Customer customer) {
@@ -33,18 +50,17 @@ public abstract class Account {
             DecimalFormat decimalFormat = new DecimalFormat("0.#####");
             String amountToPrint = decimalFormat.format(Double.valueOf(amount));
             newBalance = String.valueOf(balance);
-            System.out.println("\nWithdrawing $" + amountToPrint);
+            System.out.println("\nWithdrawing KR " + amountToPrint);
         } else {
             System.out.println("\nYour balance is not enough to complete this transaction");
         }
         printBalance();
         History.replaceSelected(oldBalance, newBalance);
-        History.replaceSelected(date, History.getDateNowFormat());
         History.historyLog(customer, amount, AccountEnum.WITHDRAW.getAccountType(),
-                customer.getAccountEnum().getAccountType());
+                customer.getAccountEnum().getAccountType(), "");
     }
 
-    public void deposit(double amount,Customer customer) {
+    public void deposit(double amount, Customer customer) {
         String oldBalance = String.valueOf(balance);
         String newBalance = null;
         if (amount > 0) {
@@ -54,18 +70,17 @@ public abstract class Account {
             System.out.println(amountToPrint);
             newBalance = String.valueOf(balance);
             System.out.println("\n----------------------------------\n");
-            System.out.println("Depositing $" + amountToPrint);
+            System.out.println("Depositing KR " + amountToPrint);
         } else {
             System.out.println("\nYour amount is incorrect");
         }
         printBalance();
         History.replaceSelected(oldBalance, newBalance);
-        History.replaceSelected(date, History.getDateNowFormat());
         History.historyLog(customer, amount, AccountEnum.DEPOSIT.getAccountType(),
-                customer.getAccountEnum().getAccountType());
+                customer.getAccountEnum().getAccountType(), "");
     }
 
-    public void transfer(double transferAmount, long destinationAcc ) {
+    public void transfer(double transferAmount, long destinationAcc, String destFullName) {
         Database database = new Database();
         String target;
         String replacement;
@@ -79,9 +94,8 @@ public abstract class Account {
                 customerFromDB.get(i).getAccount().setBalance(balance);
                 replacement = String.valueOf(balance);
                 History.replaceSelected(target, replacement);
-                History.replaceSelected(date, History.getDateNowFormat());
                 History.historyLog(customerFromDB.get(i), transferAmount, AccountEnum.TRANSFER.getAccountType(),
-                        customerFromDB.get(i).getAccountEnum().getAccountType());
+                        customerFromDB.get(i).getAccountEnum().getAccountType(), destFullName);
             }
             if (customerFromDB.get(i).getAccount().accountNumber == destinationAcc) {
                 target = String.valueOf(customerFromDB.get(i).getAccount().getBalance());
@@ -89,13 +103,13 @@ public abstract class Account {
                 customerFromDB.get(i).getAccount().setBalance(destinationBalance);
                 replacement = String.valueOf(destinationBalance);
                 History.replaceSelected(target, replacement);
-                History.replaceSelected(customerFromDB.get(i).getAccount().getDate(), History.getDateNowFormat());
                 History.historyLog(customerFromDB.get(i), transferAmount, AccountEnum.TRANSFER.getAccountType(),
-                        customerFromDB.get(i).getAccountEnum().getAccountType());
+                        customerFromDB.get(i).getAccountEnum().getAccountType(), destFullName);
             }
         }
         printBalance();
     }
+    public abstract void setRate();
 
     public long getAccountNumber() {
         return accountNumber;
@@ -110,8 +124,8 @@ public abstract class Account {
     }
 
     public void printBalance() {
-        for(int clear = 0; clear < 1000; clear++) {
-            System.out.println("\b") ;
+        for (int clear = 0; clear < 1000; clear++) {
+            System.out.println("\b");
         }
         DecimalFormat decimalFormat = new DecimalFormat("0.#####");
         String balanceToPrint = decimalFormat.format(Double.valueOf(balance));
@@ -126,8 +140,8 @@ public abstract class Account {
     @Override
     public String toString() {
         return "\nAccountNumber: " + accountNumber +
-                "\nBalance: " + balance
-                ;
+                "\nRate: " + rate +
+                "\nBalance: " + balance                ;
     }
 }
 

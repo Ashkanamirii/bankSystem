@@ -7,10 +7,19 @@ package account;
  * Project: bankSystem
  * Copyright: MIT
  */
-public class CurrentAccount extends Account {
+public class CurrentAccount extends Account implements IInterestRate {
 
     public CurrentAccount(long accountNumber, double balance, String date) {
         super(accountNumber, balance, date);
+        setRate();
     }
 
+    @Override
+    public void setRate() {
+        rate = (getBaseRate() - 1) / 100;
+    }
+
+    @Override
+    public void calculateInterestRate() {
+    }
 }

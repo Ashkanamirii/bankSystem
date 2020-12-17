@@ -4,6 +4,8 @@ import account.Account;
 import account.AccountEnum;
 import database.History;
 
+import java.util.List;
+
 /**
  * Created by Ashkan Amiri, Jacaranda Perez, Iryna Gnatenko och Salem Koldzo
  * Date:  2020-11-29
@@ -43,7 +45,6 @@ public class Customer {
     public void setAccountType(AccountEnum accountEnum) {
         this.accountEnum = accountEnum;
     }
-
 
 
     public double getSalary() {
@@ -112,20 +113,17 @@ public class Customer {
         return "Welcome " + firstName + ' ' + lastName +
                 "\nYour customerID: " + customerId +
                 "\nYour pin code: " + customerPinCode + "\n" +
-                "\nYour " + accountEnum.getAccountType(1).getDescription() + " account number is: " + account.getAccountNumber();
+                "\nYour " + accountEnum.getDescription() + "s number is ---> " + account.getAccountNumber() +
+                "\n ------------------------------------" + "\n";
+
     }
 
-    public String customerRegisterInfoShowUserCurrentAcc() {
-        return "Your " + accountEnum.getAccountType(2).getDescription() + " account number is: " +  account.getAccountNumber();
-    }
-
-
-    public String customToString(int typeOfTransaction, int typeOfAccount, double amount) {
+    public String historyToString(int typeOfTransaction, int typeOfAccount, double amount , String desName) {
         return account.getAccountNumber() + "; " +
                 accountEnum.getAccountType(typeOfAccount).getDescription() + "; " +
                 accountEnum.getAccountType(typeOfTransaction).getDescription() + "; " +
                 amount + "; " +
-                account.getBalance() + "; " +
+                account.getBalance() + "; " + desName + ";"+
                 History.getDateNowFormat();
     }
 
@@ -134,5 +132,13 @@ public class Customer {
                 lastName + ";" + getAccount().getAccountNumber() + ";" + account.getBalance() +
                 ";" + salary + ";" + accountEnum.getAccountType(typeOfAccount).getDescription() + ";" +
                 History.getDateNowFormat();
+    }
+
+    public String[] customerAccountListToString(List<Customer> customerList) {
+        String s[] = new String[customerList.size()];
+        for (int i = 0; i < customerList.size(); i++) {
+            s[i] = customerList.get(i).getAccount().toString();
+        }
+        return s;
     }
 }

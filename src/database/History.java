@@ -45,9 +45,9 @@ public class History {
         }
     }
 
-    public static void historyLog(Customer customer, double amount , int action, int action1) {
+    public static void historyLog(Customer customer, double amount , int action, int action1 , String desFullName) {
         String filePathOut = "resources/CustomersHistory.csv";
-        String textToAppend = customer.customToString(action, action1,amount);
+        String textToAppend = customer.historyToString(action, action1,amount, desFullName);
         Database.AddDataToFile(filePathOut, textToAppend);
     }
 }
